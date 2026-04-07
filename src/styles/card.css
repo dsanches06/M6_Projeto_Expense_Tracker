@@ -1,0 +1,67 @@
+.sectionCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.sectionCard .card {
+  width: 260px;
+  height: 130px;
+  background-color: #07182e;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sectionCard .card::before {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210%;
+  background: linear-gradient(
+    180deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sectionCard .card::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background-color: #07182e;
+  border-radius: 15px;
+}
+
+.sectionCard .card .cardTitle,
+.sectionCard .card .cardValue {
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+}
+
+.sectionCard .card .cardTitle {
+  font-size: 16px;
+}
+
+.sectionCard .card .cardValue {
+  font-size: 24px;
+}
