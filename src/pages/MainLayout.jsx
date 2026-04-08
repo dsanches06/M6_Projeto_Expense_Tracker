@@ -1,13 +1,13 @@
-import { Outlet } from "react-router";
+import { Outlet, NavLinkLink } from "react-router";
 
 const MainLayout = () => {
   return (
     <div>
       <header>
         <nav>
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
         </nav>
       </header>
       <main>
