@@ -40,7 +40,7 @@ const App = () => {
   };
 
   return (
-    <main className="container">
+    <div className="container">
       <div className="page-header">
         <button
           className="btn btn-add-transaction"
@@ -77,7 +77,7 @@ const App = () => {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 };
 
