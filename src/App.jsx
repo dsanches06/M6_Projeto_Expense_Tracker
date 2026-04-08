@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Summary from "./components/Summary.jsx";
-import AddTransaction from "./components/AddTransaction.jsx";
-import TransactionList from "./components/TransactionList.jsx";
+import Summary from "./components/Summary";
+import AddTransaction from "./components/AddTransaction";
+import TransactionList from "./components/TransactionList";
 import { initialTransactions } from "./data/mockData.js";
 
 const App = () => {
@@ -40,7 +40,7 @@ const App = () => {
   };
 
   return (
-    <main>
+    <main className="container">
       <div className="page-header">
         <button
           className="btn btn-add-transaction"

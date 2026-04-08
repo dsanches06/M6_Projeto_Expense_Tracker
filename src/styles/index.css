@@ -41,6 +41,16 @@ main {
   min-width: 0;
 }
 
+.container{
+    display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+
+
 .btn-add-transaction {
   margin-left: auto;
   .transaction-list-container {
@@ -193,3 +203,5 @@ form {
 .modal-close:hover {
   color: var(--text-color);
 }
+
+

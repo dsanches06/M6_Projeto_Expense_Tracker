@@ -1,4 +1,4 @@
-import TransactionItem from "./TransactionItem.jsx";
+import TransactionItem from "./TransactionItem";
 
 // lista transações
 const TransactionList = ({ transactions, onDeleteTransaction }) => {
