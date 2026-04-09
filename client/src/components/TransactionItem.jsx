@@ -1,6 +1,6 @@
-// um item individual (verde/vermelho)
+// um item individual (verde/vermelho) com botões de editar e apagar
 
-const TransactionItem = ({ transaction, onDelete }) => {
+const TransactionItem = ({ transaction, onDelete, onEdit }) => {
   const isIncome = transaction.type === "income";
   const colorClass = isIncome ? "income" : "expense";
 
@@ -17,9 +17,14 @@ const TransactionItem = ({ transaction, onDelete }) => {
         </div>
       </div>
 
-      <button className="btn-delete" onClick={onDelete}>
-        Apagar
-      </button>
+      <div className="transaction-actions">
+        <button className="btn-edit" onClick={onEdit}>
+          Editar
+        </button>
+        <button className="btn-delete" onClick={onDelete}>
+          Apagar
+        </button>
+      </div>
     </div>
   );
 };
