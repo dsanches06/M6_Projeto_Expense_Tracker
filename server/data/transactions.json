@@ -1,0 +1,13 @@
+{
+  "transactions": [
+    {
+      "id": "21c85946-2047-4caa-9ea7-453348733750",
+      "description": "Supermercado Pingo Doce",
+      "amount": -45.5,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-08",
+      "createdAt": "2026-04-08T22:14:52.352Z"
+    }
+  ]
+}
