@@ -1,3 +1,8 @@
+
+// importar componentes do react-router-dom
+import { Routes, Route } from "react-router-dom";
+
+// componente principal da aplicação
 import { useState } from "react";
 import Summary from "./components/Summary.jsx";
 import AddTransaction from "./components/AddTransaction.jsx";
@@ -39,46 +44,65 @@ const App = () => {
     setTransactions(transactions.filter((t) => t.id !== id));
   };
 
+  // retornar as rotas da aplicação
   return (
+    // container principal
     <div className="container">
-      <div className="page-header">
-        <button
-          className="btn btn-add-transaction"
-          onClick={() => setShowModal(true)}
-        >
-          + Adicionar transação
-        </button>
-      </div>
+      {/* rotas da aplicação */}
+      <Routes>
+        {/* rota principal: lista e resumo */}
+        <Route
+          path="/"
+          element={
+            <>
+              {/* cabeçalho com botão para adicionar transação */}
+              <div className="page-header">
+                <button
+                  className="btn btn-add-transaction"
+                  onClick={() => setShowModal(true)}
+                >
+                  + adicionar transação
+                </button>
+              </div>
 
-      <div className="page-grid">
-        <section className="summary-panel">
-          <Summary
-            saldo={balance}
-            receitas={totalIncome}
-            despesas={totalExpenses}
-          />
-        </section>
+              {/* grid com resumo e lista de transações */}
+              <div className="page-grid">
+                <section className="summary-panel">
+                  <Summary
+                    saldo={balance}
+                    receitas={totalIncome}
+                    despesas={totalExpenses}
+                  />
+                </section>
 
-        <section className="transactions-panel">
-          <TransactionList
-            transactions={transactions}
-            onDeleteTransaction={handleDeleteTransaction}
-          />
-        </section>
-      </div>
+                <section className="transactions-panel">
+                  <TransactionList
+                    transactions={transactions}
+                    onDeleteTransaction={handleDeleteTransaction}
+                  />
+                </section>
+              </div>
 
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setShowModal(false)}>
-              ×
-            </button>
-            <AddTransaction onAddTransaction={handleAddTransaction} />
-          </div>
-        </div>
-      )}
+              {/* modal para adicionar transação */}
+              {showModal && (
+                <div className="modal-overlay" onClick={() => setShowModal(false)}>
+                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <button className="modal-close" onClick={() => setShowModal(false)}>
+                      ×
+                    </button>
+                    <AddTransaction onAddTransaction={handleAddTransaction} />
+                  </div>
+                </div>
+              )}
+            </>
+          }
+        />
+        {/* rota para o resumo */}
+        <Route path="/resumo" element={<Summary saldo={balance} receitas={totalIncome} despesas={totalExpenses} />} />
+      </Routes>
     </div>
   );
 };
 
+// exportar componente principal
 export default App;
