@@ -11,6 +11,7 @@ import { initialTransactions } from "./data/mockData.js";
 import MainLayout from "./pages/MainLayout.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
+import Home from "./pages/Home.jsx";
 
 const App = () => {
   const [transactions, setTransactions] = useState(initialTransactions);
@@ -53,52 +54,7 @@ const App = () => {
       {/* layout principal para todas as páginas */}
       <Route path="/" element={<MainLayout />}>
         {/* página inicial (home) */}
-        <Route
-          index
-          element={
-            <div className="container">
-              {/* cabeçalho com botão para adicionar transação */}
-              <div className="page-header">
-                <button
-                  className="btn btn-add-transaction"
-                  onClick={() => setShowModal(true)}
-                >
-                  + adicionar transação
-                </button>
-              </div>
-
-              {/* grid com resumo e lista de transações */}
-              <div className="page-grid">
-                <section className="summary-panel">
-                  <Summary
-                    saldo={balance}
-                    receitas={totalIncome}
-                    despesas={totalExpenses}
-                  />
-                </section>
-
-                <section className="transactions-panel">
-                  <TransactionList
-                    transactions={transactions}
-                    onDeleteTransaction={handleDeleteTransaction}
-                  />
-                </section>
-              </div>
-
-              {/* modal para adicionar transação */}
-              {showModal && (
-                <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <button className="modal-close" onClick={() => setShowModal(false)}>
-                      ×
-                    </button>
-                    <AddTransaction onAddTransaction={handleAddTransaction} />
-                  </div>
-                </div>
-              )}
-            </div>
-          }
-        />
+        <Route index element={<Home />} />
         {/* página about */}
         <Route path="about" element={<About />} />
         {/* página contact */}
