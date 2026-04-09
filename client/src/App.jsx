@@ -4,14 +4,14 @@ import { Routes, Route } from "react-router-dom";
 
 // componente principal da aplicação
 import { useState } from "react";
-import Summary from "./components/Summary.jsx";
-import AddTransaction from "./components/AddTransaction.jsx";
-import TransactionList from "./components/TransactionList.jsx";
+
+import Summary from "./components/Summary";
+import AddTransaction from "./components/AddTransaction";
+import TransactionList from "./components/TransactionList";
 import { initialTransactions } from "./data/mockData.js";
-import MainLayout from "./pages/MainLayout.jsx";
-import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx";
-import Home from "./pages/Home.jsx";
+// importar páginas about e contact
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const App = () => {
   const [transactions, setTransactions] = useState(initialTransactions);
@@ -50,17 +50,64 @@ const App = () => {
 
   // retornar as rotas da aplicação
   return (
-    <Routes>
-      {/* layout principal para todas as páginas */}
-      <Route path="/" element={<MainLayout />}>
-        {/* página inicial (home) */}
-        <Route index element={<Home />} />
-        {/* página about */}
-        <Route path="about" element={<About />} />
-        {/* página contact */}
-        <Route path="contact" element={<Contact />} />
-      </Route>
-    </Routes>
+    // container principal
+    <div className="container">
+      {/* rotas da aplicação */}
+      <Routes>
+        {/* rota principal: lista e resumo */}
+        <Route
+          path="/"
+          element={
+            <>
+              {/* cabeçalho com botão para adicionar transação centralizado */}
+              <div className="page-header" style={{ justifyContent: 'center' }}>
+                <button
+                  className="btn btn-add-transaction"
+                  style={{ margin: '0 auto', display: 'block' }}
+                  onClick={() => setShowModal(true)}
+                >
+                  + adicionar transação
+                </button>
+              </div>
+
+              {/* grid com resumo e lista de transações */}
+              <div className="page-grid">
+                <section className="summary-panel">
+                  <Summary
+                    saldo={balance}
+                    receitas={totalIncome}
+                    despesas={totalExpenses}
+                  />
+                </section>
+
+                <section className="transactions-panel">
+                  <TransactionList
+                    transactions={transactions}
+                    onDeleteTransaction={handleDeleteTransaction}
+                  />
+                </section>
+              </div>
+
+              {/* modal para adicionar transação */}
+              {showModal && (
+                <div className="modal-overlay" onClick={() => setShowModal(false)}>
+                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <button className="modal-close" onClick={() => setShowModal(false)}>
+                      ×
+                    </button>
+                    <AddTransaction onAddTransaction={handleAddTransaction} />
+                  </div>
+                </div>
+              )}
+            </>
+          }
+        />
+        {/* rota para página about */}
+        <Route path="/about" element={<About />} />
+        {/* rota para página contact */}
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </div>
   );
 };
 

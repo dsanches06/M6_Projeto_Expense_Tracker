@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
-import "./MainLayout.css";
+import "../styles/MainLayout.css";
 
 const MainLayout = () => {
   // pegar localização para destacar link ativo
@@ -10,9 +10,21 @@ const MainLayout = () => {
         <aside className="sidebar">
           <span className="nav-title">Expense Tracker</span>
           <nav className="sidebar-nav">
-            <Link to="/" className={location.pathname === "/" ? "active" : ""}>Home</Link>
-            <Link to="/about" className={location.pathname === "/about" ? "active" : ""}>About</Link>
-            <Link to="/contact" className={location.pathname === "/contact" ? "active" : ""}>Contact</Link>
+            <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+              Home
+            </Link>
+            <Link
+              to="/about"
+              className={location.pathname === "/about" ? "active" : ""}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className={location.pathname === "/contact" ? "active" : ""}
+            >
+              Contact
+            </Link>
           </nav>
         </aside>
         <div className="main-content">
