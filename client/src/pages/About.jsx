@@ -14,11 +14,11 @@ const About = () => {
       </div>
       <div style={{ minWidth: 280, maxWidth: 400, background: '#f7f7fa', borderRadius: 8, padding: 24, boxShadow: '0 2px 8px #0001' }}>
         <h2 style={{ color: '#4a78e0', marginBottom: 16 }}>Sobre os estudantes</h2>
-        <ul style={{ textAlign: 'left', paddingLeft: 20 }}>
-          <li><b>Abel Pinto</b> &mdash; FCUL, Ciências ULisboa</li>
-          <li><b>Danilson Sanchez</b> &mdash; FCUL, Ciências ULisboa</li>
-        </ul>
-        <p>Projeto realizado no âmbito do curso.</p>
+        <div style={{ textAlign: 'left' }}>
+          <p><b>Abel Pinto</b> &mdash; FCUL, Ciências ULisboa</p>
+          <p><b>Danilson Sanchez</b> &mdash; FCUL, Ciências ULisboa</p>
+        </div>
+        <p>Projeto realizado no âmbito do curso UPSKILL.</p>
       </div>
     </div>
   );
