@@ -1,13 +1,25 @@
 // componente about
 // mostra informações sobre o curso e os estudantes
 
+
+// componente About melhorado com layout em duas colunas
 const About = () => {
   return (
-    <div style={{ textAlign: 'center', marginTop: 40 }}>
-      <h2>sobre o curso</h2>
-      <p>curso front end upskill</p>
-      <p>módulo 6: next.js e react.js</p>
-      <p>feito pelos estudantes abel pinto e danilson sanchez</p>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 40, marginTop: 40, flexWrap: 'wrap' }}>
+      <div style={{ minWidth: 280, maxWidth: 400, background: '#f7f7fa', borderRadius: 8, padding: 24, boxShadow: '0 2px 8px #0001' }}>
+        <h2 style={{ color: '#4a78e0', marginBottom: 16 }}>Sobre o módulo</h2>
+        <p><b>Módulo:</b> M6: Frontend - React & Next.js</p>
+        <p><b>Objetivo:</b> Criar aplicações web modernas com React, Vite e boas práticas de UI/UX.</p>
+        <p><b>Projeto:</b> Expense Tracker</p>
+      </div>
+      <div style={{ minWidth: 280, maxWidth: 400, background: '#f7f7fa', borderRadius: 8, padding: 24, boxShadow: '0 2px 8px #0001' }}>
+        <h2 style={{ color: '#4a78e0', marginBottom: 16 }}>Sobre os estudantes</h2>
+        <ul style={{ textAlign: 'left', paddingLeft: 20 }}>
+          <li><b>Abel Pinto</b> &mdash; FCUL, Ciências ULisboa</li>
+          <li><b>Danilson Sanchez</b> &mdash; FCUL, Ciências ULisboa</li>
+        </ul>
+        <p>Projeto realizado no âmbito do curso.</p>
+      </div>
     </div>
   );
 };
