@@ -1,0 +1,36 @@
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.about-card {
+  min-width: 280px;
+  max-width: 400px;
+  background: #f7f7fa;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.about-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(74, 120, 224, 0.15);
+}
+
+.about-card h2 {
+  color: #4a78e0;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.about-card p {
+  margin: 12px 0;
+  line-height: 1.6;
+  color: #212529;
+}

@@ -68,8 +68,12 @@ const EditTransaction = ({ transaction, onEditTransaction, onCancel }) => {
           />
         </div>
         <div className="edit-actions">
-          <button className="btn" type="submit">Guardar</button>
-          <button className="btn btn-cancel" type="button" onClick={onCancel}>Cancelar</button>
+          <button className="btn" type="submit">
+            Guardar
+          </button>
+          <button className="btn btn-cancel" type="button" onClick={onCancel}>
+            Cancelar
+          </button>
         </div>
       </form>
     </div>

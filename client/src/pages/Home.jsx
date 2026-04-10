@@ -1,10 +1,10 @@
 // componente home
 // página inicial com resumo, lista, pesquisa e edição de transações
-import Summary from "../components/Summary.jsx";
-import AddTransaction from "../components/AddTransaction.jsx";
-import EditTransaction from "../components/EditTransaction.jsx";
-import SearchTransaction from "../components/SearchTransaction.jsx";
-import TransactionList from "../components/TransactionList.jsx";
+import Summary from "../components/Summary";
+import AddTransaction from "../components/AddTransaction";
+import EditTransaction from "../components/EditTransaction";
+import SearchTransaction from "../components/SearchTransaction";
+import TransactionList from "../components/TransactionList";
 import { useState } from "react";
 import { initialTransactions } from "../data/mockData.js";
 
@@ -65,6 +65,10 @@ const Home = () => {
 
   return (
     <div className="container">
+      {/* cards de resumo no topo */}
+      <section className="summary-panel">
+        <Summary saldo={balance} receitas={totalIncome} despesas={totalExpenses} />
+      </section>
       {/* cabeçalho com pesquisa e botão adicionar */}
       <div className="page-header">
         <SearchTransaction onSearch={handleSearch} />
@@ -75,19 +79,14 @@ const Home = () => {
           + Adicionar transação
         </button>
       </div>
-      {/* grid com resumo e lista de transações */}
-      <div className="page-grid">
-        <section className="summary-panel">
-          <Summary saldo={balance} receitas={totalIncome} despesas={totalExpenses} />
-        </section>
-        <section className="transactions-panel">
-          <TransactionList
-            transactions={filteredTransactions}
-            onDeleteTransaction={handleDeleteTransaction}
-            onEditTransaction={handleStartEdit}
-          />
-        </section>
-      </div>
+      {/* lista de transações */}
+      <section className="transactions-panel">
+        <TransactionList
+          transactions={filteredTransactions}
+          onDeleteTransaction={handleDeleteTransaction}
+          onEditTransaction={handleStartEdit}
+        />
+      </section>
       {/* modal para adicionar transação */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>

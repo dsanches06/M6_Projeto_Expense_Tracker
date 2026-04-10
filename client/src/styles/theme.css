@@ -1,0 +1,212 @@
+/* Light Theme (padrão) */
+:root[data-theme="light"],
+:root {
+  --primary-color: #4a78e0;
+  --secondary-color: #5a6473;
+  --background-color: #f4f6fa;
+  --text-color: #212529;
+  --surface-color: #ffffff;
+  --border-color: #e0e4ea;
+}
+
+/* Dark Theme */
+:root[data-theme="dark"] {
+  --primary-color: #5a8aff;
+  --secondary-color: #b0b5c1;
+  --background-color: #0f1419;
+  --text-color: #e8eaed;
+  --surface-color: #1a1f2e;
+  --border-color: #2c3142;
+}
+
+/* Aplicar tema ao body e elementos principais */
+body[data-theme="dark"] {
+  background-color: #0f1419;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] main {
+  background-color: #0f1419;
+}
+
+body[data-theme="dark"] .main-content {
+  background-color: #0f1419;
+}
+
+/* Sidebar em tema escuro */
+body[data-theme="dark"] .sidebar {
+  background: linear-gradient(135deg, #1a2a4e 0%, #0f1a2e 100%);
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.4);
+}
+
+body[data-theme="dark"] .sidebar-nav a {
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .sidebar-nav a:hover,
+body[data-theme="dark"] .sidebar-nav a.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+body[data-theme="dark"] .layout-wrapper {
+  background-color: #0f1419;
+}
+
+/* Cards em tema escuro */
+body[data-theme="dark"] .sectionCard .card {
+  background-color: #1a2a4e;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .sectionCard .card .cardTitle,
+body[data-theme="dark"] .sectionCard .card .cardValue {
+  color: #5a8aff;
+}
+
+/* About cards em tema escuro */
+body[data-theme="dark"] .about-card {
+  background-color: #1a1f2e;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .about-card h2 {
+  color: #5a8aff;
+}
+
+body[data-theme="dark"] .about-card p {
+  color: #b0b5c1;
+}
+
+/* Contact cards em tema escuro - Estilos agora gerenciados por variáveis CSS em contact.css */
+
+/* Footer em tema escuro */
+body[data-theme="dark"] footer {
+  background-color: #1a1f2e;
+  color: #b0b5c1;
+  border-top-color: #2c3142;
+}
+
+/* Botões de tema em tema escuro */
+body[data-theme="dark"] .theme-btn {
+  background: #252d3d;
+  color: #5a8aff;
+  border-color: #3c4555;
+}
+
+body[data-theme="dark"] .theme-btn:hover {
+  background: #3c4555;
+  box-shadow: 0 4px 12px rgba(90, 138, 255, 0.2);
+}
+
+body[data-theme="dark"] .theme-btn.active {
+  background: #5a8aff;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(90, 138, 255, 0.4);
+}
+
+/* Transações em tema escuro */
+body[data-theme="dark"] .transaction-list-container {
+  background-color: #252d3d;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .transaction-list-container h3 {
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .transaction-item {
+  background-color: #3c4555;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .container {
+  background-color: #0f1419;
+}
+
+body[data-theme="dark"] .page-header {
+  background-color: #0f1419;
+}
+
+body[data-theme="dark"] .summary-panel {
+  background-color: #0f1419;
+}
+
+body[data-theme="dark"] .transactions-panel {
+  background-color: #0f1419;
+}
+
+/* Modal em tema escuro */
+body[data-theme="dark"] .modal-content {
+  background-color: #1a1f2e;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .modal-content h3 {
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .modal-close {
+  color: #b0b5c1;
+}
+
+body[data-theme="dark"] .modal-close:hover {
+  color: #e8eaed;
+}
+
+/* Formulário em tema escuro */
+body[data-theme="dark"] form {
+  background-color: #1a1f2e;
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .form-control label {
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .form-control input,
+body[data-theme="dark"] .form-control select {
+  background-color: #252d3d;
+  color: #e8eaed;
+  border-color: #3c4555;
+}
+
+body[data-theme="dark"] .form-control input::placeholder {
+  color: #8a8f9b;
+}
+
+body[data-theme="dark"] .form-control input:focus,
+body[data-theme="dark"] .form-control select:focus {
+  border-color: #5a8aff;
+  box-shadow: 0 0 0 3px rgba(90, 138, 255, 0.15);
+}
+
+/* Pesquisa em tema escuro */
+body[data-theme="dark"] .search-input-wrapper {
+  background: #252d3d;
+  border-color: #3c4555;
+}
+
+body[data-theme="dark"] .search-input {
+  color: #e8eaed;
+}
+
+body[data-theme="dark"] .search-input::placeholder {
+  color: #8a8f9b;
+}
+
+body[data-theme="dark"] .search-filter {
+  background: #252d3d;
+  color: #e8eaed;
+  border-color: #3c4555;
+}
+
+body[data-theme="dark"] .search-filter:focus {
+  border-color: #5a8aff;
+  box-shadow: 0 0 0 3px rgba(90, 138, 255, 0.15);
+}
+
+/* Transição suave ao mudar tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
