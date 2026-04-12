@@ -1,10 +1,9 @@
 import TransactionItem from "./TransactionItem";
 
-// lista transações
-const TransactionList = ({ transactions, onDeleteTransaction, onEditTransaction }) => {
+// lista transações - simples, apenas mostra a lista
+const TransactionList = ({ transactions, categories = [], onDelete }) => {
   return (
     <div className="transaction-list-container">
-      <h3>Transações</h3>
       <div className="transaction-list">
         {transactions.length === 0 ? (
           <p className="no-transactions">Nenhuma transação encontrada</p>
@@ -13,8 +12,8 @@ const TransactionList = ({ transactions, onDeleteTransaction, onEditTransaction 
             <TransactionItem
               key={transaction.id}
               transaction={transaction}
-              onDelete={() => onDeleteTransaction(transaction.id)}
-              onEdit={() => onEditTransaction(transaction)}
+              categories={categories}
+              onDelete={onDelete}
             />
           ))
         )}

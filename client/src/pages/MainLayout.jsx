@@ -1,49 +1,44 @@
-import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import "../styles/MainLayout.css";
+import { Outlet, Link } from "react-router";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import "../styles/MainLayout.css"; 
 
-
-const MainLayout = () => {
-  // pegar localização para destacar link ativo
-  const location = useLocation();
-  const { theme, toggleTheme } = useTheme();
+export default function MainLayout() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div>
+    <div className={`app ${theme}`}>
       <div className="layout-wrapper">
         <aside className="sidebar">
           <div className="logo-container">
-            <NavLink to="/" className="logo-link">
-              <img className="nav-logo" src="./src/assets/expense.png" alt="logotipo do app" />
-            </NavLink>
+            <Link to="/" className="logo-link">
+              <img
+                className="nav-logo"
+                src="./src/assets/expense.png"
+                alt="logotipo do app"
+              />
+            </Link>
           </div>
+
           <nav className="sidebar-nav">
-            <NavLink to="/" className={location.pathname === "/" ? "active" : ""}>🏠 Home</NavLink>
-            <NavLink to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}>📊 DashBoard</NavLink>
-            <NavLink to="/about" className={location.pathname === "/about" ? "active" : ""}>ℹ️ About</NavLink>
-            <NavLink to="/contact" className={location.pathname === "/contact" ? "active" : ""}>📧 Contact</NavLink>
+            <Link to="/">Dashboard</Link>
+            <Link to="/adicionar">Nova Transação</Link>
+            <Link to="/historico">Histórico</Link>
+            <Link to="/definicoes">Definições</Link>
           </nav>
         </aside>
+        
         <div className="main-content">
-          <div className="theme-toggle">
-            <button 
-              className={`theme-btn ${theme === "light" ? "active" : ""}`}
-              onClick={() => toggleTheme("light")}
-              title="Tema Claro"
-            >
-              <i className="fas fa-sun"></i>
+          <header className="app-header">
+            <button className="theme-toggle-btn" onClick={toggleTheme} title="Alternar tema">
+              {theme === "dark" ? "☀️" : "🌙"}
             </button>
-            <button 
-              className={`theme-btn ${theme === "dark" ? "active" : ""}`}
-              onClick={() => toggleTheme("dark")}
-              title="Tema Escuro"
-            >
-              <i className="fas fa-moon"></i>
-            </button>
-          </div>
+          </header>
+          
           <main>
-            <Outlet />
+            <Outlet /> {/* ← as páginas renderizam aqui */}
           </main>
+          
           <footer>
             <p>Desenvolvido por Abel Pinto e Danilson Sanches.</p>
             <p>M6: Frontend: React &amp; Next.js</p>
@@ -53,6 +48,4 @@ const MainLayout = () => {
       </div>
     </div>
   );
-};
-
-export default MainLayout;
+}

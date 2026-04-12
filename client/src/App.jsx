@@ -1,30 +1,36 @@
-// importar componentes do react-router-dom
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "./context/ThemeProvider";
+// importar componentes do react-router
+import { BrowserRouter, Routes, Route } from 'react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ThemeProvider } from './context/ThemeContext'
+import { PreferencesProvider } from './context/PreferencesContext'
 
 // componente principal da aplicação
-import MainLayout from "./pages/MainLayout";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import DashBoard from "./pages/DashBoard";
+import MainLayout from './pages/MainLayout'
+import Dashboard from './pages/dashboard'
+import AddTransaction from './pages/AddTransaction'
+import History from './pages/History'
+import Settings from './pages/Settings'
 
-const App = () => {
+// Criar instância do QueryClient
+const queryClient = new QueryClient()
+
+export default function App() {
   return (
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="dashboard" element={<DashBoard />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-          </Route>
-        </Routes>
+        <PreferencesProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="adicionar" element={<AddTransaction />} />
+                <Route path="historico" element={<History />} />
+                <Route path="definicoes" element={<Settings />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </PreferencesProvider>
       </ThemeProvider>
-    </BrowserRouter>
-  );
-};
-
-// exportar componente principal
-export default App;
+    </QueryClientProvider>
+  )
+}

@@ -1,0 +1,326 @@
+/* Dashboard Styling */
+.dashboard {
+  width: 100%;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.dashboard-header p {
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.filters-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.filters-section h2 {
+  font-size: 1.5rem;
+  margin: 0 0 10px 0;
+  color: var(--text-color);
+}
+
+.filters-controls {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  padding: 20px;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.reset-btn:hover {
+  background-color: #3c6bc0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 120, 224, 0.2);
+}
+
+.categories-section {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.categories-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.transactions-section {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.transactions-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+/* Date Range Picker */
+.date-range-picker {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.date-range-picker label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.date-range-picker input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.date-range-picker input[type="date"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 120, 224, 0.1);
+}
+
+/* Category Filter */
+.category-filter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 15px 0;
+}
+
+.category-pill {
+  padding: 8px 16px;
+  border: 2px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.category-pill:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(74, 120, 224, 0.08);
+}
+
+.category-pill.active {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(74, 120, 224, 0.2);
+}
+
+/* Dark Theme */
+.app.dark .filters-section {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.app.dark .filters-controls {
+  background-color: #1a1f2e;
+  box-shadow: none;
+  border: 1px solid #2c3142;
+}
+
+.app.dark .reset-btn {
+  background-color: var(--primary-color);
+}
+
+.app.dark .reset-btn:hover {
+  background-color: #5a8aff;
+}
+
+.app.dark .date-range-picker label {
+  color: #e8eaed;
+}
+
+.app.dark .date-range-picker input[type="date"] {
+  background-color: #252d3d;
+  border-color: #3f4a5f;
+  color: #e8eaed;
+}
+
+.app.dark .category-pill {
+  background-color: #1a1f2e;
+  border-color: #3f4a5f;
+  color: #e8eaed;
+}
+
+.app.dark .category-pill:hover {
+  border-color: #5a8aff;
+  background-color: rgba(90, 138, 255, 0.1);
+}
+
+.app.dark .category-pill.active {
+  border-color: #5a8aff;
+  background-color: #5a8aff;
+  color: white;
+}
+
+/* Recent Transactions Cards */
+.recent-transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recent-transaction-card {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--surface-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.recent-transaction-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.recent-transaction-card.expense .card-left-border {
+  background-color: #e74c3c;
+}
+
+.recent-transaction-card.income .card-left-border {
+  background-color: #27ae60;
+}
+
+.card-left-border {
+  width: 4px;
+  flex-shrink: 0;
+}
+
+.card-content {
+  flex: 1;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.transaction-title {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.transaction-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.transaction-category {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.category-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.transaction-date {
+  margin: 0;
+  color: var(--secondary-color);
+  font-size: 0.8rem;
+}
+
+.card-details .transaction-amount {
+  font-weight: 700;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.card-details .transaction-amount.expense {
+  color: #e74c3c;
+}
+
+.card-details .transaction-amount.income {
+  color: #27ae60;
+}
+
+/* Dark Theme - Recent Transactions */
+.app.dark .recent-transactions {
+  background-color: #1a1f2e;
+  border-color: #2c3142;
+}
+
+.app.dark .recent-transaction-card {
+  background-color: #252d3d;
+  border-color: #3f4a5f;
+}
+
+.app.dark .transaction-title {
+  color: #e8eaed;
+}
+
+.app.dark .transaction-category,
+.app.dark .transaction-date {
+  color: #9ca3af;
+}

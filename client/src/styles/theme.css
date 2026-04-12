@@ -20,193 +20,266 @@
 }
 
 /* Aplicar tema ao body e elementos principais */
-body[data-theme="dark"] {
+.app.dark {
   background-color: #0f1419;
   color: #e8eaed;
+  --primary-color: #5a8aff;
+  --secondary-color: #b0b5c1;
+  --background-color: #0f1419;
+  --text-color: #e8eaed;
+  --surface-color: #1a1f2e;
+  --border-color: #2c3142;
 }
 
-body[data-theme="dark"] main {
+/* Transição suave ao mudar tema */
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.app.dark main {
   background-color: #0f1419;
 }
 
-body[data-theme="dark"] .main-content {
+.app.dark .main-content {
   background-color: #0f1419;
 }
 
 /* Sidebar em tema escuro */
-body[data-theme="dark"] .sidebar {
+.app.dark .sidebar {
   background: linear-gradient(135deg, #1a2a4e 0%, #0f1a2e 100%);
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.4);
 }
 
-body[data-theme="dark"] .sidebar-nav a {
+.app.dark .sidebar-nav a {
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .sidebar-nav a:hover,
-body[data-theme="dark"] .sidebar-nav a.active {
+.app.dark .sidebar-nav a:hover,
+.app.dark .sidebar-nav a.active {
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
-body[data-theme="dark"] .layout-wrapper {
+.app.dark .layout-wrapper {
   background-color: #0f1419;
 }
 
 /* Cards em tema escuro */
-body[data-theme="dark"] .sectionCard .card {
+.app.dark .sectionCard .card {
   background-color: #1a2a4e;
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .sectionCard .card .cardTitle,
-body[data-theme="dark"] .sectionCard .card .cardValue {
+.app.dark .sectionCard .card .cardTitle,
+.app.dark .sectionCard .card .cardValue {
   color: #5a8aff;
 }
 
 /* About cards em tema escuro */
-body[data-theme="dark"] .about-card {
+.app.dark .about-card {
   background-color: #1a1f2e;
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .about-card h2 {
+.app.dark .about-card h2 {
   color: #5a8aff;
 }
 
-body[data-theme="dark"] .about-card p {
+.app.dark .about-card p {
   color: #b0b5c1;
 }
 
 /* Contact cards em tema escuro - Estilos agora gerenciados por variáveis CSS em contact.css */
 
 /* Footer em tema escuro */
-body[data-theme="dark"] footer {
+.app.dark footer {
   background-color: #1a1f2e;
   color: #b0b5c1;
   border-top-color: #2c3142;
 }
 
 /* Botões de tema em tema escuro */
-body[data-theme="dark"] .theme-btn {
+.app.dark .theme-btn {
   background: #252d3d;
   color: #5a8aff;
   border-color: #3c4555;
 }
 
-body[data-theme="dark"] .theme-btn:hover {
+.app.dark .theme-btn:hover {
   background: #3c4555;
   box-shadow: 0 4px 12px rgba(90, 138, 255, 0.2);
 }
 
-body[data-theme="dark"] .theme-btn.active {
+/* Estilos principais da aplicação para temas */
+.app.light {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+.app.dark {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.app.dark .theme-btn.active {
   background: #5a8aff;
   color: #fff;
   box-shadow: 0 4px 12px rgba(90, 138, 255, 0.4);
 }
 
 /* Transações em tema escuro */
-body[data-theme="dark"] .transaction-list-container {
+.app.dark .transaction-list-container {
   background-color: #252d3d;
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .transaction-list-container h3 {
+.app.dark .transaction-list-container h3 {
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .transaction-item {
+.app.dark .transaction-item {
   background-color: #3c4555;
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .container {
+.app.dark .container {
   background-color: #0f1419;
 }
 
-body[data-theme="dark"] .page-header {
+/* Form Styles - Dark Theme */
+.app.dark .form-group label {
+  color: #ffffff;
+}
+
+.app.dark .form-group input,
+.app.dark .form-group select {
+  background-color: #252d3d;
+  border-color: #3f4a5f;
+  color: #e8eaed;
+}
+
+.app.dark .form-group select option {
+  background-color: #1a1f2e;
+  color: #e8eaed;
+  padding: 10px;
+}
+
+.app.dark .form-group select option:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.app.dark .form-group select option:checked {
+  background-color: var(--primary-color);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='white' d='M5.354 7.324l.866-.866 2.024 2.024 3.59-3.59.866.866-4.456 4.456z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  color: #ffffff;
+}
+
+.app.dark .form-group input::placeholder {
+  color: #8a8f9b;
+}
+
+/* Button Styles - Dark Theme */
+.app.dark .btn-cancel {
+  background-color: #3f4a5f;
+  color: #e8eaed;
+}
+
+.app.dark .btn-cancel:hover {
+  background-color: #4a5670;
+}
+
+/* Error Messages - Dark Theme */
+.app.dark .error-message {
+  background-color: #4a2c2c;
+  color: #f5a9a9;
+  border-left-color: #d9534f;
+}
+
+
+.app.dark .page-header {
   background-color: #0f1419;
 }
 
-body[data-theme="dark"] .summary-panel {
+.app.dark .summary-panel {
   background-color: #0f1419;
 }
 
-body[data-theme="dark"] .transactions-panel {
+.app.dark .transactions-panel {
   background-color: #0f1419;
 }
 
 /* Modal em tema escuro */
-body[data-theme="dark"] .modal-content {
+.app.dark .modal-content {
   background-color: #1a1f2e;
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .modal-content h3 {
+.app.dark .modal-content h3 {
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .modal-close {
+.app.dark .modal-close {
   color: #b0b5c1;
 }
 
-body[data-theme="dark"] .modal-close:hover {
+.app.dark .modal-close:hover {
   color: #e8eaed;
 }
 
 /* Formulário em tema escuro */
-body[data-theme="dark"] form {
+.app.dark form {
   background-color: #1a1f2e;
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .form-control label {
+.app.dark .form-control label {
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .form-control input,
-body[data-theme="dark"] .form-control select {
+.app.dark .form-control input,
+.app.dark .form-control select {
   background-color: #252d3d;
   color: #e8eaed;
   border-color: #3c4555;
 }
 
-body[data-theme="dark"] .form-control input::placeholder {
+.app.dark .form-control input::placeholder {
   color: #8a8f9b;
 }
 
-body[data-theme="dark"] .form-control input:focus,
-body[data-theme="dark"] .form-control select:focus {
+.app.dark .form-control input:focus,
+.app.dark .form-control select:focus {
   border-color: #5a8aff;
   box-shadow: 0 0 0 3px rgba(90, 138, 255, 0.15);
 }
 
 /* Pesquisa em tema escuro */
-body[data-theme="dark"] .search-input-wrapper {
+.app.dark .search-input-wrapper {
   background: #252d3d;
   border-color: #3c4555;
 }
 
-body[data-theme="dark"] .search-input {
+.app.dark .search-input {
   color: #e8eaed;
 }
 
-body[data-theme="dark"] .search-input::placeholder {
+.app.dark .search-input::placeholder {
   color: #8a8f9b;
 }
 
-body[data-theme="dark"] .search-filter {
+.app.dark .search-filter {
   background: #252d3d;
   color: #e8eaed;
   border-color: #3c4555;
 }
 
-body[data-theme="dark"] .search-filter:focus {
+.app.dark .search-filter:focus {
   border-color: #5a8aff;
   box-shadow: 0 0 0 3px rgba(90, 138, 255, 0.15);
-}
-
-/* Transição suave ao mudar tema */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

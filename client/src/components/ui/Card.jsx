@@ -6,7 +6,7 @@ const Card = (props) => {
       <div className="cardIcon">{props.icon}</div>
       <div className="cardContent">
         <h2 className="cardTitle">{props.title}</h2>
-        <div className="cardValue">{props.value.toFixed(2)} €</div>
+        <div className="cardValue">{props.value}</div>
       </div>
     </div>
   );

@@ -8,6 +8,51 @@
       "type": "expense",
       "date": "2026-04-08",
       "createdAt": "2026-04-08T22:14:52.352Z"
+    },
+    {
+      "id": "3d15fc0a-4e3b-45dc-9384-1a5527b7daa1",
+      "description": "Compra de Bitcoin",
+      "amount": -50,
+      "category": "outro",
+      "type": "expense",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T04:32:48.665Z"
+    },
+    {
+      "id": "01745bdb-80a1-4b8f-bda6-6153a7ead628",
+      "description": "bb",
+      "amount": 50,
+      "category": "viagens",
+      "type": "income",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T04:57:10.412Z"
+    },
+    {
+      "id": "928c120b-2575-4f77-9cb7-f228b0cac9cf",
+      "description": "dsdsd",
+      "amount": 150,
+      "category": "saude",
+      "type": "income",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T04:59:33.349Z"
+    },
+    {
+      "id": "1885de53-5333-4024-864e-6bdabbaa7e8d",
+      "description": "Compra de Bitcoin",
+      "amount": -35,
+      "category": "compras",
+      "type": "expense",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T05:01:41.132Z"
+    },
+    {
+      "id": "30fa0aae-5b85-472c-8d2d-0e5fc2a1e1e1",
+      "description": "cxcxcxcxc",
+      "amount": 50,
+      "category": "alimentacao",
+      "type": "income",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T05:06:24.678Z"
     }
   ]
 }

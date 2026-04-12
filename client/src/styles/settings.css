@@ -1,0 +1,147 @@
+/* Settings Page Styles */
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 200px);
+  padding: 20px 20px 40px;
+}
+
+.settings-card {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-header {
+  margin-bottom: 8px;
+}
+
+.settings-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.settings-label {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.settings-input,
+.settings-button {
+  padding: 12px 14px;
+  border: 2px solid #e0e4ea;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  background-color: #f8f9fb;
+  color: var(--text-color);
+  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.settings-input option {
+  background-color: #ffffff;
+  color: #212529;
+  padding: 10px;
+}
+
+.settings-input option:checked {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.settings-input::placeholder {
+  color: #a0a6b0;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: var(--surface-color);
+  box-shadow: 0 0 0 4px rgba(74, 120, 224, 0.1);
+}
+
+.app.dark .settings-input,
+.app.dark .settings-button {
+  background-color: #252d3d;
+  border-color: #3f4a5f;
+  color: #e8eaed;
+}
+
+.app.dark .settings-input::placeholder {
+  color: #8a8f9b;
+}
+
+.app.dark .settings-input:focus {
+  border-color: var(--primary-color);
+  background-color: #252d3d;
+  box-shadow: 0 0 0 4px rgba(90, 138, 255, 0.2);
+}
+
+.app.dark .settings-input option {
+  background-color: #1a1f2e;
+  color: #e8eaed;
+  padding: 10px;
+}
+
+.app.dark .settings-input option:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.app.dark .settings-input option:checked {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.settings-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px 20px;
+  min-width: 120px;
+  transition: all 0.3s ease;
+}
+
+.settings-button:hover {
+  background-color: #3c6bc0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 120, 224, 0.3);
+}
+
+.settings-button:active {
+  transform: translateY(0);
+}
+
+.app.dark .settings-button {
+  background-color: var(--primary-color);
+}
+
+.app.dark .settings-button:hover {
+  background-color: #5a8aff;
+}
