@@ -1,13 +1,13 @@
 {
   "transactions": [
     {
-      "id": "2432bc9a-d688-492a-ab9d-5015f55b7952",
+      "id": "e65bcb5a-ee50-4e56-a935-03306245a1f1",
       "description": "salario",
-      "amount": 100,
-      "category": "outro",
+      "amount": 1000,
+      "category": "educacao",
       "type": "income",
       "date": "2026-04-13",
-      "createdAt": "2026-04-13T09:06:02.728Z"
+      "createdAt": "2026-04-13T10:31:55.889Z"
     }
   ]
 }

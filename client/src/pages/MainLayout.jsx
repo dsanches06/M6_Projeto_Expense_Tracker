@@ -21,7 +21,7 @@ export default function MainLayout() {
           </div>
 
           <nav className="sidebar-nav">
-            <Link to="/">Painel</Link>
+            <Link to="/">Painel Dashboard</Link>
             <Link to="/adicionar">Nova Transação</Link>
             <Link to="/historico">Histórico</Link>
             <Link to="/definicoes">Definições</Link>

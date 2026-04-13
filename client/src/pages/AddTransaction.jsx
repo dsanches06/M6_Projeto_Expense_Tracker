@@ -1,7 +1,7 @@
-import { useRef, useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { createTransaction, getCategories } from '../services/api';
+import { useRef, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { createTransaction, getCategories } from "../services/api";
 
 const AddTransaction = () => {
   const navigate = useNavigate();
@@ -9,16 +9,16 @@ const AddTransaction = () => {
   const descriptionInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
-    description: '',
-    amount: '',
-    type: 'income',
-    category_id: '',
-    date: new Date().toISOString().split('T')[0],
+    description: "",
+    amount: "",
+    type: "income",
+    category_id: "",
+    date: new Date().toISOString().split("T")[0],
   });
 
   // Buscar categorias
   const { data: categories = [] } = useQuery({
-    queryKey: ['categories'],
+    queryKey: ["categories"],
     queryFn: getCategories,
   });
 
@@ -26,13 +26,16 @@ const AddTransaction = () => {
   const mutation = useMutation({
     mutationFn: (data) => {
       // Converter type em amount com sinal
-      const amount = data.type === 'income' 
-        ? parseFloat(data.amount)
-        : -parseFloat(data.amount);
+      const amount =
+        data.type === "income"
+          ? parseFloat(data.amount)
+          : -parseFloat(data.amount);
 
       // Encontrar a categoria pelo id para pegar o slug
-      const selectedCategory = categories.find(cat => String(cat.id) === String(data.category_id));
-      const categorySlug = selectedCategory?.slug || 'outro';
+      const selectedCategory = categories.find(
+        (cat) => String(cat.id) === String(data.category_id),
+      );
+      const categorySlug = selectedCategory?.slug || "outro";
 
       return createTransaction({
         description: data.description,
@@ -43,10 +46,10 @@ const AddTransaction = () => {
     },
     onSuccess: () => {
       // Invalidar cache de transações
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
       // Redirecionar para dashboard
-      navigate('/');
-    },
+      navigate("/");
+    }
   });
 
   // Focar no input de descrição quando a página monta
@@ -149,7 +152,7 @@ const AddTransaction = () => {
             className="btn-submit"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? 'A guardar...' : 'Guardar Transação'}
+            {mutation.isPending ? "A guardar..." : "Guardar Transação"}
           </button>
         </div>
 

@@ -1,24 +1,33 @@
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getTransactions, deleteTransaction, getCategories } from '../services/api';
-import TransactionListCard from '../components/ui/TransactionListCard';
-import '../styles/history.css';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getTransactions,
+  deleteTransaction,
+  getCategories,
+} from "../services/api";
+import TransactionListCard from "../components/ui/TransactionListCard";
+import ModalConfirm from "../components/ui/ModalConfirm";
+import "../styles/history.css";
 
 const History = () => {
   const queryClient = useQueryClient();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
   const [deleteId, setDeleteId] = useState(null);
 
   // Buscar transações
-  const { data: transactions = [], isLoading, error } = useQuery({
-    queryKey: ['transactions'],
+  const {
+    data: transactions = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["transactions"],
     queryFn: getTransactions,
   });
 
   // Buscar categorias
   const { data: categories = [] } = useQuery({
-    queryKey: ['categories'],
+    queryKey: ["categories"],
     queryFn: getCategories,
   });
 
@@ -26,7 +35,7 @@ const History = () => {
   const deleteMutation = useMutation({
     mutationFn: deleteTransaction,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
   });
 
@@ -37,16 +46,16 @@ const History = () => {
       .includes(searchTerm.toLowerCase());
 
     const matchesType =
-      filterType === 'all' ||
-      (filterType === 'income' && tx.amount > 0) ||
-      (filterType === 'expense' && tx.amount < 0);
+      filterType === "all" ||
+      (filterType === "income" && tx.amount > 0) ||
+      (filterType === "expense" && tx.amount < 0);
 
     return matchesSearch && matchesType;
   });
 
   // Ordenar por data decrescente
   const sortedTransactions = [...filteredTransactions].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.date) - new Date(a.date),
   );
 
   const handleDeleteTransaction = (id) => {
@@ -87,20 +96,20 @@ const History = () => {
 
           <div className="filter-buttons">
             <button
-              className={`filter-btn ${filterType === 'all' ? 'active' : ''}`}
-              onClick={() => setFilterType('all')}
+              className={`filter-btn ${filterType === "all" ? "active" : ""}`}
+              onClick={() => setFilterType("all")}
             >
               Todas
             </button>
             <button
-              className={`filter-btn ${filterType === 'income' ? 'active' : ''}`}
-              onClick={() => setFilterType('income')}
+              className={`filter-btn ${filterType === "income" ? "active" : ""}`}
+              onClick={() => setFilterType("income")}
             >
               Receitas
             </button>
             <button
-              className={`filter-btn ${filterType === 'expense' ? 'active' : ''}`}
-              onClick={() => setFilterType('expense')}
+              className={`filter-btn ${filterType === "expense" ? "active" : ""}`}
+              onClick={() => setFilterType("expense")}
             >
               Despesas
             </button>
@@ -115,42 +124,63 @@ const History = () => {
                 <tr>
                   <th>Data</th>
                   <th>Descrição</th>
-                <th>Categoria</th>
-                <th>Valor</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedTransactions.map((tx) => {
-                const category = categories.find(cat => cat.slug === tx.category);
-                const categoryName = category?.name || tx.category || '-';
-                const categoryIcon = category?.iconUrl;
-                
-                return (
-                  <tr key={tx.id} className={tx.amount > 0 ? 'income-row' : 'expense-row'}>
-                    <td>{new Date(tx.date).toLocaleDateString('pt-PT')}</td>
-                    <td>{tx.description}</td>
-                    <td>
-                      {categoryIcon && <img src={categoryIcon} alt={categoryName} style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} />}
-                      {categoryName}
-                    </td>
-                    <td className={tx.amount > 0 ? 'amount-positive' : 'amount-negative'}>
-                      {tx.amount > 0 ? '+' : ''} {Math.abs(tx.amount).toFixed(2)}€
-                    </td>
-                    <td>
-                      <button
-                        className="btn-delete"
-                        onClick={() => handleDeleteTransaction(tx.id)}
-                        disabled={deleteMutation.isPending}
+                  <th>Categoria</th>
+                  <th>Valor</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedTransactions.map((tx) => {
+                  const category = categories.find(
+                    (cat) => cat.slug === tx.category,
+                  );
+                  const categoryName = category?.name || tx.category || "-";
+                  const categoryIcon = category?.iconUrl;
+
+                  return (
+                    <tr
+                      key={tx.id}
+                      className={tx.amount > 0 ? "income-row" : "expense-row"}
+                    >
+                      <td>{new Date(tx.date).toLocaleDateString("pt-PT")}</td>
+                      <td>{tx.description}</td>
+                      <td>
+                        {categoryIcon && (
+                          <img
+                            src={categoryIcon}
+                            alt={categoryName}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              marginRight: "8px",
+                              verticalAlign: "middle",
+                            }}
+                          />
+                        )}
+                        {categoryName}
+                      </td>
+                      <td
+                        className={
+                          tx.amount > 0 ? "amount-positive" : "amount-negative"
+                        }
                       >
-                        🗑️ Apagar
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        {tx.amount > 0 ? "+" : ""}{" "}
+                        {Math.abs(tx.amount).toFixed(2)}€
+                      </td>
+                      <td>
+                        <button
+                          className="btn-delete"
+                          onClick={() => handleDeleteTransaction(tx.id)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          🗑️ Apagar
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </TransactionListCard>
         ) : (
           <div className="empty-state">
@@ -160,16 +190,10 @@ const History = () => {
       </div>
 
       {deleteId !== null && (
-        <div className="modal-overlay" onClick={cancelDelete}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Confirmar eliminação</h3>
-            <p>Tens a certeza que queres apagar esta transação?</p>
-            <div className="modal-actions">
-              <button className="btn-cancel" onClick={cancelDelete}>Cancelar</button>
-              <button className="btn-confirm-delete" onClick={confirmDelete}>Apagar</button>
-            </div>
-          </div>
-        </div>
+        <ModalConfirm
+          cancel={cancelDelete}
+          confirm={confirmDelete}
+        />
       )}
     </div>
   );
