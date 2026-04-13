@@ -1,18 +1,19 @@
 // importar componentes do react-router
-import { BrowserRouter, Routes, Route } from 'react-router'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider } from './context/ThemeContext'
-import { PreferencesProvider } from './context/PreferencesContext'
+import { BrowserRouter, Routes, Route } from "react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "./context/ThemeContext";
+import { PreferencesProvider } from "./context/PreferencesContext";
 
 // componente principal da aplicação
-import MainLayout from './pages/MainLayout'
-import Dashboard from './pages/dashboard'
-import AddTransaction from './pages/AddTransaction'
-import History from './pages/History'
-import Settings from './pages/Settings'
+import MainLayout from "./pages/MainLayout";
+import Dashboard from "./pages/dashboard";
+import AddTransaction from "./pages/AddTransaction";
+import History from "./pages/History";
+import Settings from "./pages/Settings";
 
 // Criar instância do QueryClient
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
           </BrowserRouter>
         </PreferencesProvider>
       </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  )
+  );
 }
