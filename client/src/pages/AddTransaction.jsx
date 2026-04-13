@@ -73,7 +73,7 @@ const AddTransaction = () => {
     <div className="add-transaction-container">
       <form onSubmit={handleSubmit} className="add-transaction-form">
         <div className="form-group">
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description">Descrição</label>
           <input
             ref={descriptionInputRef}
             type="text"
@@ -81,13 +81,13 @@ const AddTransaction = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            placeholder="Ex: Supermarket purchase"
+            placeholder="Ex: Compras no supermercado"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="amount">Amount</label>
+          <label htmlFor="amount">Valor</label>
           <input
             type="number"
             id="amount"
@@ -101,20 +101,20 @@ const AddTransaction = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="type">Tipo</label>
           <select
             id="type"
             name="type"
             value={formData.type}
             onChange={handleChange}
           >
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
+            <option value="income">Receita</option>
+            <option value="expense">Despesa</option>
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="category_id">Category</label>
+          <label htmlFor="category_id">Categoria</label>
           <select
             id="category_id"
             name="category_id"
@@ -122,7 +122,7 @@ const AddTransaction = () => {
             onChange={handleChange}
             required
           >
-            <option value="">Select a category</option>
+            <option value="">Selecionar categoria</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.icon} {cat.name}
@@ -132,7 +132,7 @@ const AddTransaction = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="date">Date</label>
+          <label htmlFor="date">Data</label>
           <input
             type="date"
             id="date"
@@ -149,7 +149,7 @@ const AddTransaction = () => {
             className="btn-submit"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? 'Saving...' : 'Save Transaction'}
+            {mutation.isPending ? 'A guardar...' : 'Guardar Transação'}
           </button>
         </div>
 

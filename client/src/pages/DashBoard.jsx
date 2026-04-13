@@ -80,8 +80,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>Hello, {userName}! 👋</h1>
-        <p>Welcome to your expense management dashboard</p>
+        <h1>Olá, {userName}! 👋</h1>
+        <p>Bem-vindo ao teu painel de gestão de despesas</p>
       </div>
 
       {/* Summary Cards */}
@@ -89,7 +89,7 @@ const Dashboard = () => {
 
       {/* Filtros */}
       <section className="filters-section">
-        <h2>Filter by Date</h2>
+        <h2>Filtrar por Data</h2>
         <div className="filters-controls">
           <DateRangePicker
             startDate={filters.startDate}
@@ -97,7 +97,7 @@ const Dashboard = () => {
             onDateChange={handleDateChange}
           />
           <button onClick={handleResetFilters} className="reset-btn">
-            Clear Filters
+            Limpar Filtros
           </button>
         </div>
       </section>
@@ -105,7 +105,7 @@ const Dashboard = () => {
       {/* Category Filter */}
       {categories.length > 0 && (
         <section className="categories-section">
-          <h2>Filter by Category</h2>
+          <h2>Filtrar por Categoria</h2>
           <CategoryFilter
             categories={categories}
             activeCategory={filters.activeCategory}
@@ -116,7 +116,7 @@ const Dashboard = () => {
 
       {/* Transactions List */}
       <section className="transactions-section">
-        <h2>Recent Transactions</h2>
+        <h2>Transações Recentes</h2>
         <RecentTransactions
           transactions={filteredTransactions.slice(0, 10)}
           categories={categories}

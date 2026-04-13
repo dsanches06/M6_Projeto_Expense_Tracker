@@ -8,6 +8,7 @@ const History = () => {
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const [deleteId, setDeleteId] = useState(null);
 
   // Buscar transações
   const { data: transactions = [], isLoading, error } = useQuery({
@@ -49,9 +50,16 @@ const History = () => {
   );
 
   const handleDeleteTransaction = (id) => {
-    if (confirm('Are you sure you want to delete this transaction?')) {
-      deleteMutation.mutate(id);
-    }
+    setDeleteId(id);
+  };
+
+  const confirmDelete = () => {
+    deleteMutation.mutate(deleteId);
+    setDeleteId(null);
+  };
+
+  const cancelDelete = () => {
+    setDeleteId(null);
   };
 
   if (isLoading) {
@@ -65,13 +73,13 @@ const History = () => {
   return (
     <div className="history-container">
       <div className="history-card">
-        <h1 className="history-title">Transaction History</h1>
+        <h1 className="history-title">Histórico de Transações</h1>
 
-        {/* Filters */}
+        {/* Filtros */}
         <section className="history-filters">
           <input
             type="text"
-            placeholder="Search by description..."
+            placeholder="Pesquisar por descrição..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
@@ -82,19 +90,19 @@ const History = () => {
               className={`filter-btn ${filterType === 'all' ? 'active' : ''}`}
               onClick={() => setFilterType('all')}
             >
-              All
+              Todas
             </button>
             <button
               className={`filter-btn ${filterType === 'income' ? 'active' : ''}`}
               onClick={() => setFilterType('income')}
             >
-              Income
+              Receitas
             </button>
             <button
               className={`filter-btn ${filterType === 'expense' ? 'active' : ''}`}
               onClick={() => setFilterType('expense')}
             >
-              Expenses
+              Despesas
             </button>
           </div>
         </section>
@@ -105,11 +113,11 @@ const History = () => {
             <table className="transactions-table">
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Description</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Actions</th>
+                  <th>Data</th>
+                  <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Valor</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -120,7 +128,7 @@ const History = () => {
                 
                 return (
                   <tr key={tx.id} className={tx.amount > 0 ? 'income-row' : 'expense-row'}>
-                    <td>{new Date(tx.date).toLocaleDateString('en-GB')}</td>
+                    <td>{new Date(tx.date).toLocaleDateString('pt-PT')}</td>
                     <td>{tx.description}</td>
                     <td>
                       {categoryIcon && <img src={categoryIcon} alt={categoryName} style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} />}
@@ -135,7 +143,7 @@ const History = () => {
                         onClick={() => handleDeleteTransaction(tx.id)}
                         disabled={deleteMutation.isPending}
                       >
-                        🗑️ Delete
+                        🗑️ Apagar
                       </button>
                     </td>
                   </tr>
@@ -146,10 +154,23 @@ const History = () => {
           </TransactionListCard>
         ) : (
           <div className="empty-state">
-            <p>No transactions found</p>
+            <p>Nenhuma transação encontrada</p>
           </div>
         )}
       </div>
+
+      {deleteId !== null && (
+        <div className="modal-overlay" onClick={cancelDelete}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Confirmar eliminação</h3>
+            <p>Tens a certeza que queres apagar esta transação?</p>
+            <div className="modal-actions">
+              <button className="btn-cancel" onClick={cancelDelete}>Cancelar</button>
+              <button className="btn-confirm-delete" onClick={confirmDelete}>Apagar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
