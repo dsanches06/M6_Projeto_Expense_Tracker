@@ -135,14 +135,6 @@ Para adicionar autenticação no futuro:
 2. Salve tokens no localStorage
 3. Adicione headers de autorização nas requisições
 
-## 📱 Responsivo
-
-A aplicação é otimizada para:
-- Desktop (1920px+)
-- Laptop (1200px - 1920px)
-- Tablet (768px - 1200px)
-- Mobile (320px - 768px)
-
 ## 🐛 Debugging
 
 ### Ferramentas Recomendadas
@@ -151,48 +143,6 @@ A aplicação é otimizada para:
 - **Redux DevTools** (para debugging de state)
 - **Network tab** do navegador
 
-### Comandos Úteis
-
-```bash
-# Lint do código (ESLint)
-npm run lint
-
-# Verificar erros
-npm run check
-
-# Limpar node_modules e reinstalar
-rm -rf node_modules package-lock.json
-npm install
-```
-
-## 🚀 Deploy
-
-### Vercel (Recomendado)
-
-1. Push o código para GitHub
-2. Conecte o repositório ao Vercel
-3. Vercel detectará Vite automaticamente
-4. Configure variáveis de ambiente para API
-
-### Netlify
-
-```bash
-npm run build
-# Faça upload da pasta dist/
-```
-
-### Docker
-
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "run", "preview"]
-```
 
 ## 📚 Endpoints da API
 

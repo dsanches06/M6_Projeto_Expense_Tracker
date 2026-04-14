@@ -1,1 +1,0 @@
-import{r as e,t}from"./jsx-runtime-DAs1UGHr.js";import{n,t as r}from"./TrophySpin-CMPk4RcL.js";var i=e(n(),1),a=t(),o=()=>{let[e,t]=(0,i.useState)(!0);return(0,i.useEffect)(()=>{let e=setTimeout(()=>t(!1),1e3);return()=>clearTimeout(e)},[]),e?(0,a.jsx)(r,{}):(0,a.jsx)(a.Fragment,{children:(0,a.jsx)(`h1`,{children:`Estatisticas`})})};export{o as default};

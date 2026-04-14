@@ -1,0 +1,182 @@
+.statistics-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.statistics-container h1 {
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.charts-grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.dark .chart-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.chart-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.dark .chart-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.chart-card h2 {
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.chart-card.full-width {
+  grid-column: 1 / -1;
+  margin-bottom: 2rem;
+  min-height: 400px;
+}
+
+/* Doughnut Chart com Total no Centro */
+.doughnut-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.doughnut-center {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.chart-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.total-amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.total-label {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+/* Responsivo para tablets */
+@media (max-width: 1024px) {
+  .charts-grid-two {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .charts-grid-two {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .statistics-container {
+    padding: 1rem;
+  }
+
+  .statistics-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-card {
+    padding: 1rem;
+  }
+
+  .chart-card h2 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .doughnut-wrapper {
+    min-height: 250px;
+  }
+
+  .total-amount {
+    font-size: 1.5rem;
+  }
+}
+
+/* Responsivo para mobile */
+@media (max-width: 480px) {
+  .statistics-container {
+    padding: 0.75rem;
+  }
+
+  .statistics-container h1 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .chart-card {
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .chart-card h2 {
+    font-size: 0.95rem;
+  }
+
+  .charts-grid-two {
+    gap: 1rem;
+  }
+
+  .doughnut-wrapper {
+    min-height: 200px;
+  }
+
+  .total-amount {
+    font-size: 1.3rem;
+  }
+}
+
+/* Animação de load */
+.chart-card {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

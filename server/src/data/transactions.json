@@ -8,6 +8,177 @@
       "type": "income",
       "date": "2026-04-13",
       "createdAt": "2026-04-13T10:31:55.889Z"
+    },
+    {
+      "id": "a1b2c3d4-e5f6-47g8-h9i0-j1k2l3m4n5o6",
+      "description": "Almoço no restaurante",
+      "amount": -25.50,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T12:15:30.000Z"
+    },
+    {
+      "id": "b2c3d4e5-f6g7-48h9-i0j1-k2l3m4n5o6p7",
+      "description": "Consulta médica",
+      "amount": -80.00,
+      "category": "saude",
+      "type": "expense",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T09:45:20.000Z"
+    },
+    {
+      "id": "c3d4e5f6-g7h8-49i0-j1k2-l3m4n5o6p7q8",
+      "description": "Uber para trabalho",
+      "amount": -15.30,
+      "category": "transporte",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T08:20:10.000Z"
+    },
+    {
+      "id": "d4e5f6g7-h8i9-50j1-k2l3-m4n5o6p7q8r9",
+      "description": "Cinema com amigos",
+      "amount": -35.00,
+      "category": "entretenimento",
+      "type": "expense",
+      "date": "2026-04-13",
+      "createdAt": "2026-04-13T19:30:45.000Z"
+    },
+    {
+      "id": "e5f6g7h8-i9j0-51k2-l3m4-n5o6p7q8r9s1",
+      "description": "Supermercado",
+      "amount": -120.75,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-11",
+      "createdAt": "2026-04-11T16:50:00.000Z"
+    },
+    {
+      "id": "f6g7h8i9-j0k1-52l3-m4n5-o6p7q8r9s1t2",
+      "description": "Mensalidade academia",
+      "amount": -60.00,
+      "category": "saude",
+      "type": "expense",
+      "date": "2026-04-10",
+      "createdAt": "2026-04-10T14:25:15.000Z"
+    },
+    {
+      "id": "g7h8i9j0-k1l2-53m4-n5o6-p7q8r9s1t2u3",
+      "description": "Passagem de ônibus",
+      "amount": -8.50,
+      "category": "transporte",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T07:30:00.000Z"
+    },
+    {
+      "id": "h8i9j0k1-l2m3-54n5-o6p7-q8r9s1t2u3v4",
+      "description": "Livro de programação",
+      "amount": -45.90,
+      "category": "educacao",
+      "type": "expense",
+      "date": "2026-04-09",
+      "createdAt": "2026-04-09T11:10:05.000Z"
+    },
+    {
+      "id": "i9j0k1l2-m3n4-55o6-p7q8-r9s1t2u3v4w5",
+      "description": "Bônus do trabalho",
+      "amount": 300.00,
+      "category": "outros",
+      "type": "income",
+      "date": "2026-04-08",
+      "createdAt": "2026-04-08T17:40:25.000Z"
+    },
+    {
+      "id": "j0k1l2m3-n4o5-56p7-q8r9-s1t2u3v4w5x6",
+      "description": "Presente para amigo",
+      "amount": -50.00,
+      "category": "entretenimento",
+      "type": "expense",
+      "date": "2026-04-07",
+      "createdAt": "2026-04-07T13:20:40.000Z"
+    },
+    {
+      "id": "k1l2m3n4-o5p6-57q8-r9s1-t2u3v4w5x6y7",
+      "description": "Medicamentos",
+      "amount": -35.60,
+      "category": "saude",
+      "type": "expense",
+      "date": "2026-04-06",
+      "createdAt": "2026-04-06T10:15:30.000Z"
+    },
+    {
+      "id": "l2m3n4o5-p6q7-58r9-s1t2-u3v4w5x6y7z8",
+      "description": "Café da manhã",
+      "amount": -12.50,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T07:45:20.000Z"
+    },
+    {
+      "id": "m3n4o5p6-q7r8-59s1-t2u3-v4w5x6y7z8a9",
+      "description": "Freelance - Design gráfico",
+      "amount": 250.00,
+      "category": "outros",
+      "type": "income",
+      "date": "2026-04-05",
+      "createdAt": "2026-04-05T15:55:10.000Z"
+    },
+    {
+      "id": "n4o5p6q7-r8s9-60t1-u2v3-w4x5y6z7a8b9",
+      "description": "Venda de produtos usados",
+      "amount": 180.00,
+      "category": "vendas",
+      "type": "income",
+      "date": "2026-04-03",
+      "createdAt": "2026-04-03T14:20:00.000Z"
+    },
+    {
+      "id": "o5p6q7r8-s9t0-61u2-v3w4-x5y6z7a8b9c0",
+      "description": "Rendimento de investimento",
+      "amount": 75.50,
+      "category": "investimentos",
+      "type": "income",
+      "date": "2026-04-02",
+      "createdAt": "2026-04-02T10:30:45.000Z"
+    },
+    {
+      "id": "p6q7r8s9-t0u1-62v3-w4x5-y6z7a8b9c0d1",
+      "description": "Reembolso da empresa",
+      "amount": 120.00,
+      "category": "reembolso",
+      "type": "income",
+      "date": "2026-04-01",
+      "createdAt": "2026-04-01T09:15:20.000Z"
+    },
+    {
+      "id": "q7r8s9t0-u1v2-63w4-x5y6-z7a8b9c0d1e2",
+      "description": "Consultoria técnica",
+      "amount": 400.00,
+      "category": "freelance",
+      "type": "income",
+      "date": "2026-03-31",
+      "createdAt": "2026-03-31T16:45:30.000Z"
+    },
+    {
+      "id": "r8s9t0u1-v2w3-64x5-y6z7-a8b9c0d1e2f3",
+      "description": "Cashback do cartão",
+      "amount": 45.30,
+      "category": "cashback",
+      "type": "income",
+      "date": "2026-03-30",
+      "createdAt": "2026-03-30T11:25:15.000Z"
+    },
+    {
+      "id": "s9t0u1v2-w3x4-65y6-z7a8-b9c0d1e2f3g4",
+      "description": "Aluguel de equipamento",
+      "amount": 200.00,
+      "category": "aluguel",
+      "type": "income",
+      "date": "2026-03-29",
+      "createdAt": "2026-03-29T13:40:50.000Z"
     }
   ]
 }
