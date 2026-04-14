@@ -1,77 +1,150 @@
+const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
 
-// Use /tmp for Vercel, or local path for development
-const DB_PATH = process.env.VERCEL 
-  ? "/tmp/transactions.json"
-  : path.join(__dirname, "transactions.json");
+// PostgreSQL connection pool
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
 
-// Initialize the database file if it doesn't exist
-function initDB() {
+// Initialize the database table
+async function initDB() {
   try {
-    if (!fs.existsSync(DB_PATH)) {
-      fs.writeFileSync(DB_PATH, JSON.stringify({ transactions: [] }, null, 2));
-      console.log("📁 Base de dados criada em", DB_PATH);
-    }
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS transactions (
+        id TEXT PRIMARY KEY,
+        description TEXT NOT NULL,
+        amount DECIMAL(10, 2) NOT NULL,
+        category TEXT NOT NULL,
+        type TEXT NOT NULL,
+        date TEXT NOT NULL,
+        "createdAt" TEXT NOT NULL
+      );
+    `);
+    console.log("✅ Tabela 'transactions' inicializada");
+
+    // Migrate data from JSON if table is empty
+    await migrateData();
   } catch (error) {
     console.error("Erro ao inicializar DB:", error);
     throw error;
   }
 }
 
-function readDB() {
+// Migrate data from transactions.json to PostgreSQL (one-time operation)
+async function migrateData() {
   try {
-    const raw = fs.readFileSync(DB_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch (error) {
-    console.error("Erro ao ler DB:", error);
-    return { transactions: [] };
-  }
-}
+    const result = await pool.query("SELECT COUNT(*) FROM transactions;");
+    const count = parseInt(result.rows[0].count, 10);
 
-function writeDB(data) {
-  try {
-    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+    if (count === 0) {
+      const jsonPath = path.join(__dirname, "transactions.json");
+      if (fs.existsSync(jsonPath)) {
+        const data = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
+        
+        for (const transaction of data.transactions || []) {
+          await pool.query(
+            `INSERT INTO transactions 
+             (id, description, amount, category, type, date, "createdAt") 
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             ON CONFLICT (id) DO NOTHING;`,
+            [
+              transaction.id,
+              transaction.description,
+              transaction.amount,
+              transaction.category,
+              transaction.type,
+              transaction.date,
+              transaction.createdAt,
+            ]
+          );
+        }
+        console.log(`📦 ${data.transactions.length} transações migradas para PostgreSQL`);
+      }
+    }
   } catch (error) {
-    console.error("Erro ao escrever DB:", error);
-    throw error;
+    console.error("Erro ao migrar dados:", error);
   }
 }
 
 // --- Transactions ---
 
-function getAllTransactions() {
-  return readDB().transactions;
+async function getAllTransactions() {
+  try {
+    const result = await pool.query("SELECT * FROM transactions ORDER BY date DESC;");
+    return result.rows;
+  } catch (error) {
+    console.error("Erro ao buscar transações:", error);
+    return [];
+  }
 }
 
-function getTransactionById(id) {
-  const { transactions } = readDB();
-  return transactions.find((t) => t.id === id) || null;
+async function getTransactionById(id) {
+  try {
+    const result = await pool.query("SELECT * FROM transactions WHERE id = $1;", [id]);
+    return result.rows[0] || null;
+  } catch (error) {
+    console.error("Erro ao buscar transação:", error);
+    return null;
+  }
 }
 
-function createTransaction(transaction) {
-  const db = readDB();
-  db.transactions.push(transaction);
-  writeDB(db);
-  return transaction;
+async function createTransaction(transaction) {
+  try {
+    const result = await pool.query(
+      `INSERT INTO transactions 
+       (id, description, amount, category, type, date, "createdAt") 
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING *;`,
+      [
+        transaction.id,
+        transaction.description,
+        transaction.amount,
+        transaction.category,
+        transaction.type,
+        transaction.date,
+        transaction.createdAt,
+      ]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Erro ao criar transação:", error);
+    throw error;
+  }
 }
 
-function updateTransaction(id, updates) {
-  const db = readDB();
-  const index = db.transactions.findIndex((t) => t.id === id);
-  if (index === -1) return null;
-  db.transactions[index] = { ...db.transactions[index], ...updates };
-  writeDB(db);
-  return db.transactions[index];
+async function updateTransaction(id, updates) {
+  try {
+    const fields = [];
+    const values = [];
+    let paramCount = 1;
+
+    for (const [key, value] of Object.entries(updates)) {
+      fields.push(`"${key}" = $${paramCount}`);
+      values.push(value);
+      paramCount++;
+    }
+
+    values.push(id);
+
+    const query = `UPDATE transactions SET ${fields.join(", ")} WHERE id = $${paramCount} RETURNING *;`;
+    const result = await pool.query(query, values);
+    return result.rows[0] || null;
+  } catch (error) {
+    console.error("Erro ao atualizar transação:", error);
+    throw error;
+  }
 }
 
-function deleteTransaction(id) {
-  const db = readDB();
-  const index = db.transactions.findIndex((t) => t.id === id);
-  if (index === -1) return false;
-  db.transactions.splice(index, 1);
-  writeDB(db);
-  return true;
+async function deleteTransaction(id) {
+  try {
+    const result = await pool.query("DELETE FROM transactions WHERE id = $1;", [id]);
+    return result.rowCount > 0;
+  } catch (error) {
+    console.error("Erro ao deletar transação:", error);
+    throw error;
+  }
 }
 
 module.exports = {
@@ -81,4 +154,5 @@ module.exports = {
   createTransaction,
   updateTransaction,
   deleteTransaction,
+  pool, // Export pool for direct queries if needed
 };

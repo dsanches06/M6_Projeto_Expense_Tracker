@@ -6,11 +6,16 @@ const transactionsRouter = require("./routes/transactions");
 const categoriesRouter = require("./routes/categories");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // ─── Middleware ───────────────────────────────
 app.use(cors()); // Permite pedidos do React (localhost:3000, etc.)
 app.use(express.json()); // Interpreta JSON no body dos pedidos
+
+// ─── Initialize Database ──────────────────────
+initDB().catch((err) => {
+  console.error("Erro ao inicializar BD:", err);
+  process.exit(1);
+});
 
 // ─── Rotas ───────────────────────────────────
 app.use("/api/transactions", transactionsRouter);
@@ -50,11 +55,16 @@ app.use((req, res) => {
   res.status(404).json({ error: `Rota '${req.path}' não encontrada` });
 });
 
-// ─── Iniciar servidor ─────────────────────────
-initDB();
-app.listen(PORT, () => {
-  console.log(`\nServidor a correr em http://localhost:${PORT}`);
-  console.log(`Documentação:       http://localhost:${PORT}/`);
-  console.log(`Transações:         http://localhost:${PORT}/api/transactions`);
-  console.log(`Categorias:         http://localhost:${PORT}/api/categories\n`);
-});
+// ─── Export for Vercel serverless function ────
+module.exports = app;
+
+// ─── Start server for local development ──────
+if (require.main === module) {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`\nServidor a correr em http://localhost:${PORT}`);
+    console.log(`Documentação:       http://localhost:${PORT}/`);
+    console.log(`Transações:         http://localhost:${PORT}/api/transactions`);
+    console.log(`Categorias:         http://localhost:${PORT}/api/categories\n`);
+  });
+}
