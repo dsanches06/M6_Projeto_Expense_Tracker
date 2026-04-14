@@ -84,6 +84,14 @@ async function migrateData() {
   }
 }
 
+// Helper to convert transaction amounts from string to number
+function normalizeTransaction(transaction) {
+  return {
+    ...transaction,
+    amount: parseFloat(transaction.amount) || 0,
+  };
+}
+
 // --- Transactions ---
 
 async function getAllTransactions() {
@@ -92,7 +100,7 @@ async function getAllTransactions() {
   
   try {
     const result = await pool.query("SELECT * FROM transactions ORDER BY date DESC;");
-    return result.rows;
+    return result.rows.map(normalizeTransaction);
   } catch (error) {
     console.error("Erro ao buscar transações:", error);
     return [];
@@ -102,7 +110,7 @@ async function getAllTransactions() {
 async function getTransactionById(id) {
   try {
     const result = await pool.query("SELECT * FROM transactions WHERE id = $1;", [id]);
-    return result.rows[0] || null;
+    return result.rows[0] ? normalizeTransaction(result.rows[0]) : null;
   } catch (error) {
     console.error("Erro ao buscar transação:", error);
     return null;
@@ -126,7 +134,7 @@ async function createTransaction(transaction) {
         transaction.createdAt,
       ]
     );
-    return result.rows[0];
+    return normalizeTransaction(result.rows[0]);
   } catch (error) {
     console.error("Erro ao criar transação:", error);
     throw error;
@@ -149,7 +157,7 @@ async function updateTransaction(id, updates) {
 
     const query = `UPDATE transactions SET ${fields.join(", ")} WHERE id = $${paramCount} RETURNING *;`;
     const result = await pool.query(query, values);
-    return result.rows[0] || null;
+    return result.rows[0] ? normalizeTransaction(result.rows[0]) : null;
   } catch (error) {
     console.error("Erro ao atualizar transação:", error);
     throw error;
