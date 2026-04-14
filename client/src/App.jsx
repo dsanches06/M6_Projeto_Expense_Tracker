@@ -9,11 +9,12 @@ import Loader from "./components/ui/TrophySpin";
 
 // componente principal da aplicação
 import MainLayout from "./pages/MainLayout";
-import History from "./pages/History";
 import Settings from "./pages/Settings";
+import AddTransaction from "./pages/AddTransaction";
 
-const AddTransaction = lazy(() => import("./pages/AddTransaction"));
+//optimização de componentes
 const Dashboard = lazy(() => import("./pages/DashBoard"));
+const History = lazy(() => import("./pages/History"));
 const Statistics = lazy(() => import("./pages/Statistics"));
 
 // Criar instância do QueryClient
@@ -36,15 +37,16 @@ const App = () => {
                   }
                 />
 
+                <Route path="adicionar" element={<AddTransaction />} />
+
                 <Route
-                  path="adicionar"
+                  path="historico"
                   element={
-                    <Suspense>
-                      <AddTransaction />
+                    <Suspense fallback={<Loader />}>
+                      <History />
                     </Suspense>
                   }
                 />
-                <Route path="historico" element={<History />} />
 
                 <Route
                   path="estatisticas"
@@ -56,6 +58,7 @@ const App = () => {
                 />
 
                 <Route path="definicoes" element={<Settings />} />
+                <Route path="*" element={<p>NOT FOUND</p>} />
               </Route>
             </Routes>
           </BrowserRouter>

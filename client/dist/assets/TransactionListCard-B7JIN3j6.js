@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DAs1UGHr.js";var t=e(),n=({children:e,className:n=``})=>(0,t.jsx)(`div`,{className:`transaction-list-card ${n}`,children:e});export{n as t};

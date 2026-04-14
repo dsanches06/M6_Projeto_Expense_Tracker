@@ -198,7 +198,7 @@ const History = () => {
       </div>
 
       {deleteId !== null && (
-        <Suspense fallback={<p>A carregar modal....</p>}>
+        <Suspense fallback={<Loader />}>
           <ModalConfirm cancel={cancelDelete} confirm={confirmDelete} />
         </Suspense>
       )}

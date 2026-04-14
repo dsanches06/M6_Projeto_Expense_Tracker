@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-DAs1UGHr.js";var t=e(),n=()=>(0,t.jsx)(t.Fragment,{children:(0,t.jsx)(`h1`,{children:`Estatisticas`})});export{n as default};
