@@ -1,5 +1,5 @@
 // src/api.js - VERSÃO COMPLETA PARA A V2
-const API_URL = 'http://localhost:3001'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 // Buscar todas as transações (GET)
 // A filtragem por datas é feita no frontend com .filter()
