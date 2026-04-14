@@ -2,7 +2,6 @@ const express = require("express");
 const categories = require("../data/categories");
 
 const router = express.Router();
-const API_URL = process.env.API_URL || "http://localhost:3001";
 
 // ─────────────────────────────────────────────
 // GET /api/categories
@@ -16,7 +15,7 @@ router.get("/", (req, res) => {
     label,
     labelEn,
     color,
-    iconUrl: `${API_URL}/api/categories/${slug}/icon`,
+    iconUrl: `/api/categories/${slug}/icon`,
   }));
   res.json(list);
 });
@@ -31,7 +30,7 @@ router.get("/:slug", (req, res) => {
     return res.status(404).json({ error: "Categoria não encontrada" });
   }
   const { icon, ...rest } = category;
-  res.json({ ...rest, iconUrl: `${API_URL}/api/categories/${category.slug}/icon` });
+  res.json({ ...rest, iconUrl: `/api/categories/${category.slug}/icon` });
 });
 
 // ─────────────────────────────────────────────
