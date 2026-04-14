@@ -1,0 +1,4 @@
+# Don't ignore these directories
+!server
+!server/src
+!server/src/**

@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd client && npm run build",
-  "installCommand": "npm install && cd client && npm install",
+  "buildCommand": "npm install && cd server && npm install && cd ../client && npm run build",
+  "installCommand": "npm install && cd server && npm install && cd ../client && npm install",
   "outputDirectory": "client/dist",
   "rewrites": [
     {
@@ -9,6 +9,7 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "VITE_API_URL": "/api"
   }
 }
