@@ -2,15 +2,30 @@ const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
 
+// Check if DATABASE_URL is available
+if (!process.env.DATABASE_URL) {
+  console.error("❌ DATABASE_URL não está configurada!");
+  console.error("Configura em Vercel: Settings → Environment Variables → DATABASE_URL");
+}
+
 // PostgreSQL connection pool
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
+// Flag to track if DB has been initialized
+let dbInitialized = false;
+
 // Initialize the database table
 async function initDB() {
+  if (dbInitialized) return;
+  
   try {
+    // Test connection first
+    await pool.query("SELECT NOW();");
+    console.log("✅ Conectado ao PostgreSQL");
+    
     await pool.query(`
       CREATE TABLE IF NOT EXISTS transactions (
         id TEXT PRIMARY KEY,
@@ -26,9 +41,10 @@ async function initDB() {
 
     // Migrate data from JSON if table is empty
     await migrateData();
+    dbInitialized = true;
   } catch (error) {
-    console.error("Erro ao inicializar DB:", error);
-    throw error;
+    console.error("❌ Erro ao inicializar DB:", error.message);
+    // Don't throw - let the app start anyway, but errors will occur on first request
   }
 }
 
@@ -64,13 +80,16 @@ async function migrateData() {
       }
     }
   } catch (error) {
-    console.error("Erro ao migrar dados:", error);
+    console.error("⚠️  Erro ao migrar dados:", error.message);
   }
 }
 
 // --- Transactions ---
 
 async function getAllTransactions() {
+  // Ensure DB is initialized
+  await initDB();
+  
   try {
     const result = await pool.query("SELECT * FROM transactions ORDER BY date DESC;");
     return result.rows;
