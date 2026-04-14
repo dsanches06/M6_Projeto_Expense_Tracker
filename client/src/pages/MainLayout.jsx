@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import expenseLogo from "../assets/expense.png";
 import "../styles/MainLayout.css";
 
 const MainLayout = () => {
@@ -14,7 +15,7 @@ const MainLayout = () => {
             <Link to="/" className="logo-link">
               <img
                 className="nav-logo"
-                src="./src/assets/expense.png"
+                src={expenseLogo}
                 alt="logotipo do app"
               />
             </Link>
