@@ -1,11 +1,12 @@
-import { useContext } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
-import { PreferencesContext } from '../context/PreferencesContext'
-import '../styles/settings.css'
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import { PreferencesContext } from "../context/PreferencesContext";
+import "../styles/settings.css";
 
-export default function Settings() {
-  const { theme, toggleTheme } = useContext(ThemeContext)
-  const { currency, setCurrency, userName, setUserName } = useContext(PreferencesContext)
+const Settings = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { currency, setCurrency, userName, setUserName } =
+    useContext(PreferencesContext);
 
   return (
     <div className="settings-container">
@@ -15,12 +16,14 @@ export default function Settings() {
             <h3>Tema</h3>
           </div>
           <button className="settings-button" onClick={toggleTheme}>
-            {theme === 'light' ? '🌙 Mudar para Dark' : '☀️ Mudar para Light'}
+            {theme === "light" ? "🌙 Mudar para Dark" : "☀️ Mudar para Light"}
           </button>
         </section>
 
         <section className="settings-section">
-          <label htmlFor="currency" className="settings-label">Moeda</label>
+          <label htmlFor="currency" className="settings-label">
+            Moeda
+          </label>
           <select
             id="currency"
             className="settings-input"
@@ -34,7 +37,9 @@ export default function Settings() {
         </section>
 
         <section className="settings-section">
-          <label htmlFor="userName" className="settings-label">O teu nome</label>
+          <label htmlFor="userName" className="settings-label">
+            O teu nome
+          </label>
           <input
             id="userName"
             type="text"
@@ -46,5 +51,7 @@ export default function Settings() {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Settings;

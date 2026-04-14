@@ -49,7 +49,7 @@ const AddTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       // Redirecionar para dashboard
       navigate("/");
-    }
+    },
   });
 
   // Focar no input de descrição quando a página monta

@@ -11,19 +11,11 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     <div className="date-range-picker">
       <label>
         Data Início:
-        <input
-          type="date"
-          value={startDate}
-          onChange={handleStartChange}
-        />
+        <input type="date" value={startDate} onChange={handleStartChange} />
       </label>
       <label>
         Data Fim:
-        <input
-          type="date"
-          value={endDate}
-          onChange={handleEndChange}
-        />
+        <input type="date" value={endDate} onChange={handleEndChange} />
       </label>
     </div>
   );

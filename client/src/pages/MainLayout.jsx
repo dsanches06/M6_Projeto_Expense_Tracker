@@ -1,9 +1,9 @@
-import { Outlet, Link }                                                                                                         from "react-router";
+import { Outlet, Link } from "react-router";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
-import "../styles/MainLayout.css"; 
+import "../styles/MainLayout.css";
 
-export default function MainLayout() {
+const MainLayout = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
@@ -24,21 +24,26 @@ export default function MainLayout() {
             <Link to="/">Painel Dashboard</Link>
             <Link to="/adicionar">Nova Transação</Link>
             <Link to="/historico">Histórico</Link>
+            <Link to="/estatisticas">Estatisticas</Link>
             <Link to="/definicoes">Definições</Link>
           </nav>
         </aside>
-        
+
         <div className="main-content">
           <header className="app-header">
-            <button className="theme-toggle-btn" onClick={toggleTheme} title="Alternar tema">
+            <button
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              title="Alternar tema"
+            >
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
           </header>
-          
+
           <main>
             <Outlet /> {/* ← as páginas renderizam aqui */}
           </main>
-          
+
           <footer>
             <p>Desenvolvido por Abel Pinto e Danilson Sanches.</p>
             <p>M6: Frontend: React &amp; Next.js</p>
@@ -48,4 +53,6 @@ export default function MainLayout() {
       </div>
     </div>
   );
-}
+};
+
+export default MainLayout;

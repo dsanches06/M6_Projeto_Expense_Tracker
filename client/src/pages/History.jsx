@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getTransactions,
@@ -6,8 +6,9 @@ import {
   getCategories,
 } from "../services/api";
 import TransactionListCard from "../components/ui/TransactionListCard";
-import ModalConfirm from "../components/ui/ModalConfirm";
 import "../styles/history.css";
+
+const ModalConfirm = lazy(() => import("../components/ui/ModalConfirm"));
 
 const History = () => {
   const queryClient = useQueryClient();
@@ -190,10 +191,9 @@ const History = () => {
       </div>
 
       {deleteId !== null && (
-        <ModalConfirm
-          cancel={cancelDelete}
-          confirm={confirmDelete}
-        />
+        <Suspense fallback={<p>A carregar modal....</p>}>
+          <ModalConfirm cancel={cancelDelete} confirm={confirmDelete} />
+        </Suspense>
       )}
     </div>
   );

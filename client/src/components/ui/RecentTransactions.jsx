@@ -67,4 +67,4 @@ const RecentTransactions = ({ transactions = [], categories = [] }) => {
   )
 }
 
-export default RecentTransactions
+export default RecentTransactions;
