@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getTransactions,
@@ -6,6 +6,7 @@ import {
   getCategories,
 } from "../services/api";
 import TransactionListCard from "../components/ui/TransactionListCard";
+import Loader from "../components/ui/TrophySpin";
 import "../styles/history.css";
 
 const ModalConfirm = lazy(() => import("../components/ui/ModalConfirm"));
@@ -15,6 +16,12 @@ const History = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [deleteId, setDeleteId] = useState(null);
+  const [minLoading, setMinLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMinLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Buscar transações
   const {
@@ -72,8 +79,8 @@ const History = () => {
     setDeleteId(null);
   };
 
-  if (isLoading) {
-    return <div className="loading">A carregar histórico...</div>;
+  if (isLoading || minLoading) {
+    return <Loader />;
   }
 
   if (error) {

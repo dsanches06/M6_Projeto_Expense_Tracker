@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "./context/ThemeContext";
 import { PreferencesProvider } from "./context/PreferencesContext";
+import Loader from "./components/ui/TrophySpin";
 
 // componente principal da aplicação
 import MainLayout from "./pages/MainLayout";
@@ -29,7 +30,7 @@ const App = () => {
                 <Route
                   index
                   element={
-                    <Suspense fallback={<p>A carregar</p>}>
+                    <Suspense fallback={<Loader />}>
                       <Dashboard />
                     </Suspense>
                   }
@@ -48,7 +49,7 @@ const App = () => {
                 <Route
                   path="estatisticas"
                   element={
-                    <Suspense fallback={<p>A carregar</p>}>
+                    <Suspense fallback={<Loader />}>
                       <Statistics />
                     </Suspense>
                   }

@@ -1,4 +1,4 @@
-import { useReducer, useContext } from "react";
+import { useReducer, useContext, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTransactions, getCategories } from "../services/api";
 import {
@@ -10,11 +10,19 @@ import DateRangePicker from "../components/DateRangePicker";
 import CategoryFilter from "../components/CategoryFilter";
 import Summary from "../components/Summary";
 import RecentTransactions from "../components/ui/RecentTransactions";
+import Loader from "../components/ui/TrophySpin";
 import "../styles/dashboard.css";
 
 const Dashboard = () => {
   const [filters, dispatch] = useReducer(filtersReducer, initialFiltersState);
   const { userName } = useContext(PreferencesContext);
+
+  const [minLoading, setMinLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMinLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Buscar transações - uma única vez, depois fica em cache
   const { data: allTransactions = [], isLoading: txLoading } = useQuery({
@@ -73,8 +81,8 @@ const Dashboard = () => {
     dispatch({ type: "RESET" });
   };
 
-  if (txLoading) {
-    return <div className="loading">A carregar dados...</div>;
+  if (txLoading || minLoading) {
+    return <Loader />;
   }
 
   return (
