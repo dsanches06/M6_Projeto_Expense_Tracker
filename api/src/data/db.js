@@ -1,23 +1,41 @@
 const fs = require("fs");
 const path = require("path");
 
-const DB_PATH = path.join(__dirname, "transactions.json");
+// Use /tmp for Vercel, or local path for development
+const DB_PATH = process.env.VERCEL 
+  ? "/tmp/transactions.json"
+  : path.join(__dirname, "transactions.json");
 
 // Initialize the database file if it doesn't exist
 function initDB() {
-  if (!fs.existsSync(DB_PATH)) {
-    fs.writeFileSync(DB_PATH, JSON.stringify({ transactions: [] }, null, 2));
-    console.log("📁 Base de dados criada em data/transactions.json");
+  try {
+    if (!fs.existsSync(DB_PATH)) {
+      fs.writeFileSync(DB_PATH, JSON.stringify({ transactions: [] }, null, 2));
+      console.log("📁 Base de dados criada em", DB_PATH);
+    }
+  } catch (error) {
+    console.error("Erro ao inicializar DB:", error);
+    throw error;
   }
 }
 
 function readDB() {
-  const raw = fs.readFileSync(DB_PATH, "utf-8");
-  return JSON.parse(raw);
+  try {
+    const raw = fs.readFileSync(DB_PATH, "utf-8");
+    return JSON.parse(raw);
+  } catch (error) {
+    console.error("Erro ao ler DB:", error);
+    return { transactions: [] };
+  }
 }
 
 function writeDB(data) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+  try {
+    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+  } catch (error) {
+    console.error("Erro ao escrever DB:", error);
+    throw error;
+  }
 }
 
 // --- Transactions ---
