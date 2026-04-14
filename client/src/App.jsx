@@ -13,7 +13,7 @@ import History from "./pages/History";
 import Settings from "./pages/Settings";
 
 const AddTransaction = lazy(() => import("./pages/AddTransaction"));
-const Dashboard = lazy(() => import("./pages/dashboard"));
+const Dashboard = lazy(() => import("./pages/DashBoard"));
 const Statistics = lazy(() => import("./pages/Statistics"));
 
 // Criar instância do QueryClient
