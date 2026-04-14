@@ -20,11 +20,11 @@
   padding: 20px;
   position: relative;
   overflow: hidden;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  border: 1px solid #e8eaed;
+  border: 1px solid #dde1e7;
 }
 
 .sectionCard .card:hover {
