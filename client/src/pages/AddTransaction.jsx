@@ -37,18 +37,29 @@ const AddTransaction = () => {
       );
       const categorySlug = selectedCategory?.slug || "outro";
 
-      return createTransaction({
+      const payload = {
         description: data.description,
         amount,
         category: categorySlug,
         date: data.date,
+      };
+
+      console.log("📤 Enviando transação:", payload);
+      return createTransaction(payload).then((res) => {
+        console.log("✅ Resposta do servidor:", res);
+        return res;
       });
     },
     onSuccess: () => {
-      // Invalidar cache de transações
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      // Redirecionar para dashboard
-      navigate("/");
+      console.log("🔄 Invalidando cache...");
+      // Invalida o cache - da próxima vez que o Dashboard abrir,
+      // o useQuery vai buscar dados frescos à API
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      console.log("✅ Cache invalidado, redirecionando...");
+      navigate('/');
+    },
+    onError: (error) => {
+      console.error("❌ Erro ao criar transação:", error);
     },
   });
 
@@ -67,9 +78,28 @@ const AddTransaction = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.description.trim() && formData.amount) {
-      mutation.mutate(formData);
+    
+    // Validação adicional
+    if (!formData.description.trim()) {
+      console.error("❌ Descrição vazia");
+      alert("Por favor, preenche a descrição");
+      return;
     }
+    
+    if (!formData.amount) {
+      console.error("❌ Valor vazio");
+      alert("Por favor, preenche o valor");
+      return;
+    }
+    
+    if (!formData.category_id) {
+      console.error("❌ Categoria não selecionada");
+      alert("Por favor, seleciona uma categoria");
+      return;
+    }
+
+    console.log("📝 Submetendo formulário:", formData);
+    mutation.mutate(formData);
   };
 
   return (

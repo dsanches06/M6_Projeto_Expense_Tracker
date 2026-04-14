@@ -17,6 +17,8 @@ const History = () => {
   const [filterType, setFilterType] = useState("all");
   const [deleteId, setDeleteId] = useState(null);
   const [minLoading, setMinLoading] = useState(true);
+  const [sortBy, setSortBy] = useState("date");
+  const [sortDirection, setSortDirection] = useState("desc");
 
   useEffect(() => {
     const timer = setTimeout(() => setMinLoading(false), 1000);
@@ -61,10 +63,53 @@ const History = () => {
     return matchesSearch && matchesType;
   });
 
-  // Ordenar por data decrescente
-  const sortedTransactions = [...filteredTransactions].sort(
-    (a, b) => new Date(b.date) - new Date(a.date),
-  );
+  // Ordenar transações baseado em sortBy e sortDirection
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    let aValue, bValue;
+
+    switch (sortBy) {
+      case "date":
+        aValue = new Date(a.date);
+        bValue = new Date(b.date);
+        break;
+      case "description":
+        aValue = a.description.toLowerCase();
+        bValue = b.description.toLowerCase();
+        break;
+      case "category":
+        const catA = categories.find((cat) => cat.slug === a.category);
+        const catB = categories.find((cat) => cat.slug === b.category);
+        aValue = (catA?.name || a.category || "-").toLowerCase();
+        bValue = (catB?.name || b.category || "-").toLowerCase();
+        break;
+      case "amount":
+        aValue = Math.abs(a.amount);
+        bValue = Math.abs(b.amount);
+        break;
+      default:
+        return 0;
+    }
+
+    if (sortDirection === "asc") {
+      return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+    } else {
+      return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+    }
+  });
+
+  const handleSort = (column) => {
+    if (sortBy === column) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortDirection("asc");
+    }
+  };
+
+  const getSortIndicator = (column) => {
+    if (sortBy !== column) return "";
+    return sortDirection === "asc" ? " ↑" : " ↓";
+  };
 
   const handleDeleteTransaction = (id) => {
     setDeleteId(id);
@@ -130,11 +175,31 @@ const History = () => {
             <table className="transactions-table">
               <thead>
                 <tr>
-                  <th>Data</th>
-                  <th>Descrição</th>
-                  <th>Categoria</th>
-                  <th>Valor</th>
-                  <th>Ações</th>
+                  <th 
+                    onClick={() => handleSort("date")}
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    Data{getSortIndicator("date")}
+                  </th>
+                  <th 
+                    onClick={() => handleSort("description")}
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    Descrição{getSortIndicator("description")}
+                  </th>
+                  <th 
+                    onClick={() => handleSort("category")}
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    Categoria{getSortIndicator("category")}
+                  </th>
+                  <th 
+                    onClick={() => handleSort("amount")}
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    Valor{getSortIndicator("amount")}
+                  </th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>

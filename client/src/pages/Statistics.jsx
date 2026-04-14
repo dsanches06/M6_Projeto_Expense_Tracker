@@ -211,20 +211,55 @@ const Statistics = () => {
     return balanceByDate;
   };
 
+  // Evolução de despesas acumuladas ao longo do tempo
+  const getExpenseEvolution = () => {
+    const sortedTransactions = [...allTransactions].sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    let totalExpense = 0;
+    const expenseByDate = {};
+
+    sortedTransactions.forEach((tx) => {
+      if (tx.amount < 0) {
+        totalExpense += Math.abs(tx.amount);
+      }
+      const date = tx.date;
+      expenseByDate[date] = totalExpense;
+    });
+
+    return expenseByDate;
+  };
+
   const balanceEvolution = getBalanceEvolution();
+  const expenseEvolution = getExpenseEvolution();
+  const allDates = [...new Set([...Object.keys(balanceEvolution), ...Object.keys(expenseEvolution)])].sort();
+  
   const lineChartData = {
-    labels: Object.keys(balanceEvolution),
+    labels: allDates,
     datasets: [
       {
         label: "Evolução do Saldo",
-        data: Object.values(balanceEvolution),
+        data: allDates.map(date => balanceEvolution[date] || null),
         borderColor: colors.primary,
         backgroundColor: `${colors.primary}20`,
         borderWidth: 2,
-        fill: true,
+        fill: false,
         tension: 0.4,
         pointBackgroundColor: colors.primary,
         pointBorderColor: colors.primary,
+        pointRadius: 4,
+      },
+      {
+        label: "Evolução de Despesas",
+        data: allDates.map(date => expenseEvolution[date] || null),
+        borderColor: "#ff6b6b",
+        backgroundColor: "#ff6b6b20",
+        borderWidth: 2,
+        fill: false,
+        tension: 0.4,
+        pointBackgroundColor: "#ff6b6b",
+        pointBorderColor: "#ff6b6b",
         pointRadius: 4,
       },
     ],
@@ -235,8 +270,8 @@ const Statistics = () => {
     responsive: true,
     maintainAspectRatio: true,
     animation: {
-      duration: 1000,
-      easing: "easeInOutQuart",
+      duration: 800,
+      easing: "easeInOutQuad",
     },
     plugins: {
       legend: {

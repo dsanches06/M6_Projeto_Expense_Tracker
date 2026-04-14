@@ -22,7 +22,7 @@ const RecentTransactions = ({ transactions = [], categories = [] }) => {
     <TransactionListCard className="recent-transactions-card">
       <div className="recent-transactions">
         {[...transactions]
-          .sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt))
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .map(transaction => {
             const isIncome = transaction.amount > 0
             const category = getCategory(transaction.category)

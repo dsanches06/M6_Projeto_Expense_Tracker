@@ -12,7 +12,7 @@
     {
       "id": "a1b2c3d4-e5f6-47g8-h9i0-j1k2l3m4n5o6",
       "description": "Almoço no restaurante",
-      "amount": -25.50,
+      "amount": -25.5,
       "category": "alimentacao",
       "type": "expense",
       "date": "2026-04-14",
@@ -21,7 +21,7 @@
     {
       "id": "b2c3d4e5-f6g7-48h9-i0j1-k2l3m4n5o6p7",
       "description": "Consulta médica",
-      "amount": -80.00,
+      "amount": -80,
       "category": "saude",
       "type": "expense",
       "date": "2026-04-12",
@@ -30,7 +30,7 @@
     {
       "id": "c3d4e5f6-g7h8-49i0-j1k2-l3m4n5o6p7q8",
       "description": "Uber para trabalho",
-      "amount": -15.30,
+      "amount": -15.3,
       "category": "transporte",
       "type": "expense",
       "date": "2026-04-14",
@@ -39,7 +39,7 @@
     {
       "id": "d4e5f6g7-h8i9-50j1-k2l3-m4n5o6p7q8r9",
       "description": "Cinema com amigos",
-      "amount": -35.00,
+      "amount": -35,
       "category": "entretenimento",
       "type": "expense",
       "date": "2026-04-13",
@@ -57,7 +57,7 @@
     {
       "id": "f6g7h8i9-j0k1-52l3-m4n5-o6p7q8r9s1t2",
       "description": "Mensalidade academia",
-      "amount": -60.00,
+      "amount": -60,
       "category": "saude",
       "type": "expense",
       "date": "2026-04-10",
@@ -66,7 +66,7 @@
     {
       "id": "g7h8i9j0-k1l2-53m4-n5o6-p7q8r9s1t2u3",
       "description": "Passagem de ônibus",
-      "amount": -8.50,
+      "amount": -8.5,
       "category": "transporte",
       "type": "expense",
       "date": "2026-04-14",
@@ -75,7 +75,7 @@
     {
       "id": "h8i9j0k1-l2m3-54n5-o6p7-q8r9s1t2u3v4",
       "description": "Livro de programação",
-      "amount": -45.90,
+      "amount": -45.9,
       "category": "educacao",
       "type": "expense",
       "date": "2026-04-09",
@@ -84,7 +84,7 @@
     {
       "id": "i9j0k1l2-m3n4-55o6-p7q8-r9s1t2u3v4w5",
       "description": "Bônus do trabalho",
-      "amount": 300.00,
+      "amount": 300,
       "category": "outros",
       "type": "income",
       "date": "2026-04-08",
@@ -93,7 +93,7 @@
     {
       "id": "j0k1l2m3-n4o5-56p7-q8r9-s1t2u3v4w5x6",
       "description": "Presente para amigo",
-      "amount": -50.00,
+      "amount": -50,
       "category": "entretenimento",
       "type": "expense",
       "date": "2026-04-07",
@@ -102,7 +102,7 @@
     {
       "id": "k1l2m3n4-o5p6-57q8-r9s1-t2u3v4w5x6y7",
       "description": "Medicamentos",
-      "amount": -35.60,
+      "amount": -35.6,
       "category": "saude",
       "type": "expense",
       "date": "2026-04-06",
@@ -111,7 +111,7 @@
     {
       "id": "l2m3n4o5-p6q7-58r9-s1t2-u3v4w5x6y7z8",
       "description": "Café da manhã",
-      "amount": -12.50,
+      "amount": -12.5,
       "category": "alimentacao",
       "type": "expense",
       "date": "2026-04-14",
@@ -120,7 +120,7 @@
     {
       "id": "m3n4o5p6-q7r8-59s1-t2u3-v4w5x6y7z8a9",
       "description": "Freelance - Design gráfico",
-      "amount": 250.00,
+      "amount": 250,
       "category": "outros",
       "type": "income",
       "date": "2026-04-05",
@@ -129,7 +129,7 @@
     {
       "id": "n4o5p6q7-r8s9-60t1-u2v3-w4x5y6z7a8b9",
       "description": "Venda de produtos usados",
-      "amount": 180.00,
+      "amount": 180,
       "category": "vendas",
       "type": "income",
       "date": "2026-04-03",
@@ -138,7 +138,7 @@
     {
       "id": "o5p6q7r8-s9t0-61u2-v3w4-x5y6z7a8b9c0",
       "description": "Rendimento de investimento",
-      "amount": 75.50,
+      "amount": 75.5,
       "category": "investimentos",
       "type": "income",
       "date": "2026-04-02",
@@ -147,7 +147,7 @@
     {
       "id": "p6q7r8s9-t0u1-62v3-w4x5-y6z7a8b9c0d1",
       "description": "Reembolso da empresa",
-      "amount": 120.00,
+      "amount": 120,
       "category": "reembolso",
       "type": "income",
       "date": "2026-04-01",
@@ -156,7 +156,7 @@
     {
       "id": "q7r8s9t0-u1v2-63w4-x5y6-z7a8b9c0d1e2",
       "description": "Consultoria técnica",
-      "amount": 400.00,
+      "amount": 400,
       "category": "freelance",
       "type": "income",
       "date": "2026-03-31",
@@ -165,7 +165,7 @@
     {
       "id": "r8s9t0u1-v2w3-64x5-y6z7-a8b9c0d1e2f3",
       "description": "Cashback do cartão",
-      "amount": 45.30,
+      "amount": 45.3,
       "category": "cashback",
       "type": "income",
       "date": "2026-03-30",
@@ -174,11 +174,281 @@
     {
       "id": "s9t0u1v2-w3x4-65y6-z7a8-b9c0d1e2f3g4",
       "description": "Aluguel de equipamento",
-      "amount": 200.00,
+      "amount": 200,
       "category": "aluguel",
       "type": "income",
       "date": "2026-03-29",
       "createdAt": "2026-03-29T13:40:50.000Z"
+    },
+    {
+      "id": "t0u1v2w3-x4y5-66z7-a8b9-c0d1e2f3g4h5",
+      "description": "Pizza para jantar",
+      "amount": -38.9,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T19:20:00.000Z"
+    },
+    {
+      "id": "u1v2w3x4-y5z6-67a8-b9c0-d1e2f3g4h5i6",
+      "description": "Gasolina para carro",
+      "amount": -72.5,
+      "category": "transporte",
+      "type": "expense",
+      "date": "2026-04-13",
+      "createdAt": "2026-04-13T08:10:25.000Z"
+    },
+    {
+      "id": "v2w3x4y5-z6a7-68b9-c0d1-e2f3g4h5i6j7",
+      "description": "Aula de piano online",
+      "amount": -55,
+      "category": "educacao",
+      "type": "expense",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T15:30:40.000Z"
+    },
+    {
+      "id": "w3x4y5z6-a7b8-69c0-d1e2-f3g4h5i6j7k8",
+      "description": "Teatro e espetáculo",
+      "amount": -72,
+      "category": "entretenimento",
+      "type": "expense",
+      "date": "2026-04-11",
+      "createdAt": "2026-04-11T20:15:50.000Z"
+    },
+    {
+      "id": "x4y5z6a7-b8c9-70d1-e2f3-g4h5i6j7k8l9",
+      "description": "Fisioterapia",
+      "amount": -90,
+      "category": "saude",
+      "type": "expense",
+      "date": "2026-04-10",
+      "createdAt": "2026-04-10T10:45:15.000Z"
+    },
+    {
+      "id": "y5z6a7b8-c9d0-71e2-f3g4-h5i6j7k8l9m0",
+      "description": "Compra roupas",
+      "amount": -145.7,
+      "category": "outros",
+      "type": "expense",
+      "date": "2026-04-09",
+      "createdAt": "2026-04-09T14:35:20.000Z"
+    },
+    {
+      "id": "z6a7b8c9-d0e1-72f3-g4h5-i6j7k8l9m0n1",
+      "description": "Pão na padaria",
+      "amount": -8.5,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T06:50:10.000Z"
+    },
+    {
+      "id": "a7b8c9d0-e1f2-73g4-h5i6-j7k8l9m0n1o2",
+      "description": "Estacionamento no shopping",
+      "amount": -15,
+      "category": "transporte",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T16:25:30.000Z"
+    },
+    {
+      "id": "b8c9d0e1-f2g3-74h5-i6j7-k8l9m0n1o2p3",
+      "description": "Renda de aluguéis",
+      "amount": 500,
+      "category": "aluguel",
+      "type": "income",
+      "date": "2026-04-13",
+      "createdAt": "2026-04-13T09:00:00.000Z"
+    },
+    {
+      "id": "c9d0e1f2-g3h4-75i6-j7k8-l9m0n1o2p3q4",
+      "description": "Corte de cabelo",
+      "amount": -45,
+      "category": "outros",
+      "type": "expense",
+      "date": "2026-04-12",
+      "createdAt": "2026-04-12T11:20:45.000Z"
+    },
+    {
+      "id": "d0e1f2g3-h4i5-76j7-k8l9-m0n1o2p3q4r5",
+      "description": "Jogo de vídeo",
+      "amount": -89.99,
+      "category": "entretenimento",
+      "type": "expense",
+      "date": "2026-04-11",
+      "createdAt": "2026-04-11T17:40:20.000Z"
+    },
+    {
+      "id": "e1f2g3h4-i5j6-77k8-l9m0-n1o2p3q4r5s6",
+      "description": "Revisão do carro",
+      "amount": -280,
+      "category": "transporte",
+      "type": "expense",
+      "date": "2026-04-10",
+      "createdAt": "2026-04-10T09:15:00.000Z"
+    },
+    {
+      "id": "f2g3h4i5-j6k7-78l9-m0n1-o2p3q4r5s6t7",
+      "description": "Vitaminas suplementos",
+      "amount": -62.5,
+      "category": "saude",
+      "type": "expense",
+      "date": "2026-04-09",
+      "createdAt": "2026-04-09T08:50:35.000Z"
+    },
+    {
+      "id": "g3h4i5j6-k7l8-79m0-n1o2-p3q4r5s6t7u8",
+      "description": "Curso online investimentos",
+      "amount": -79.9,
+      "category": "educacao",
+      "type": "expense",
+      "date": "2026-04-08",
+      "createdAt": "2026-04-08T13:25:10.000Z"
+    },
+    {
+      "id": "h4i5j6k7-l8m9-80n1-o2p3-q4r5s6t7u8v9",
+      "description": "Saque de salário",
+      "amount": 2500,
+      "category": "outros",
+      "type": "income",
+      "date": "2026-04-07",
+      "createdAt": "2026-04-07T10:00:00.000Z"
+    },
+    {
+      "id": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
+      "description": "Presente para mãe",
+      "amount": -85.5,
+      "category": "entretenimento",
+      "type": "expense",
+      "date": "2026-04-06",
+      "createdAt": "2026-04-06T14:30:50.000Z"
+    },
+    {
+      "id": "j6k7l8m9-n0o1-82p3-q4r5-s6t7u8v9w0x1",
+      "description": "Almoço com clientes",
+      "amount": -95.75,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-05",
+      "createdAt": "2026-04-05T12:45:15.000Z"
+    },
+    {
+      "id": "k7l8m9n0-o1p2-83q4-r5s6-t7u8v9w0x1y2",
+      "description": "Taxa bancária",
+      "amount": -25,
+      "category": "outros",
+      "type": "expense",
+      "date": "2026-04-04",
+      "createdAt": "2026-04-04T09:30:00.000Z"
+    },
+    {
+      "id": "l8m9n0o1-p2q3-84r5-s6t7-u8v9w0x1y2z3",
+      "description": "Rendimento de conta poupança",
+      "amount": 35.6,
+      "category": "investimentos",
+      "type": "income",
+      "date": "2026-04-03",
+      "createdAt": "2026-04-03T08:00:25.000Z"
+    },
+    {
+      "id": "m9n0o1p2-q3r4-85s6-t7u8-v9w0x1y2z3a4",
+      "description": "Donativo para caridade",
+      "amount": -50,
+      "category": "outros",
+      "type": "expense",
+      "date": "2026-04-02",
+      "createdAt": "2026-04-02T11:15:40.000Z"
+    },
+    {
+      "id": "n0o1p2q3-r4s5-86t7-u8v9-w0x1y2z3a4b5",
+      "description": "Reparação de smartphone",
+      "amount": -150,
+      "category": "outros",
+      "type": "expense",
+      "date": "2026-04-01",
+      "createdAt": "2026-04-01T15:50:20.000Z"
+    },
+    {
+      "id": "o1p2q3r4-s5t6-87u8-v9w0-x1y2z3a4b5c6",
+      "description": "Venda online - webcam",
+      "amount": 120,
+      "category": "vendas",
+      "type": "income",
+      "date": "2026-03-31",
+      "createdAt": "2026-03-31T12:35:10.000Z"
+    },
+    {
+      "id": "p2q3r4s5-t6u7-88v9-w0x1-y2z3a4b5c6d7",
+      "description": "Espresso no café",
+      "amount": -6.8,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-03-30",
+      "createdAt": "2026-03-30T10:20:15.000Z"
+    },
+    {
+      "id": "q3r4s5t6-u7v8-89w0-x1y2-z3a4b5c6d7e8",
+      "description": "Consultoria de seguros",
+      "amount": -180,
+      "category": "outros",
+      "type": "expense",
+      "date": "2026-03-29",
+      "createdAt": "2026-03-29T14:10:30.000Z"
+    },
+    {
+      "id": "74f46cad-b669-4351-9e79-19985a6155e4",
+      "description": "Compra de Bitcoin",
+      "amount": -600,
+      "category": "compras",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T16:45:02.682Z"
+    },
+    {
+      "id": "ee074cf5-c833-42a5-82c2-cdebb0c145ed",
+      "description": "Teste de transa��o",
+      "amount": -25.5,
+      "category": "alimentacao",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T16:48:15.200Z"
+    },
+    {
+      "id": "d992cdcf-6b80-4374-ac04-894084c0a869",
+      "description": "Compra de Bitcoin",
+      "amount": -600,
+      "category": "compras",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T16:49:43.023Z"
+    },
+    {
+      "id": "7b2de6d4-38d6-46f4-83a4-7ea7c457df50",
+      "description": "Compra de Bitcoin",
+      "amount": -600,
+      "category": "compras",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T16:53:12.759Z"
+    },
+    {
+      "id": "1deab185-3e69-4ed2-9f6a-624650547121",
+      "description": "Passagem para Luxemburgo",
+      "amount": -350,
+      "category": "viagens",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T17:06:39.305Z"
+    },
+    {
+      "id": "d45e12f2-ee1d-4c64-a0f0-271fe53cc8d1",
+      "description": "Passagem para Portugal",
+      "amount": -300,
+      "category": "viagens",
+      "type": "expense",
+      "date": "2026-04-14",
+      "createdAt": "2026-04-14T17:09:01.501Z"
     }
   ]
 }

@@ -28,6 +28,7 @@ const Dashboard = () => {
   const { data: allTransactions = [], isLoading: txLoading } = useQuery({
     queryKey: ["transactions"],
     queryFn: getTransactions,
+    staleTime: 0, // Sempre considerar como stale, refetch se invalidado
   });
 
   // Buscar categorias

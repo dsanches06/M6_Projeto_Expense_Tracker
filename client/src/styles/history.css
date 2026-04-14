@@ -161,6 +161,19 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.transactions-table th:not(:last-child) {
+  cursor: pointer;
+}
+
+.transactions-table th:not(:last-child):hover {
+  background-color: #e8ecf2;
+}
+
+.app.dark .transactions-table th:not(:last-child):hover {
+  background-color: #2a3139;
 }
 
 .app.dark .transactions-table th {
