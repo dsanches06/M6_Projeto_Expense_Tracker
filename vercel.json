@@ -1,15 +1,16 @@
 {
-  "buildCommand": "npm install && cd server && npm install && cd ../client && npm run build",
-  "installCommand": "npm install && cd server && npm install && cd ../client && npm install",
+  "buildCommand": "cd client && npm run build",
+  "installCommand": "npm install && cd client && npm install && cd api && npm install && cd ../..",
   "outputDirectory": "client/dist",
+  "functions": {
+    "client/api/src/server.js": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/client/api/index.js"
+      "destination": "/client/api/src/server.js?path=/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "VITE_API_URL": "/api"
-  }
+  ]
 }
