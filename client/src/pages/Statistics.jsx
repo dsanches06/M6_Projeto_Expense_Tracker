@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Bar, Doughnut, Pie, Line } from "react-chartjs-2";
 import {
@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { getTransactions, getCategories } from "../services/api";
 import { useTheme } from "../context/ThemeContext";
+import { PreferencesContext } from "../context/PreferencesContext";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/statistics.css";
 
@@ -28,9 +29,33 @@ ChartJS.register(
   Legend
 );
 
+ChartJS.defaults.devicePixelRatio = window.devicePixelRatio || 2;
+
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
+  const { currency } = useContext(PreferencesContext);
+
+  // Taxas de conversão (base: EUR)
+  const exchangeRates = { EUR: 1, USD: 1.08, GBP: 0.86 };
+  const rate = exchangeRates[currency] || 1;
+
+  const convertAmount = (value) => value * rate;
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("pt-PT", {
+      style: "currency",
+      currency: currency,
+    }).format(convertAmount(value));
+  };
+
+  // Formatar valor já convertido (para gráficos cujos dados já foram convertidos)
+  const formatConverted = (value) => {
+    return new Intl.NumberFormat("pt-PT", {
+      style: "currency",
+      currency: currency,
+    }).format(value);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -46,6 +71,17 @@ const Statistics = () => {
     queryKey: ["categories"],
     queryFn: getCategories,
   });
+
+  // Mapa de slug → nome com acentuação
+  const categoryMap = {};
+  categories.forEach((cat) => {
+    categoryMap[cat.slug] = cat.name || cat.label;
+  });
+  const getCategoryName = (slug) => {
+    if (categoryMap[slug]) return categoryMap[slug];
+    // Capitalizar fallback para slugs sem mapeamento
+    return slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, " ");
+  };
 
   // Cores para temas
   const getThemeColors = () => {
@@ -115,14 +151,14 @@ const Statistics = () => {
     datasets: [
       {
         label: "Despesas",
-        data: Object.values(dayData).map(d => d.expenses),
+        data: Object.values(dayData).map(d => convertAmount(d.expenses)),
         backgroundColor: "#ff6b6b",
         borderColor: "#ff6b6b",
         borderWidth: 1,
       },
       {
         label: "Receitas",
-        data: Object.values(dayData).map(d => d.income),
+        data: Object.values(dayData).map(d => convertAmount(d.income)),
         backgroundColor: "#6bcf7f",
         borderColor: "#6bcf7f",
         borderWidth: 1,
@@ -150,10 +186,10 @@ const Statistics = () => {
   const totalExpenses = Object.values(expensesByCategory).reduce((a, b) => a + b, 0);
   
   const expensesDoughnutData = {
-    labels: Object.keys(expensesByCategory),
+    labels: Object.keys(expensesByCategory).map(getCategoryName),
     datasets: [
       {
-        data: Object.values(expensesByCategory),
+        data: Object.values(expensesByCategory).map(v => convertAmount(v)),
         backgroundColor: chartColors.slice(0, Object.keys(expensesByCategory).length),
         borderColor: colors.grid,
         borderWidth: 2,
@@ -181,10 +217,10 @@ const Statistics = () => {
   const totalIncome = Object.values(incomeByCategory).reduce((a, b) => a + b, 0);
   
   const incomeDoughnutData = {
-    labels: Object.keys(incomeByCategory),
+    labels: Object.keys(incomeByCategory).map(getCategoryName),
     datasets: [
       {
-        data: Object.values(incomeByCategory),
+        data: Object.values(incomeByCategory).map(v => convertAmount(v)),
         backgroundColor: chartColors.slice(0, Object.keys(incomeByCategory).length),
         borderColor: colors.grid,
         borderWidth: 2,
@@ -240,7 +276,7 @@ const Statistics = () => {
     datasets: [
       {
         label: "Evolução do Saldo",
-        data: allDates.map(date => balanceEvolution[date] || null),
+        data: allDates.map(date => balanceEvolution[date] != null ? convertAmount(balanceEvolution[date]) : null),
         borderColor: colors.primary,
         backgroundColor: `${colors.primary}20`,
         borderWidth: 2,
@@ -252,7 +288,7 @@ const Statistics = () => {
       },
       {
         label: "Evolução de Despesas",
-        data: allDates.map(date => expenseEvolution[date] || null),
+        data: allDates.map(date => expenseEvolution[date] != null ? convertAmount(expenseEvolution[date]) : null),
         borderColor: "#ff6b6b",
         backgroundColor: "#ff6b6b20",
         borderWidth: 2,
@@ -278,7 +314,7 @@ const Statistics = () => {
         labels: {
           color: colors.text,
           font: {
-            size: 12,
+            size: 14,
           },
         },
       },
@@ -288,6 +324,12 @@ const Statistics = () => {
         bodyColor: colors.text,
         borderColor: colors.primary,
         borderWidth: 1,
+        callbacks: {
+          label: (context) => {
+            const value = context.parsed.y ?? context.parsed;
+            return `${context.dataset.label}: ${formatConverted(value)}`;
+          },
+        },
       },
     },
   };
@@ -296,7 +338,7 @@ const Statistics = () => {
     ...commonOptions,
     scales: {
       y: {
-        ticks: { color: colors.text },
+        ticks: { color: colors.text, callback: (value) => formatConverted(value) },
         grid: { color: colors.grid },
       },
       x: {
@@ -310,7 +352,7 @@ const Statistics = () => {
     ...commonOptions,
     scales: {
       y: {
-        ticks: { color: colors.text },
+        ticks: { color: colors.text, callback: (value) => formatConverted(value) },
         grid: { color: colors.grid },
       },
       x: {
@@ -327,6 +369,10 @@ const Statistics = () => {
       legend: {
         ...commonOptions.plugins.legend,
         position: "bottom",
+        labels: {
+          ...commonOptions.plugins.legend.labels,
+          font: { size: 14 },
+        },
       },
     },
   };
@@ -338,6 +384,10 @@ const Statistics = () => {
       legend: {
         ...commonOptions.plugins.legend,
         position: "right",
+        labels: {
+          ...commonOptions.plugins.legend.labels,
+          font: { size: 14 },
+        },
       },
     },
   };
@@ -365,7 +415,7 @@ const Statistics = () => {
             <Doughnut data={expensesDoughnutData} options={doughnutOptions} />
           </div>
           <div className="chart-total">
-            <div className="total-amount">${totalExpenses.toFixed(2)}</div>
+            <div className="total-amount">{formatCurrency(totalExpenses)}</div>
             <div className="total-label">Total</div>
           </div>
         </div>
@@ -377,7 +427,7 @@ const Statistics = () => {
             <Pie data={incomeDoughnutData} options={pieOptions} />
           </div>
           <div className="chart-total">
-            <div className="total-amount">${totalIncome.toFixed(2)}</div>
+            <div className="total-amount">{formatCurrency(totalIncome)}</div>
             <div className="total-label">Total</div>
           </div>
         </div>

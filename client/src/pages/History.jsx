@@ -1,10 +1,11 @@
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getTransactions,
   deleteTransaction,
   getCategories,
 } from "../services/api";
+import { PreferencesContext } from "../context/PreferencesContext";
 import TransactionListCard from "../components/ui/TransactionListCard";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/history.css";
@@ -13,6 +14,14 @@ const ModalConfirm = lazy(() => import("../components/ui/ModalConfirm"));
 
 const History = () => {
   const queryClient = useQueryClient();
+  const { currency } = useContext(PreferencesContext);
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("pt-PT", {
+      style: "currency",
+      currency: currency,
+    }).format(value);
+  };
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [deleteId, setDeleteId] = useState(null);
@@ -238,7 +247,7 @@ const History = () => {
                         }
                       >
                         {tx.amount > 0 ? "+" : ""}{" "}
-                        {Math.abs(tx.amount).toFixed(2)}€
+                        {formatCurrency(Math.abs(tx.amount))}
                       </td>
                       <td>
                         <button

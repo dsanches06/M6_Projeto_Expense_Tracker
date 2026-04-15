@@ -9,13 +9,14 @@ const API_URL = process.env.API_URL || "http://localhost:3001";
 // Devolve todas as categorias (sem os SVGs para manter a resposta leve)
 // ─────────────────────────────────────────────
 router.get("/", (req, res) => {
-  const list = categories.map(({ slug, label, labelEn, color }, index) => ({
+  const list = categories.map(({ slug, label, labelEn, color, type }, index) => ({
     id: index,
     slug,
     name: label,
     label,
     labelEn,
     color,
+    type: type || "expense",
     iconUrl: `${API_URL}/api/categories/${slug}/icon`,
   }));
   res.json(list);

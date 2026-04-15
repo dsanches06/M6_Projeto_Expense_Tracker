@@ -73,6 +73,8 @@ const AddTransaction = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+      // Limpar categoria quando muda o tipo
+      ...(name === "type" ? { category_id: "" } : {}),
     }));
   };
 
@@ -156,7 +158,9 @@ const AddTransaction = () => {
             required
           >
             <option value="">Selecionar categoria</option>
-            {categories.map((cat) => (
+            {categories
+              .filter((cat) => cat.type === formData.type)
+              .map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.icon} {cat.name}
               </option>

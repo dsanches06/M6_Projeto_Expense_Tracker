@@ -4,7 +4,7 @@
       "id": "e65bcb5a-ee50-4e56-a935-03306245a1f1",
       "description": "salario",
       "amount": 1000,
-      "category": "educacao",
+      "category": "salario",
       "type": "income",
       "date": "2026-04-13",
       "createdAt": "2026-04-13T10:31:55.889Z"
@@ -449,6 +449,15 @@
       "type": "expense",
       "date": "2026-04-14",
       "createdAt": "2026-04-14T17:09:01.501Z"
+    },
+    {
+      "id": "c152ddb8-32c2-4ea9-8780-0c101b6eaa9f",
+      "description": "iPhone 16 PRO",
+      "amount": -920,
+      "category": "tecnologia",
+      "type": "expense",
+      "date": "2026-04-15",
+      "createdAt": "2026-04-15T12:34:14.775Z"
     }
   ]
 }

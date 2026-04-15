@@ -10,7 +10,8 @@ export const filtersReducer = (state, action) => {
     case 'SET_CATEGORY':
       return {
         ...state,
-        activeCategory: action.payload,
+        activeCategory: action.payload.slug,
+        activeCategoryType: action.payload.type,
       };
 
     case 'RESET':
@@ -20,6 +21,7 @@ export const filtersReducer = (state, action) => {
           .split('T')[0],
         endDate: new Date().toISOString().split('T')[0],
         activeCategory: null,
+        activeCategoryType: null,
       };
 
     default:
@@ -45,4 +47,5 @@ export const initialFiltersState = {
   startDate: getFirstDayOfMonth(),
   endDate: getTodayDate(),
   activeCategory: null,
+  activeCategoryType: null,
 };

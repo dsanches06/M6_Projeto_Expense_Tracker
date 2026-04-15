@@ -45,7 +45,10 @@ const Dashboard = () => {
 
     const isInDateRange = txDate >= filterStartDate && txDate <= filterEndDate;
     const isMatchingCategory =
-      filters.activeCategory === null || t.category === filters.activeCategory;
+      filters.activeCategory === null ||
+      (t.category === filters.activeCategory &&
+        (filters.activeCategoryType === null ||
+          (filters.activeCategoryType === "expense" ? t.amount < 0 : t.amount > 0)));
 
     return isInDateRange && isMatchingCategory;
   });
@@ -118,6 +121,7 @@ const Dashboard = () => {
           <CategoryFilter
             categories={categories}
             activeCategory={filters.activeCategory}
+            activeCategoryType={filters.activeCategoryType}
             onCategoryChange={handleCategoryChange}
           />
         </section>
@@ -125,9 +129,9 @@ const Dashboard = () => {
 
       {/* Transactions List */}
       <section className="transactions-section">
-        <h2>Transações Recentes</h2>
+        <h2>{filters.activeCategory ? "Transações Filtradas" : "Transações Recentes"}</h2>
         <RecentTransactions
-          transactions={filteredTransactions.slice(0, 10)}
+          transactions={filters.activeCategory ? filteredTransactions : filteredTransactions.slice(0, 10)}
           categories={categories}
         />
       </section>

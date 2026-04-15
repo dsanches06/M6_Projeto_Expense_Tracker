@@ -1,7 +1,18 @@
 // Componente para exibir transações recentes em formato de cards
+import { useContext } from 'react'
+import { PreferencesContext } from '../../context/PreferencesContext'
 import TransactionListCard from './TransactionListCard'
 
 const RecentTransactions = ({ transactions = [], categories = [] }) => {
+  const { currency } = useContext(PreferencesContext)
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('pt-PT', {
+      style: 'currency',
+      currency: currency,
+    }).format(value)
+  }
+
   const getCategory = (categorySlug) => {
     return categories.find(cat => cat.slug === categorySlug)
   }
@@ -55,7 +66,7 @@ const RecentTransactions = ({ transactions = [], categories = [] }) => {
                     </div>
                     
                     <div className={`transaction-amount ${isIncome ? 'income' : 'expense'}`}>
-                      {isIncome ? '+' : ''}{Math.abs(transaction.amount).toFixed(2)}€
+                      {isIncome ? '+' : ''}{formatCurrency(Math.abs(transaction.amount))}
                     </div>
                   </div>
                 </div>

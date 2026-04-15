@@ -1,5 +1,16 @@
+import { useContext } from "react";
+import { PreferencesContext } from "../context/PreferencesContext";
+
 // um item individual (verde/vermelho) com botão de apagar
 const TransactionItem = ({ transaction, categories = [], onDelete }) => {
+  const { currency } = useContext(PreferencesContext);
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("pt-PT", {
+      style: "currency",
+      currency: currency,
+    }).format(value);
+  };
   const isIncome = transaction.amount > 0;
   const colorClass = isIncome ? "income" : "expense";
   const displayDate = new Date(
@@ -36,7 +47,7 @@ const TransactionItem = ({ transaction, categories = [], onDelete }) => {
         </div>
         <div className={`transaction-amount ${colorClass}`}>
           {isIncome ? "+" : ""}
-          {Math.abs(transaction.amount).toFixed(2)}€
+          {formatCurrency(Math.abs(transaction.amount))}
         </div>
       </div>
 
