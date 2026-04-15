@@ -307,15 +307,6 @@
       "createdAt": "2026-04-08T13:25:10.000Z"
     },
     {
-      "id": "h4i5j6k7-l8m9-80n1-o2p3-q4r5s6t7u8v9",
-      "description": "Saque de salário",
-      "amount": 2500,
-      "category": "outros",
-      "type": "income",
-      "date": "2026-04-07",
-      "createdAt": "2026-04-07T10:00:00.000Z"
-    },
-    {
       "id": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
       "description": "Presente para mãe",
       "amount": -85.5,
