@@ -1,3 +1,6 @@
+// Formata número com zero à esquerda (ex: 1 → "01")
+const pad = (n) => String(n).padStart(2, '0');
+
 export const filtersReducer = (state, action) => {
   switch (action.type) {
     case 'SET_DATE_RANGE':
@@ -16,10 +19,8 @@ export const filtersReducer = (state, action) => {
 
     case 'RESET':
       return {
-        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-          .toISOString()
-          .split('T')[0],
-        endDate: new Date().toISOString().split('T')[0],
+        startDate: getFirstDayOfMonth(),
+        endDate: getTodayDate(),
         activeCategory: null,
         activeCategoryType: null,
       };
@@ -29,17 +30,16 @@ export const filtersReducer = (state, action) => {
   }
 };
 
-// Função auxiliar para obter o primeiro dia do mês actual
+// Função auxiliar para obter o primeiro dia do mês actual (hora local, sem UTC)
 export const getFirstDayOfMonth = () => {
   const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), 1)
-    .toISOString()
-    .split('T')[0];
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-01`;
 };
 
-// Função auxiliar para obter a data actual
+// Função auxiliar para obter a data actual (hora local, sem UTC)
 export const getTodayDate = () => {
-  return new Date().toISOString().split('T')[0];
+  const now = new Date();
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 };
 
 // Estado inicial dos filtros (mês actual)

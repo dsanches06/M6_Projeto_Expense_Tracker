@@ -24,11 +24,12 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Buscar transações - uma única vez, depois fica em cache
+  // Buscar transações - refetch sempre que o Dashboard monta
   const { data: allTransactions = [], isLoading: txLoading } = useQuery({
     queryKey: ["transactions"],
     queryFn: getTransactions,
-    staleTime: 0, // Sempre considerar como stale, refetch se invalidado
+    staleTime: 0,
+    refetchOnMount: "always",
   });
 
   // Buscar categorias
@@ -38,20 +39,19 @@ const Dashboard = () => {
   });
 
   // Filtragem no frontend aplicando os filtros sobre dados em cache
-  const filteredTransactions = allTransactions.filter((t) => {
-    const txDate = new Date(t.date);
-    const filterStartDate = new Date(filters.startDate);
-    const filterEndDate = new Date(filters.endDate);
+  const filteredTransactions = allTransactions
+    .filter((t) => {
+      const txDate = t.date;
+      const isInDateRange = txDate >= filters.startDate && txDate <= filters.endDate;
+      const isMatchingCategory =
+        filters.activeCategory === null ||
+        (t.category === filters.activeCategory &&
+          (filters.activeCategoryType === null ||
+            (filters.activeCategoryType === "expense" ? t.amount < 0 : t.amount > 0)));
 
-    const isInDateRange = txDate >= filterStartDate && txDate <= filterEndDate;
-    const isMatchingCategory =
-      filters.activeCategory === null ||
-      (t.category === filters.activeCategory &&
-        (filters.activeCategoryType === null ||
-          (filters.activeCategoryType === "expense" ? t.amount < 0 : t.amount > 0)));
-
-    return isInDateRange && isMatchingCategory;
-  });
+      return isInDateRange && isMatchingCategory;
+    })
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   // Calcular os totais a partir das transações filtradas
   const balance = filteredTransactions.reduce((sum, t) => sum + t.amount, 0);
