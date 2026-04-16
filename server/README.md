@@ -30,9 +30,7 @@ O servidor inicia em **http://localhost:3001**
 | Método | Rota | Descrição |
 |--------|------|-----------|
 | `GET` | `/api/transactions` | Listar todas as transações |
-| `GET` | `/api/transactions/:id` | Obter uma transação pelo ID |
 | `POST` | `/api/transactions` | Criar uma nova transação |
-| `PUT` | `/api/transactions/:id` | Atualizar uma transação |
 | `DELETE` | `/api/transactions/:id` | Eliminar uma transação |
 
 ### Categorias
