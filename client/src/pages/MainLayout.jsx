@@ -16,6 +16,7 @@ const MainLayout = () => {
             onClick={() => setSidebarOpen(false)}
           />
         )}
+        <div className="sidebar-trigger" />
         <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
           <div className="logo-container">
             <Link to="/" className="logo-link" onClick={() => setSidebarOpen(false)}>
