@@ -451,15 +451,6 @@
       "createdAt": "2026-04-15T12:34:14.775Z"
     },
     {
-      "id": "e5b551ff-53c3-47ee-a81a-e3251d5f6fa7",
-      "description": "Salario",
-      "amount": 3000,
-      "category": "salario",
-      "type": "income",
-      "date": "2026-04-15",
-      "createdAt": "2026-04-15T12:50:42.299Z"
-    },
-    {
       "id": "8a53b4fa-bcda-40d0-bece-e5dfa6b38954",
       "description": "Aluguel AirBNB",
       "amount": 800,
