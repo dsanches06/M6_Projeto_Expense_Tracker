@@ -26,25 +26,11 @@ function getAllTransactions() {
   return readDB().transactions;
 }
 
-function getTransactionById(id) {
-  const { transactions } = readDB();
-  return transactions.find((t) => t.id === id) || null;
-}
-
 function createTransaction(transaction) {
   const db = readDB();
   db.transactions.push(transaction);
   writeDB(db);
   return transaction;
-}
-
-function updateTransaction(id, updates) {
-  const db = readDB();
-  const index = db.transactions.findIndex((t) => t.id === id);
-  if (index === -1) return null;
-  db.transactions[index] = { ...db.transactions[index], ...updates };
-  writeDB(db);
-  return db.transactions[index];
 }
 
 function deleteTransaction(id) {
@@ -59,8 +45,6 @@ function deleteTransaction(id) {
 module.exports = {
   initDB,
   getAllTransactions,
-  getTransactionById,
   createTransaction,
-  updateTransaction,
   deleteTransaction,
 };

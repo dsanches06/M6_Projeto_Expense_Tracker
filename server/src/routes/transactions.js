@@ -14,18 +14,6 @@ router.get("/", (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// GET /api/transactions/:id
-// Devolve uma transação pelo id
-// ─────────────────────────────────────────────
-router.get("/:id", (req, res) => {
-  const transaction = db.getTransactionById(req.params.id);
-  if (!transaction) {
-    return res.status(404).json({ error: "Transação não encontrada" });
-  }
-  res.json(transaction);
-});
-
-// ─────────────────────────────────────────────
 // POST /api/transactions
 // Cria uma nova transação
 //
@@ -63,33 +51,6 @@ router.post("/", (req, res) => {
 
   const created = db.createTransaction(newTransaction);
   res.status(201).json(created);
-});
-
-// ─────────────────────────────────────────────
-// PUT /api/transactions/:id
-// Atualiza uma transação existente
-// ─────────────────────────────────────────────
-router.put("/:id", (req, res) => {
-  const { description, amount, category, date, type } = req.body;
-
-  const updates = {};
-  if (description !== undefined) updates.description = description.trim();
-  if (amount !== undefined) {
-    if (isNaN(Number(amount))) {
-      return res.status(400).json({ error: "'amount' deve ser um número" });
-    }
-    updates.amount = Number(amount);
-  }
-  if (category !== undefined) updates.category = category;
-  if (date !== undefined) updates.date = date;
-  if (type !== undefined) updates.type = type;
-  updates.updatedAt = new Date().toISOString();
-
-  const updated = db.updateTransaction(req.params.id, updates);
-  if (!updated) {
-    return res.status(404).json({ error: "Transação não encontrada" });
-  }
-  res.json(updated);
 });
 
 // ─────────────────────────────────────────────

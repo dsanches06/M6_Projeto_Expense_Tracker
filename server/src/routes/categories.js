@@ -23,19 +23,6 @@ router.get("/", (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// GET /api/categories/:slug
-// Devolve uma categoria específica (sem o SVG)
-// ─────────────────────────────────────────────
-router.get("/:slug", (req, res) => {
-  const category = categories.find((c) => c.slug === req.params.slug);
-  if (!category) {
-    return res.status(404).json({ error: "Categoria não encontrada" });
-  }
-  const { icon, ...rest } = category;
-  res.json({ ...rest, iconUrl: `${API_URL}/api/categories/${category.slug}/icon` });
-});
-
-// ─────────────────────────────────────────────
 // GET /api/categories/:slug/icon
 // Devolve o ícone SVG da categoria
 //

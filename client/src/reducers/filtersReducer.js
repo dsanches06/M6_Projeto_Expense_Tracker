@@ -35,13 +35,13 @@ export const filtersReducer = (state, action) => {
 };
 
 // Função auxiliar para obter o primeiro dia do mês actual (hora local, sem UTC)
-export const getFirstDayOfMonth = () => {
+const getFirstDayOfMonth = () => {
   const now = new Date();
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-01`;
 };
 
 // Função auxiliar para obter a data actual (hora local, sem UTC)
-export const getTodayDate = () => {
+const getTodayDate = () => {
   const now = new Date();
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 };
