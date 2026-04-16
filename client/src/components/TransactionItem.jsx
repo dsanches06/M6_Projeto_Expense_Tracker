@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { PreferencesContext } from "../context/PreferencesContext";
 
-// um item individual (verde/vermelho) com botão de apagar
+// Componente que representa uma transação individual
+// Exibe a descrição, categoria, data e valor com cor diferenciada (verde para receita, vermelho para despesa)
+// Inclui botão de apagar quando a função onDelete é fornecida
 const TransactionItem = ({ transaction, categories = [], onDelete }) => {
   const { currency } = useContext(PreferencesContext);
 
@@ -11,6 +13,7 @@ const TransactionItem = ({ transaction, categories = [], onDelete }) => {
       currency: currency,
     }).format(value);
   };
+  // Determinar se é receita ou despesa e definir a classe de cor
   const isIncome = transaction.amount > 0;
   const colorClass = isIncome ? "income" : "expense";
   const displayDate = new Date(

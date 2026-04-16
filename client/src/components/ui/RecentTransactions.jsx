@@ -1,4 +1,6 @@
 // Componente para exibir transações recentes em formato de cards
+// Mostra as últimas transações ordenadas por data de criação (mais recentes primeiro)
+// Cada transação é apresentada com descrição, categoria, data e valor formatado
 import { useContext } from 'react'
 import { PreferencesContext } from '../../context/PreferencesContext'
 import TransactionListCard from './TransactionListCard'
@@ -6,6 +8,7 @@ import TransactionListCard from './TransactionListCard'
 const RecentTransactions = ({ transactions = [], categories = [] }) => {
   const { currency } = useContext(PreferencesContext)
 
+  // Formatar valores monetários de acordo com a moeda selecionada
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
@@ -13,10 +16,12 @@ const RecentTransactions = ({ transactions = [], categories = [] }) => {
     }).format(value)
   }
 
+  // Obter os dados da categoria a partir do slug
   const getCategory = (categorySlug) => {
     return categories.find(cat => cat.slug === categorySlug)
   }
 
+  // Formatar data para o formato português (dd/mm/aaaa)
   const formatDate = (dateString) => {
     return new Date(dateString || new Date()).toLocaleDateString('pt-PT')
   }

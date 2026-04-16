@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect } from 'react'
 
+// Contexto de preferências do utilizador
+// Gere a moeda selecionada e o nome do utilizador
+// Os valores são persistidos no localStorage para manter entre sessões
 export const PreferencesContext = createContext()
 
 export function PreferencesProvider({ children }) {

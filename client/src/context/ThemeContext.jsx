@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 
+// Contexto do tema da aplicação
+// Gere a alternância entre tema claro e escuro
+// O tema é persistido no localStorage para manter a preferência entre sessões
 export const ThemeContext = createContext()
 
 export function ThemeProvider({ children }) {
@@ -25,6 +28,7 @@ export function ThemeProvider({ children }) {
   )
 }
 
+// Hook personalizado para aceder facilmente ao contexto do tema
 export function useTheme() {
   return useContext(ThemeContext)
 }

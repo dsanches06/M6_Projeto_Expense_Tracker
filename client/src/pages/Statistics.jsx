@@ -18,6 +18,7 @@ import { PreferencesContext } from "../context/PreferencesContext";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/statistics.css";
 
+// Registo dos componentes do Chart.js necessários para os gráficos
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -31,12 +32,16 @@ ChartJS.register(
 
 ChartJS.defaults.devicePixelRatio = window.devicePixelRatio || 2;
 
+// Página de estatísticas
+// Apresenta gráficos visuais: barras (receitas vs despesas por dia da semana),
+// doughnut (despesas por categoria), pie (receitas por categoria)
+// e gráfico de linha (evolução do saldo e despesas ao longo do tempo)
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
   const { currency } = useContext(PreferencesContext);
 
-  // Taxas de conversão (base: EUR)
+  // Conversão de moeda com base nas taxas de câmbio (base: EUR)
   const exchangeRates = { EUR: 1, USD: 1.08, GBP: 0.86 };
   const rate = exchangeRates[currency] || 1;
 
@@ -72,7 +77,7 @@ const Statistics = () => {
     queryFn: getCategories,
   });
 
-  // Mapa de slug → nome com acentuação
+  // Mapa de slug para nome legível das categorias
   const categoryMap = {};
   categories.forEach((cat) => {
     categoryMap[cat.slug] = cat.name || cat.label;
@@ -83,7 +88,7 @@ const Statistics = () => {
     return slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, " ");
   };
 
-  // Cores para temas
+  // Cores adaptadas ao tema atual (claro/escuro)
   const getThemeColors = () => {
     if (theme === "dark") {
       return {

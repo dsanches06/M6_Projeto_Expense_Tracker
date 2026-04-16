@@ -1,8 +1,12 @@
+// Componente para selecionar um intervalo de datas
+// Permite ao utilizador escolher uma data de início e uma data de fim para filtrar transações
 const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
+  // Atualizar a data de início mantendo a data de fim
   const handleStartChange = (e) => {
     onDateChange(e.target.value, endDate);
   };
 
+  // Atualizar a data de fim mantendo a data de início
   const handleEndChange = (e) => {
     onDateChange(startDate, e.target.value);
   };

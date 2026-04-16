@@ -1,5 +1,8 @@
 import "../../styles/card.css";
 
+// Componente de card reutilizável
+// Exibe um ícone, título e valor dentro de um card estilizado
+// Utilizado no resumo financeiro (saldo, receitas, despesas)
 const Card = (props) => {
   return (
     <div className="card">

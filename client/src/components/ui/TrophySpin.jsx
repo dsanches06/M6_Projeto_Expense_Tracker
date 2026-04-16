@@ -2,6 +2,9 @@ import { TrophySpin } from "react-loading-indicators";
 import { useTheme } from "../../context/ThemeContext";
 import "../../styles/TrophySpin.css";
 
+// Componente de carregamento (loader)
+// Exibe uma animação de troféu giratório enquanto os dados estão a ser carregados
+// Adapta as cores ao tema atual (claro ou escuro)
 const Loader = () => {
   const { theme } = useTheme();
 

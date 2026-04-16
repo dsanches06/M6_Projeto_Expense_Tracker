@@ -3,6 +3,9 @@ import { ThemeContext } from "../context/ThemeContext";
 import { PreferencesContext } from "../context/PreferencesContext";
 import "../styles/settings.css";
 
+// Página de definições da aplicação
+// Permite ao utilizador alterar o tema (claro/escuro), a moeda (EUR, USD, GBP)
+// e o nome de utilizador que aparece na saudação do Dashboard
 const Settings = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { currency, setCurrency, userName, setUserName } =

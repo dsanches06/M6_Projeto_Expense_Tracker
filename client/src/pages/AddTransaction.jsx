@@ -3,6 +3,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { createTransaction, getCategories } from "../services/api";
 
+// Página para adicionar uma nova transação
+// Formulário com campos de descrição, valor, tipo (receita/despesa), categoria e data
+// Após submissão, invalida o cache e redireciona para o Dashboard
 const AddTransaction = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -22,7 +25,7 @@ const AddTransaction = () => {
     queryFn: getCategories,
   });
 
-  // Mutação para criar transação
+  // Mutação para criar transação - converte o tipo em valor com sinal
   const mutation = useMutation({
     mutationFn: (data) => {
       // Converter type em amount com sinal
@@ -68,6 +71,7 @@ const AddTransaction = () => {
     descriptionInputRef.current?.focus();
   }, []);
 
+  // Atualizar os dados do formulário (limpa a categoria ao mudar o tipo)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -78,6 +82,7 @@ const AddTransaction = () => {
     }));
   };
 
+  // Submeter o formulário com validação dos campos obrigatórios
   const handleSubmit = (e) => {
     e.preventDefault();
     

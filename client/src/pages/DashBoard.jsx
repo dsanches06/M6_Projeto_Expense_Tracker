@@ -13,10 +13,14 @@ import RecentTransactions from "../components/ui/RecentTransactions";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/dashboard.css";
 
+// Página principal do Dashboard
+// Apresenta o resumo financeiro (saldo, receitas, despesas),
+// filtros por data e categoria, e as transações recentes
 const Dashboard = () => {
   const [filters, dispatch] = useReducer(filtersReducer, initialFiltersState);
   const { userName } = useContext(PreferencesContext);
 
+  // Tempo mínimo de loading para melhor experiência visual
   const [minLoading, setMinLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const Dashboard = () => {
     queryFn: getCategories,
   });
 
-  // Filtragem no frontend aplicando os filtros sobre dados em cache
+  // Filtrar transações no frontend com base nos filtros de data e categoria ativos
   const filteredTransactions = allTransactions
     .filter((t) => {
       const txDate = t.date;
@@ -53,7 +57,7 @@ const Dashboard = () => {
     })
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  // Calcular os totais a partir das transações filtradas
+  // Calcular os totais financeiros a partir das transações filtradas
   const balance = filteredTransactions.reduce((sum, t) => sum + t.amount, 0);
 
   const income = filteredTransactions
@@ -66,7 +70,7 @@ const Dashboard = () => {
       .reduce((sum, t) => sum + t.amount, 0),
   );
 
-  // Handlers que usam dispatch
+  // Handlers de filtros - enviam ações ao reducer para atualizar os filtros
   const handleDateChange = (startDate, endDate) => {
     dispatch({
       type: "SET_DATE_RANGE",
@@ -81,6 +85,7 @@ const Dashboard = () => {
     });
   };
 
+  // Repor todos os filtros para o estado inicial (mês atual)
   const handleResetFilters = () => {
     dispatch({ type: "RESET" });
   };

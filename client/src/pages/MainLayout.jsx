@@ -3,6 +3,9 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import "../styles/MainLayout.css";
 
+// Layout principal da aplicação
+// Contém a barra lateral de navegação, o botão de alternar tema,
+// e o espaço principal onde as páginas são renderizadas através do Outlet
 const MainLayout = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 

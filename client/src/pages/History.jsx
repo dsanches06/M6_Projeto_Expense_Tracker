@@ -10,8 +10,12 @@ import TransactionListCard from "../components/ui/TransactionListCard";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/history.css";
 
+// Carregamento lazy do modal de confirmação para otimização
 const ModalConfirm = lazy(() => import("../components/ui/ModalConfirm"));
 
+// Página de histórico de transações
+// Apresenta todas as transações numa tabela com pesquisa, filtros por tipo,
+// ordenação por colunas e possibilidade de apagar transações
 const History = () => {
   const queryClient = useQueryClient();
   const { currency } = useContext(PreferencesContext);
@@ -22,6 +26,7 @@ const History = () => {
       currency: currency,
     }).format(value);
   };
+  // Estado para pesquisa, filtro de tipo, modal de confirmação e ordenação
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [deleteId, setDeleteId] = useState(null);
@@ -50,7 +55,7 @@ const History = () => {
     queryFn: getCategories,
   });
 
-  // Mutação para apagar transação
+  // Mutação para apagar transação e invalidar o cache
   const deleteMutation = useMutation({
     mutationFn: deleteTransaction,
     onSuccess: () => {
@@ -58,7 +63,7 @@ const History = () => {
     },
   });
 
-  // Filtrar transações
+  // Filtrar transações por texto de pesquisa e tipo (todas, receitas ou despesas)
   const filteredTransactions = transactions.filter((tx) => {
     const matchesSearch = tx.description
       .toLowerCase()
@@ -72,7 +77,7 @@ const History = () => {
     return matchesSearch && matchesType;
   });
 
-  // Ordenar transações baseado em sortBy e sortDirection
+  // Ordenar transações pela coluna e direção selecionadas
   const sortedTransactions = [...filteredTransactions].sort((a, b) => {
     let aValue, bValue;
 
@@ -106,6 +111,7 @@ const History = () => {
     }
   });
 
+  // Alternar a ordenação ao clicar no cabeçalho da coluna
   const handleSort = (column) => {
     if (sortBy === column) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
@@ -115,11 +121,13 @@ const History = () => {
     }
   };
 
+  // Mostrar indicador visual da direção de ordenação (seta)
   const getSortIndicator = (column) => {
     if (sortBy !== column) return "";
     return sortDirection === "asc" ? " ↑" : " ↓";
   };
 
+  // Abrir modal de confirmação antes de apagar
   const handleDeleteTransaction = (id) => {
     setDeleteId(id);
   };

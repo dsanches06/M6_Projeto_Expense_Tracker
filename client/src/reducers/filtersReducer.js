@@ -1,3 +1,7 @@
+// Reducer para gestão dos filtros do Dashboard
+// Gere o estado dos filtros de data e categoria
+// Ações: SET_DATE_RANGE, SET_CATEGORY, RESET
+
 // Formata número com zero à esquerda (ex: 1 → "01")
 const pad = (n) => String(n).padStart(2, '0');
 

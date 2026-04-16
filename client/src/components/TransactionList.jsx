@@ -1,6 +1,8 @@
 import TransactionItem from "./TransactionItem";
 
-// lista transações - simples, apenas mostra a lista
+// Componente que renderiza a lista completa de transações
+// Itera sobre o array de transações e renderiza um TransactionItem para cada uma
+// Mostra uma mensagem quando não existem transações
 const TransactionList = ({ transactions, categories = [], onDelete }) => {
   return (
     <div className="transaction-list-container">

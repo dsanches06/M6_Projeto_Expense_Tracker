@@ -1,5 +1,7 @@
 
-
+// Componente modal de confirmação
+// Exibe um diálogo de confirmação antes de apagar uma transação
+// Apresenta botões para cancelar ou confirmar a eliminação
 const ModalConfirm = ({ cancel, confirm }) => {
   return (
     <div className="modal-overlay" onClick={cancel}>

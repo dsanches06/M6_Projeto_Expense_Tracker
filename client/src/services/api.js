@@ -1,4 +1,6 @@
-// src/api.js - VERSÃO COMPLETA PARA A V2
+// Serviço de comunicação com a API do servidor
+// Contém todas as funções para operações CRUD de transações e categorias
+// A filtragem por datas é feita no frontend, a API devolve todos os dados
 const API_URL = 'http://localhost:3001'
 
 // Buscar todas as transações (GET)
