@@ -232,9 +232,9 @@ const History = () => {
                       key={tx.id}
                       className={tx.amount > 0 ? "income-row" : "expense-row"}
                     >
-                      <td>{new Date(tx.date).toLocaleDateString("pt-PT")}</td>
-                      <td>{tx.description}</td>
-                      <td>
+                      <td data-label="Data">{new Date(tx.date).toLocaleDateString("pt-PT")}</td>
+                      <td data-label="Descrição">{tx.description}</td>
+                      <td data-label="Categoria">
                         {categoryIcon && (
                           <img
                             src={categoryIcon}
@@ -250,6 +250,7 @@ const History = () => {
                         {categoryName}
                       </td>
                       <td
+                        data-label="Valor"
                         className={
                           tx.amount > 0 ? "amount-positive" : "amount-negative"
                         }

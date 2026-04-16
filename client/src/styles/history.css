@@ -285,22 +285,135 @@
   color: #d9534f;
 }
 
-@media (max-width: 768px) {
+/* Tablet */
+@media (max-width: 900px) {
   .history-card {
-    padding: 20px;
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .history-title {
+    font-size: 22px;
+    margin-bottom: 12px;
   }
 
   .transactions-table {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .transactions-table th,
   .transactions-table td {
-    padding: 10px 8px;
+    padding: 12px 8px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .history-container {
+    padding: 12px 8px 32px;
+  }
+
+  .history-card {
+    padding: 16px;
+    gap: 12px;
+    border-radius: 10px;
+  }
+
+  .history-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .history-filters {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .search-input {
+    padding: 10px 12px;
+    font-size: 13px;
   }
 
   .filter-buttons {
     flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .filter-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    flex: 1 1 0;
+    text-align: center;
+    min-width: 0;
+  }
+
+  /* Transform table into card layout on mobile */
+  .transactions-table thead {
+    display: none;
+  }
+
+  .transactions-table,
+  .transactions-table tbody,
+  .transactions-table tr,
+  .transactions-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .transactions-table tbody tr {
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #e0e4ea;
+    border-bottom: 1px solid #e0e4ea;
+    position: relative;
+  }
+
+  .app.dark .transactions-table tbody tr {
+    border-color: var(--border-color);
+  }
+
+  .transactions-table td {
+    padding: 4px 0;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .transactions-table td::before {
+    content: attr(data-label);
+    display: inline-block;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--secondary-color);
+    min-width: 90px;
+    margin-right: 8px;
+  }
+
+  .transactions-table td:last-child {
+    margin-top: 8px;
+    text-align: right;
+  }
+
+  .transactions-table td:last-child::before {
+    display: none;
+  }
+
+  .transactions-table .btn-delete {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .empty-state {
+    min-height: 200px;
+    padding: 30px 16px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
   }
 }
 
