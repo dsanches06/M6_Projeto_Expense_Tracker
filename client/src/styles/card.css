@@ -9,7 +9,8 @@
 }
 
 .sectionCard .card {
-  width: 280px;
+  width: 100%;
+  max-width: 320px;
   height: 140px;
   border-radius: 16px;
   display: flex;
@@ -64,4 +65,64 @@
 .sectionCard .card .cardValue {
   font-size: 28px;
   font-weight: 700;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .sectionCard {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 0 12px;
+    margin-bottom: 30px;
+  }
+
+  .sectionCard .card {
+    height: 120px;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .sectionCard .card .cardIcon {
+    font-size: 28px;
+  }
+
+  .sectionCard .card .cardValue {
+    font-size: 20px;
+  }
+
+  .sectionCard .card .cardTitle {
+    font-size: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .sectionCard {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0;
+    margin-bottom: 24px;
+  }
+
+  .sectionCard .card {
+    max-width: 100%;
+    height: auto;
+    min-height: 90px;
+    padding: 16px 20px;
+    gap: 14px;
+  }
+
+  .sectionCard .card .cardIcon {
+    font-size: 30px;
+  }
+
+  .sectionCard .card .cardValue {
+    font-size: 22px;
+  }
+
+  .sectionCard .card .cardTitle {
+    font-size: 12px;
+  }
 }

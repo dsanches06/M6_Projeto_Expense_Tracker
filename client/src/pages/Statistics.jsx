@@ -301,10 +301,13 @@ const Statistics = () => {
     ],
   };
 
+  // Detectar mobile
+  const isMobile = window.innerWidth <= 768;
+
   // Opções compartilhadas dos gráficos
   const commonOptions = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     animation: {
       duration: 800,
       easing: "easeInOutQuad",
@@ -314,7 +317,7 @@ const Statistics = () => {
         labels: {
           color: colors.text,
           font: {
-            size: 14,
+            size: isMobile ? 11 : 14,
           },
         },
       },
@@ -338,11 +341,20 @@ const Statistics = () => {
     ...commonOptions,
     scales: {
       y: {
-        ticks: { color: colors.text, callback: (value) => formatConverted(value) },
+        ticks: {
+          color: colors.text,
+          callback: (value) => formatConverted(value),
+          font: { size: isMobile ? 10 : 12 },
+          maxTicksLimit: isMobile ? 6 : 10,
+        },
         grid: { color: colors.grid },
       },
       x: {
-        ticks: { color: colors.text },
+        ticks: {
+          color: colors.text,
+          font: { size: isMobile ? 9 : 12 },
+          maxRotation: isMobile ? 45 : 0,
+        },
         grid: { color: colors.grid },
       },
     },
@@ -352,11 +364,21 @@ const Statistics = () => {
     ...commonOptions,
     scales: {
       y: {
-        ticks: { color: colors.text, callback: (value) => formatConverted(value) },
+        ticks: {
+          color: colors.text,
+          callback: (value) => formatConverted(value),
+          font: { size: isMobile ? 10 : 12 },
+          maxTicksLimit: isMobile ? 6 : 10,
+        },
         grid: { color: colors.grid },
       },
       x: {
-        ticks: { color: colors.text },
+        ticks: {
+          color: colors.text,
+          font: { size: isMobile ? 9 : 12 },
+          maxRotation: isMobile ? 45 : 0,
+          maxTicksLimit: isMobile ? 8 : 20,
+        },
         grid: { color: colors.grid },
       },
     },
@@ -364,6 +386,7 @@ const Statistics = () => {
 
   const doughnutOptions = {
     ...commonOptions,
+    maintainAspectRatio: true,
     plugins: {
       ...commonOptions.plugins,
       legend: {
@@ -371,7 +394,7 @@ const Statistics = () => {
         position: "bottom",
         labels: {
           ...commonOptions.plugins.legend.labels,
-          font: { size: 14 },
+          font: { size: isMobile ? 11 : 14 },
         },
       },
     },
@@ -379,14 +402,15 @@ const Statistics = () => {
 
   const pieOptions = {
     ...commonOptions,
+    maintainAspectRatio: true,
     plugins: {
       ...commonOptions.plugins,
       legend: {
         ...commonOptions.plugins.legend,
-        position: "right",
+        position: isMobile ? "bottom" : "right",
         labels: {
           ...commonOptions.plugins.legend.labels,
-          font: { size: 14 },
+          font: { size: isMobile ? 11 : 14 },
         },
       },
     },
@@ -403,7 +427,9 @@ const Statistics = () => {
       {/* Bar Chart - Full Width */}
       <div className="chart-card full-width">
         <h2>Visão Geral Financeira</h2>
-        <Bar data={barChartData} options={barOptions} />
+        <div className="chart-wrapper">
+          <Bar data={barChartData} options={barOptions} />
+        </div>
       </div>
 
       {/* Two Doughnut Charts Side by Side */}
@@ -436,7 +462,9 @@ const Statistics = () => {
       {/* Line Chart - Full Width */}
       <div className="chart-card full-width">
         <h2>Evolução do Saldo</h2>
-        <Line data={lineChartData} options={lineOptions} />
+        <div className="chart-wrapper">
+          <Line data={lineChartData} options={lineOptions} />
+        </div>
       </div>
     </div>
   );
