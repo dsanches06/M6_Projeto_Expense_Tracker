@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { initDB } = require("./data/db");
+const logger = require("./middlewares/loggerMiddleware");
 
 const transactionsRouter = require("./routes/transactions");
 const categoriesRouter = require("./routes/categories");
@@ -9,8 +10,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // ─── Middleware ───────────────────────────────
-app.use(cors()); // Permite pedidos do React (localhost:3000, etc.)
-app.use(express.json()); // Interpreta JSON no body dos pedidos
+app.use(logger);
+app.use(express.json());
+app.use(cors());
 
 // ─── Rotas ───────────────────────────────────
 app.use("/api/transactions", transactionsRouter);
@@ -53,8 +55,8 @@ app.use((req, res) => {
 // ─── Iniciar servidor ─────────────────────────
 initDB();
 app.listen(PORT, () => {
-  console.log(`\nServidor a correr em http://localhost:${PORT}`);
-  console.log(`Documentação:       http://localhost:${PORT}/`);
-  console.log(`Transações:         http://localhost:${PORT}/api/transactions`);
-  console.log(`Categorias:         http://localhost:${PORT}/api/categories\n`);
+  console.log(`\n✅ Servidor a correr em http://localhost:${PORT}`);
+  console.log(`📚 Documentação:       http://localhost:${PORT}/`);
+  console.log(`💸 Transações:         http://localhost:${PORT}/api/transactions`);
+  console.log(`📂 Categorias:         http://localhost:${PORT}/api/categories\n`);
 });

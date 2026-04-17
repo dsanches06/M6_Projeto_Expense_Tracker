@@ -7,7 +7,6 @@ const DB_PATH = path.join(__dirname, "transactions.json");
 function initDB() {
   if (!fs.existsSync(DB_PATH)) {
     fs.writeFileSync(DB_PATH, JSON.stringify({ transactions: [] }, null, 2));
-    console.log("📁 Base de dados criada em data/transactions.json");
   }
 }
 

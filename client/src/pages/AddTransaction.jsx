@@ -10,6 +10,8 @@ const AddTransaction = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const descriptionInputRef = useRef(null);
+  const [descriptionError, setDescriptionError] = useState("");
+  const [amountError, setAmountError] = useState("");
 
   const [formData, setFormData] = useState({
     description: "",
@@ -47,22 +49,17 @@ const AddTransaction = () => {
         date: data.date,
       };
 
-      console.log("📤 Enviando transação:", payload);
       return createTransaction(payload).then((res) => {
-        console.log("✅ Resposta do servidor:", res);
         return res;
       });
     },
     onSuccess: () => {
-      console.log("🔄 Invalidando cache...");
       // Invalida o cache - da próxima vez que o Dashboard abrir,
       // o useQuery vai buscar dados frescos à API
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      console.log("✅ Cache invalidado, redirecionando...");
       navigate('/');
     },
     onError: (error) => {
-      console.error("❌ Erro ao criar transação:", error);
     },
   });
 
@@ -88,24 +85,34 @@ const AddTransaction = () => {
     
     // Validação adicional
     if (!formData.description.trim()) {
-      console.error("❌ Descrição vazia");
-      alert("Por favor, preenche a descrição");
+      setDescriptionError("A descrição é obrigatória");
       return;
     }
+    
+    if (formData.description.trim().length < 3) {
+      setDescriptionError("A descrição deve ter no mínimo 3 caracteres");
+      return;
+    }
+    
+    setDescriptionError("");
     
     if (!formData.amount) {
-      console.error("❌ Valor vazio");
-      alert("Por favor, preenche o valor");
+      setAmountError("O valor é obrigatório");
       return;
     }
     
+    if (parseFloat(formData.amount) === 0) {
+      setAmountError("O valor não pode ser zero");
+      return;
+    }
+    
+    setAmountError("");
+    
     if (!formData.category_id) {
-      console.error("❌ Categoria não selecionada");
       alert("Por favor, seleciona uma categoria");
       return;
     }
 
-    console.log("📝 Submetendo formulário:", formData);
     mutation.mutate(formData);
   };
 
@@ -120,10 +127,19 @@ const AddTransaction = () => {
             id="description"
             name="description"
             value={formData.description}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              setDescriptionError("");
+            }}
             placeholder="Ex: Compras no supermercado"
             required
+            style={descriptionError ? { borderColor: "#e74c3c" } : {}}
           />
+          {descriptionError && (
+            <span style={{ color: "#e74c3c", fontSize: "0.85rem", marginTop: "0.25rem", display: "block" }}>
+              {descriptionError}
+            </span>
+          )}
         </div>
 
         <div className="form-group">
@@ -133,11 +149,20 @@ const AddTransaction = () => {
             id="amount"
             name="amount"
             value={formData.amount}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              setAmountError("");
+            }}
             placeholder="0.00"
             step="0.01"
             required
+            style={amountError ? { borderColor: "#e74c3c" } : {}}
           />
+          {amountError && (
+            <span style={{ color: "#e74c3c", fontSize: "0.85rem", marginTop: "0.25rem", display: "block" }}>
+              {amountError}
+            </span>
+          )}
         </div>
 
         <div className="form-group">

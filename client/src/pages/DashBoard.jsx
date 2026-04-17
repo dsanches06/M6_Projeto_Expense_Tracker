@@ -17,8 +17,9 @@ import "../styles/dashboard.css";
 // Apresenta o resumo financeiro (saldo, receitas, despesas),
 // filtros por data e categoria, e as transações recentes
 const Dashboard = () => {
+  const [showFilters, setShowFilters] = useState(false);
   const [filters, dispatch] = useReducer(filtersReducer, initialFiltersState);
-  const { userName, currency } = useContext(PreferencesContext);
+  const { userName } = useContext(PreferencesContext);
 
   // Tempo mínimo de loading para melhor experiência visual
   const [minLoading, setMinLoading] = useState(true);
@@ -96,14 +97,41 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <div className="dashboard-header">
-        <h1>Olá, {userName}! 👋</h1>
-        <p>Bem-vindo ao teu painel de gestão de despesas</p>
+      <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1>Olá, {userName}! 👋</h1>
+          <p>Bem-vindo ao teu painel de gestão de despesas</p>
+        </div>
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          style={{
+            padding: '10px 20px',
+            borderRadius: '6px',
+            border: 'none',
+            backgroundColor: showFilters ? '#4a78e0' : '#5a8aff',
+            color: '#fff',
+            cursor: 'pointer',
+            fontWeight: '600',
+            transition: 'all 0.3s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            whiteSpace: 'nowrap'
+          }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = showFilters ? '#4a78e0' : '#5a8aff'}
+        >
+          <span>{showFilters ? '✕' : '⚙️'}</span>
+          {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
+        </button>
       </div>
 
       {/* Summary Cards */}
-      <Summary balance={balance} income={income} expenses={expenses} currency={currency} />
+      <Summary balance={balance} income={income} expenses={expenses} />
 
+      {/* Filtros Colapsáveis */}
+      {showFilters && (
+        <>
       {/* Filtros */}
       <section className="filters-section">
         <h2>Filtrar por Data</h2>
@@ -130,6 +158,8 @@ const Dashboard = () => {
             onCategoryChange={handleCategoryChange}
           />
         </section>
+      )}
+        </>
       )}
 
       {/* Transactions List */}

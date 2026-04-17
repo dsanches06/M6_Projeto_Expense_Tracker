@@ -38,6 +38,10 @@ ChartJS.defaults.devicePixelRatio = window.devicePixelRatio || 2;
 // e gráfico de linha (evolução do saldo e despesas ao longo do tempo)
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [dateStart, setDateStart] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
   const { theme } = useTheme();
   const { currency } = useContext(PreferencesContext);
 
@@ -76,6 +80,36 @@ const Statistics = () => {
     queryKey: ["categories"],
     queryFn: getCategories,
   });
+
+  // Filtrar transações com base nos filtros selecionados
+  const getFilteredTransactions = () => {
+    return allTransactions.filter((tx) => {
+      // Filtro de categoria
+      if (selectedCategory && tx.category !== selectedCategory) {
+        return false;
+      }
+
+      // Filtro de data
+      const txDate = new Date(tx.date);
+      if (dateStart) {
+        const start = new Date(dateStart);
+        if (txDate < start) {
+          return false;
+        }
+      }
+      if (dateEnd) {
+        const end = new Date(dateEnd);
+        end.setHours(23, 59, 59, 999); // Include the entire day
+        if (txDate > end) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  };
+
+  const filteredTransactions = getFilteredTransactions();
 
   // Mapa de slug para nome legível das categorias
   const categoryMap = {};
@@ -135,7 +169,7 @@ const Statistics = () => {
       "Domingo": { expenses: 0, income: 0 },
     };
 
-    allTransactions.forEach((tx) => {
+    filteredTransactions.forEach((tx) => {
       const date = new Date(tx.date);
       const dayIndex = date.getDay();
       const dayName = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"][dayIndex];
@@ -176,7 +210,7 @@ const Statistics = () => {
   const getExpensesByCategory = () => {
     const expensesByCategory = {};
 
-    allTransactions.forEach((tx) => {
+    filteredTransactions.forEach((tx) => {
       if (tx.amount < 0) {
         const category = tx.category || "Sem categoria";
         expensesByCategory[category] =
@@ -207,7 +241,7 @@ const Statistics = () => {
   const getIncomeByCategory = () => {
     const incomeByCategory = {};
 
-    allTransactions.forEach((tx) => {
+    filteredTransactions.forEach((tx) => {
       if (tx.amount > 0) {
         const category = tx.category || "Sem categoria";
         incomeByCategory[category] =
@@ -236,7 +270,7 @@ const Statistics = () => {
   // ==================== DADOS PARA LINE CHART ====================
   // Evolução do saldo ao longo do tempo
   const getBalanceEvolution = () => {
-    const sortedTransactions = [...allTransactions].sort(
+    const sortedTransactions = [...filteredTransactions].sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
 
@@ -254,7 +288,7 @@ const Statistics = () => {
 
   // Evolução de despesas acumuladas ao longo do tempo
   const getExpenseEvolution = () => {
-    const sortedTransactions = [...allTransactions].sort(
+    const sortedTransactions = [...filteredTransactions].sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
 
@@ -427,9 +461,224 @@ const Statistics = () => {
 
   return (
     <div className="statistics-container">
-      <h1>Estatísticas</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h1 style={{ margin: '0' }}>Estatísticas</h1>
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          style={{
+            padding: '10px 20px',
+            borderRadius: '6px',
+            border: 'none',
+            backgroundColor: showFilters ? '#4a78e0' : '#5a8aff',
+            color: '#fff',
+            cursor: 'pointer',
+            fontWeight: '600',
+            transition: 'all 0.3s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = showFilters ? '#4a78e0' : '#5a8aff'}
+        >
+          <span>{showFilters ? '✕' : '⚙️'}</span>
+          {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
+        </button>
+      </div>
 
-      {/* Bar Chart - Full Width */}
+      {/* Filtros Colapsáveis */}
+      {showFilters && (
+        <>
+      {/* Filtro por Data */}
+      <div className="filter-section" style={{
+        backgroundColor: theme === 'dark' ? '#252d3d' : '#f5f7fa',
+        padding: '20px',
+        borderRadius: '8px',
+        marginBottom: '25px'
+      }}>
+        <h2 style={{ fontSize: '18px', marginBottom: '15px', marginTop: '0' }}>Filtrar por Data</h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+          gap: '15px',
+          alignItems: 'flex-end'
+        }}>
+          {/* Filtro Data Início */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
+              Data Início
+            </label>
+            <input
+              type="date"
+              value={dateStart}
+              onChange={(e) => setDateStart(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderRadius: '6px',
+                border: `1px solid ${theme === 'dark' ? '#3a4454' : '#ddd'}`,
+                backgroundColor: theme === 'dark' ? '#1e232f' : '#fff',
+                color: theme === 'dark' ? '#e8eaed' : '#212529'
+              }}
+            />
+          </div>
+
+          {/* Filtro Data Fim */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
+              Data Fim
+            </label>
+            <input
+              type="date"
+              value={dateEnd}
+              onChange={(e) => setDateEnd(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderRadius: '6px',
+                border: `1px solid ${theme === 'dark' ? '#3a4454' : '#ddd'}`,
+                backgroundColor: theme === 'dark' ? '#1e232f' : '#fff',
+                color: theme === 'dark' ? '#e8eaed' : '#212529'
+              }}
+            />
+          </div>
+
+          {/* Botão Limpar Filtros */}
+          <button
+            onClick={() => {
+              setSelectedCategory("");
+              setDateStart("");
+              setDateEnd("");
+            }}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: '#5a8aff',
+              color: '#fff',
+              cursor: 'pointer',
+              fontWeight: '600',
+              transition: 'background-color 0.2s'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = '#5a8aff'}
+          >
+            Limpar Filtros
+          </button>
+        </div>
+      </div>
+
+      {/* Filtro por Categoria */}
+      <div className="filter-section" style={{
+        backgroundColor: theme === 'dark' ? '#252d3d' : '#f5f7fa',
+        padding: '20px',
+        borderRadius: '8px',
+        marginBottom: '25px'
+      }}>
+        <h2 style={{ fontSize: '18px', marginBottom: '15px', marginTop: '0' }}>Filtrar por Categoria</h2>
+        
+        {/* Despesas */}
+        <div style={{ marginBottom: '20px' }}>
+          <p style={{ color: '#ff6b6b', fontWeight: '600', fontSize: '14px', marginBottom: '10px', textTransform: 'uppercase' }}>DESPESAS</p>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '10px'
+          }}>
+            {categories
+              .filter((cat) => cat.type === 'expense')
+              .map((cat) => (
+                <button
+                  key={cat.slug}
+                  onClick={() => setSelectedCategory(selectedCategory === cat.slug ? "" : cat.slug)}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: '20px',
+                    border: `2px solid ${selectedCategory === cat.slug ? '#5a8aff' : theme === 'dark' ? '#3a4454' : '#ddd'}`,
+                    backgroundColor: selectedCategory === cat.slug ? '#5a8aff' : 'transparent',
+                    color: selectedCategory === cat.slug ? '#fff' : theme === 'dark' ? '#e8eaed' : '#212529',
+                    cursor: 'pointer',
+                    fontWeight: '500',
+                    fontSize: '13px',
+                    transition: 'all 0.2s',
+                    whiteSpace: 'nowrap'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedCategory !== cat.slug) {
+                      e.target.style.borderColor = '#5a8aff';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedCategory !== cat.slug) {
+                      e.target.style.borderColor = theme === 'dark' ? '#3a4454' : '#ddd';
+                    }
+                  }}
+                >
+                  {cat.icon} {cat.name}
+                </button>
+              ))}
+          </div>
+        </div>
+
+        {/* Receitas */}
+        <div>
+          <p style={{ color: '#6bcf7f', fontWeight: '600', fontSize: '14px', marginBottom: '10px', textTransform: 'uppercase' }}>RECEITAS</p>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '10px'
+          }}>
+            {categories
+              .filter((cat) => cat.type === 'income')
+              .map((cat) => (
+                <button
+                  key={cat.slug}
+                  onClick={() => setSelectedCategory(selectedCategory === cat.slug ? "" : cat.slug)}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: '20px',
+                    border: `2px solid ${selectedCategory === cat.slug ? '#5a8aff' : theme === 'dark' ? '#3a4454' : '#ddd'}`,
+                    backgroundColor: selectedCategory === cat.slug ? '#5a8aff' : 'transparent',
+                    color: selectedCategory === cat.slug ? '#fff' : theme === 'dark' ? '#e8eaed' : '#212529',
+                    cursor: 'pointer',
+                    fontWeight: '500',
+                    fontSize: '13px',
+                    transition: 'all 0.2s',
+                    whiteSpace: 'nowrap'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedCategory !== cat.slug) {
+                      e.target.style.borderColor = '#5a8aff';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedCategory !== cat.slug) {
+                      e.target.style.borderColor = theme === 'dark' ? '#3a4454' : '#ddd';
+                    }
+                  }}
+                >
+                  {cat.icon} {cat.name}
+                </button>
+              ))}
+          </div>
+        </div>
+      </div>
+        </>
+      )}
+
+      {/* Mensagem quando não há dados */}
+      {filteredTransactions.length === 0 ? (
+        <div style={{
+          textAlign: 'center',
+          padding: '40px 20px',
+          backgroundColor: theme === 'dark' ? '#252d3d' : '#f5f7fa',
+          borderRadius: '8px',
+          color: theme === 'dark' ? '#b0b5c1' : '#5a6473'
+        }}>
+          <p>Nenhuma transação encontrada com os filtros selecionados.</p>
+        </div>
+      ) : (
+        <>
       <div className="chart-card full-width">
         <h2>Visão Geral Financeira</h2>
         <div className="chart-wrapper">
@@ -471,6 +720,8 @@ const Statistics = () => {
           <Line data={lineChartData} options={lineOptions} />
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 };

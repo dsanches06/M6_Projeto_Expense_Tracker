@@ -6,23 +6,9 @@ import { PreferencesContext } from '../../context/PreferencesContext'
 import TransactionListCard from './TransactionListCard'
 
 const RecentTransactions = ({ transactions = [], categories = [] }) => {
-
   const { currency } = useContext(PreferencesContext)
 
-  // Taxas de câmbio fixas (base EUR)
-  const RATES = {
-    EUR: 1,
-    USD: 1.08,
-    GBP: 0.86,
-  };
-
-  // Supondo que os valores das transações estão em EUR
-  const convertCurrency = (value, from, to) => {
-    if (from === to) return value;
-    const valueInEur = from === "EUR" ? value : value / RATES[from];
-    return valueInEur * RATES[to];
-  };
-
+  // Formatar valores monetários de acordo com a moeda selecionada
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
@@ -85,7 +71,7 @@ const RecentTransactions = ({ transactions = [], categories = [] }) => {
                     </div>
                     
                     <div className={`transaction-amount ${isIncome ? 'income' : 'expense'}`}>
-                      {isIncome ? '+' : ''}{formatCurrency(Math.abs(convertCurrency(transaction.amount, "EUR", currency)))}
+                      {isIncome ? '+' : ''}{formatCurrency(Math.abs(transaction.amount))}
                     </div>
                   </div>
                 </div>
