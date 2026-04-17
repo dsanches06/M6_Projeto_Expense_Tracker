@@ -18,7 +18,7 @@ import "../styles/dashboard.css";
 // filtros por data e categoria, e as transações recentes
 const Dashboard = () => {
   const [filters, dispatch] = useReducer(filtersReducer, initialFiltersState);
-  const { userName } = useContext(PreferencesContext);
+  const { userName, currency } = useContext(PreferencesContext);
 
   // Tempo mínimo de loading para melhor experiência visual
   const [minLoading, setMinLoading] = useState(true);
@@ -102,7 +102,7 @@ const Dashboard = () => {
       </div>
 
       {/* Summary Cards */}
-      <Summary balance={balance} income={income} expenses={expenses} />
+      <Summary balance={balance} income={income} expenses={expenses} currency={currency} />
 
       {/* Filtros */}
       <section className="filters-section">
