@@ -3,3 +3,8 @@ client/dist
 server/node_modules
 api
 .vercel
+
+# Environment variables (local only)
+.env
+.env.local
+.env.*.local
