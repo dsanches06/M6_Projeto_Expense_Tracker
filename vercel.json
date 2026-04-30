@@ -3,23 +3,9 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "framework": "vite",
-  "env": [
-    "VITE_API_URL"
-  ],
-  "functions": {
-    "server/**": {
-      "memory": 1024,
-      "maxDuration": 10
+  "env": {
+    "VITE_API_URL": {
+      "description": "API URL for the Expense Tracker backend"
     }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server/src/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/client/dist/index.html"
-    }
-  ]
+  }
 }
