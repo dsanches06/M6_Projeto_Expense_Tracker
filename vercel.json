@@ -1,11 +1,15 @@
 {
-  "version": 2,
-  "buildCommand": "cd client && npm install && npm run build",
+  "buildCommand": "cd client && npm run build",
+  "installCommand": "npm install && cd client && npm install && cd ../api && npm install",
   "outputDirectory": "client/dist",
-  "framework": "vite",
   "env": {
-    "VITE_API_URL": {
-      "description": "API URL for the Expense Tracker backend"
+    "VITE_API_URL": "/api",
+    "VERCEL": "true"
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
     }
-  }
+  ]
 }
