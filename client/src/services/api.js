@@ -1,7 +1,7 @@
 // Serviço de comunicação com a API do servidor
 // Contém todas as funções para operações CRUD de transações e categorias
 // A filtragem por datas é feita no frontend, a API devolve todos os dados
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
 
 // Buscar todas as transações (GET)
 // A filtragem por datas é feita no frontend com .filter()
