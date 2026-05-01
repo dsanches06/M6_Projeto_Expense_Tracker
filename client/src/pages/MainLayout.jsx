@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import expenseLogo from "../assets/expense.png";
 import "../styles/MainLayout.css";
 
 // Layout principal da aplicação
@@ -25,7 +26,7 @@ const MainLayout = () => {
             <Link to="/" className="logo-link" onClick={() => setSidebarOpen(false)}>
               <img
                 className="nav-logo"
-                src="./src/assets/expense.png"
+                src={expenseLogo}
                 alt="logotipo do app"
               />
             </Link>
