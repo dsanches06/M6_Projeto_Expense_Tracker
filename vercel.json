@@ -2,17 +2,6 @@
   "buildCommand": "cd client && npm run build",
   "installCommand": "npm install && cd client && npm install && cd ../api && npm install",
   "outputDirectory": "client/dist",
-  "functions": {
-    "api/api.js": {
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/api"
-    }
-  ],
   "env": {
     "VITE_API_URL": "/api",
     "VERCEL": "true"
