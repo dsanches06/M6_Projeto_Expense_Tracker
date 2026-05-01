@@ -1,36 +1,29 @@
-const express = require("express");
-const cors = require("cors");
-const { initDB } = require("./src/data/db");
-const transactionsRouter = require("./src/routes/transactions");
+const db = require('./src/data/db');
 
-const app = express();
+module.exports = async function handler(req, res) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-app.use(cors());
-app.use(express.json());
-
-// Initialize DB
-initDB().catch((err) => {
-  console.error("❌ Erro ao inicializar BD:", err);
-});
-
-console.log("✅ Handler de transações carregado");
-
-// Test route
-app.get("/test", (req, res) => {
-  res.json({ message: "Handler de transações está funcionando!" });
-});
-
-// All transaction routes
-app.use("/", transactionsRouter);
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ 
-    error: "Rota não encontrada", 
-    path: req.path,
-    method: req.method 
-  });
-});
-
-module.exports = app;
-
+  try {
+    if (req.method === 'GET') {
+      const transactions = await db.getAllTransactions();
+      res.status(200).json(transactions);
+    } else if (req.method === 'POST') {
+      const transaction = await db.createTransaction(req.body);
+      res.status(201).json(transaction);
+    } else {
+      res.status(405).json({ error: 'Method not allowed' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+};

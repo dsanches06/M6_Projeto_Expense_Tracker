@@ -1,20 +1,26 @@
-const express = require("express");
-const cors = require("cors");
-const { initDB } = require("./src/data/db");
-const categoriesRouter = require("./src/routes/categories");
+const db = require('./src/data/db');
 
-const app = express();
+module.exports = async function handler(req, res) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-app.use(cors());
-app.use(express.json());
-
-initDB().catch((err) => {
-  console.error("Erro ao inicializar BD:", err);
-});
-
-app.use("/", categoriesRouter);
-app.use((req, res) => {
-  res.status(404).json({ error: "Rota não encontrada" });
-});
-
-module.exports = app;
+  try {
+    if (req.method === 'GET') {
+      const categories = await db.getAllCategories();
+      res.status(200).json(categories);
+    } else {
+      res.status(405).json({ error: 'Method not allowed' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
