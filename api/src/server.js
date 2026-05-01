@@ -13,8 +13,8 @@ app.use(express.json()); // Interpreta JSON no body dos pedidos
 
 // ─── Initialize Database ──────────────────────
 initDB().catch((err) => {
-  console.error("Erro ao inicializar BD:", err);
-  process.exit(1);
+  console.error("⚠️  Aviso ao inicializar BD:", err.message);
+  // Don't exit - the app can still start, but DB operations will fail
 });
 
 // ─── Rotas ───────────────────────────────────
@@ -23,9 +23,10 @@ app.use("/api/categories", categoriesRouter);
 
 // ─── Rota raiz com guia rápido ────────────────
 app.get("/", (req, res) => {
-  res.json({
+  const response = {
     message: "Expense Tracker API",
     version: "1.0.0",
+    status: process.env.DATABASE_URL ? "✅ BD Configurada" : "⚠️  DATABASE_URL não configurada",
     endpoints: {
       transactions: {
         "GET    /api/transactions": "Listar todas as transações",
@@ -47,7 +48,22 @@ app.get("/", (req, res) => {
       category: "restaurantes",
       date: "2026-04-09",
     },
-  });
+  };
+
+  if (!process.env.DATABASE_URL) {
+    response.warning = {
+      message: "⚠️  DATABASE_URL não está configurada!",
+      steps: [
+        "1. Cria um banco de dados (Neon, Vercel Postgres, ou Supabase)",
+        "2. Copia a Connection String",
+        "3. Em Vercel: Settings → Environment Variables → DATABASE_URL",
+        "4. Faz Redeploy",
+        "📖 Mais detalhes: Vê o ficheiro VERCEL_NEON_SETUP.md no repositório"
+      ]
+    };
+  }
+
+  res.json(response);
 });
 
 // ─── 404 handler ─────────────────────────────

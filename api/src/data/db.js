@@ -4,8 +4,9 @@ const path = require("path");
 
 // Check if DATABASE_URL is available
 if (!process.env.DATABASE_URL) {
-  console.error("❌ DATABASE_URL não está configurada!");
-  console.error("Configura em Vercel: Settings → Environment Variables → DATABASE_URL");
+  console.warn("⚠️  DATABASE_URL não está configurada!");
+  console.warn("   Para Vercel: Settings → Environment Variables → Adiciona DATABASE_URL");
+  console.warn("   Para desenvolvimento local: Cria .env com DATABASE_URL=postgresql://...");
 }
 
 // PostgreSQL connection pool
@@ -20,6 +21,12 @@ let dbInitialized = false;
 // Initialize the database table
 async function initDB() {
   if (dbInitialized) return;
+  
+  // If DATABASE_URL is not set, skip initialization
+  if (!process.env.DATABASE_URL) {
+    console.warn("⚠️  Pulando inicialização do DB (DATABASE_URL não configurada)");
+    return;
+  }
   
   try {
     // Test connection first
@@ -44,7 +51,7 @@ async function initDB() {
     dbInitialized = true;
   } catch (error) {
     console.error("❌ Erro ao inicializar DB:", error.message);
-    // Don't throw - let the app start anyway, but errors will occur on first request
+    throw error;
   }
 }
 
