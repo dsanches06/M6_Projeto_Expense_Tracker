@@ -18,8 +18,8 @@ initDB().catch((err) => {
 });
 
 // ─── Rotas ───────────────────────────────────
-app.use("/transactions", transactionsRouter);
-app.use("/categories", categoriesRouter);
+app.use("/api/transactions", transactionsRouter);
+app.use("/api/categories", categoriesRouter);
 
 // ─── Rota raiz com guia rápido ────────────────
 app.get("/", (req, res) => {
