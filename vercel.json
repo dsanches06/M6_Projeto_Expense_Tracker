@@ -2,6 +2,12 @@
   "buildCommand": "cd client && npm run build",
   "installCommand": "npm install && cd client && npm install && cd ../api && npm install",
   "outputDirectory": "client/dist",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/[...slug]"
+    }
+  ],
   "env": {
     "VITE_API_URL": "/api",
     "VERCEL": "true"
