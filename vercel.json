@@ -7,15 +7,10 @@
     "VERCEL": "true",
     "DATABASE_URL": "@database_url"
   },
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/src/server.js"
+      "destination": "/api"
     }
   ]
 }
