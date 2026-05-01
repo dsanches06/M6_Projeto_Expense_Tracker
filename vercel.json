@@ -9,8 +9,12 @@
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api"
+      "source": "/api/transactions(.*)",
+      "destination": "/api/transactions"
+    },
+    {
+      "source": "/api/categories(.*)",
+      "destination": "/api/categories"
     }
   ]
 }
