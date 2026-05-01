@@ -1,4 +1,4 @@
-const express = require("express");
+https://m6-projeto-expense-tracker.vercel.app/api/transactionsconst express = require("express");
 const cors = require("cors");
 const { initDB } = require("./data/db");
 
@@ -18,8 +18,8 @@ initDB().catch((err) => {
 });
 
 // ─── Rotas ───────────────────────────────────
-app.use("/api/transactions", transactionsRouter);
-app.use("/api/categories", categoriesRouter);
+app.use("/transactions", transactionsRouter);
+app.use("/categories", categoriesRouter);
 
 // ─── Rota raiz com guia rápido ────────────────
 app.get("/", (req, res) => {
