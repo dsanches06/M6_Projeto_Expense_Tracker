@@ -47,4 +47,6 @@ app.use((req, res) => {
   res.status(404).json({ error: "Rota não encontrada" });
 });
 
+// ─── Export for Vercel ────────────────────────
 module.exports = app;
+
