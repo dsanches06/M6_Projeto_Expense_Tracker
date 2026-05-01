@@ -46,6 +46,16 @@ async function initDB() {
     `);
     console.log("✅ Tabela 'transactions' inicializada");
 
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS categories (
+        slug TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        icon_name TEXT,
+        color TEXT
+      );
+    `);
+    console.log("✅ Tabela 'categories' inicializada");
+
     // Migrate data from JSON if table is empty
     await migrateData();
     dbInitialized = true;
@@ -58,10 +68,11 @@ async function initDB() {
 // Migrate data from transactions.json to PostgreSQL (one-time operation)
 async function migrateData() {
   try {
-    const result = await pool.query("SELECT COUNT(*) FROM transactions;");
-    const count = parseInt(result.rows[0].count, 10);
+    // Migrate transactions
+    const txResult = await pool.query("SELECT COUNT(*) FROM transactions;");
+    const txCount = parseInt(txResult.rows[0].count, 10);
 
-    if (count === 0) {
+    if (txCount === 0) {
       const jsonPath = path.join(__dirname, "transactions.json");
       if (fs.existsSync(jsonPath)) {
         const data = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
@@ -85,6 +96,23 @@ async function migrateData() {
         }
         console.log(`📦 ${data.transactions.length} transações migradas para PostgreSQL`);
       }
+    }
+
+    // Migrate categories
+    const catResult = await pool.query("SELECT COUNT(*) FROM categories;");
+    const catCount = parseInt(catResult.rows[0].count, 10);
+
+    if (catCount === 0) {
+      const categories = require("./categories");
+      for (const cat of categories) {
+        await pool.query(
+          `INSERT INTO categories (slug, name, icon_name, color) 
+           VALUES ($1, $2, $3, $4)
+           ON CONFLICT (slug) DO NOTHING;`,
+          [cat.slug, cat.label, cat.slug, cat.color]
+        );
+      }
+      console.log(`📦 ${categories.length} categorias migradas para PostgreSQL`);
     }
   } catch (error) {
     console.error("⚠️  Erro ao migrar dados:", error.message);
@@ -181,6 +209,29 @@ async function deleteTransaction(id) {
   }
 }
 
+// --- Categories ---
+
+async function getAllCategories() {
+  await initDB();
+  try {
+    const result = await pool.query("SELECT * FROM categories ORDER BY name;");
+    return result.rows;
+  } catch (error) {
+    console.error("Erro ao buscar categorias:", error);
+    return [];
+  }
+}
+
+async function getCategoryBySlug(slug) {
+  try {
+    const result = await pool.query("SELECT * FROM categories WHERE slug = $1;", [slug]);
+    return result.rows[0] || null;
+  } catch (error) {
+    console.error("Erro ao buscar categoria:", error);
+    return null;
+  }
+}
+
 module.exports = {
   initDB,
   getAllTransactions,
@@ -188,5 +239,7 @@ module.exports = {
   createTransaction,
   updateTransaction,
   deleteTransaction,
+  getAllCategories,
+  getCategoryBySlug,
   pool, // Export pool for direct queries if needed
 };
