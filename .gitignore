@@ -1,7 +1,7 @@
 client/node_modules
 client/dist
 server/node_modules
-api
+api/node_modules
 .vercel
 
 # Environment variables (local only)
