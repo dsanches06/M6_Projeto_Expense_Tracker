@@ -50,7 +50,7 @@ const Dashboard = () => {
       const isInDateRange =
         (!filters.startDate || txDate >= filters.startDate) &&
         (!filters.endDate || txDate <= filters.endDate);
-
+      
       // Filtro de múltiplas categorias
       const isMatchingCategory =
         filters.activeCategories.length === 0 ||
@@ -112,33 +112,14 @@ const Dashboard = () => {
           <p>Bem-vindo ao teu painel de gestão de despesas</p>
         </div>
         <button
-          className={`dashboard-settings-button ${showFilters ? "open" : ""}`}
+          className={`dashboard-settings-button ${showFilters ? 'open' : ''}`}
           onClick={() => setShowFilters(!showFilters)}
-          aria-label={showFilters ? "Close filters" : "Open filters"}
-          title={showFilters ? "Fechar Filtros" : "Abrir Filtros"}
+          aria-label={showFilters ? 'Close filters' : 'Open filters'}
+          title={showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
         >
-          <span className="button-icon">
-            {showFilters ? (
-              "✕"
-            ) : (
-              <svg
-                xmlns="http://w3.org"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            )}
-          </span>
+          <span className="button-icon">{showFilters ? '✕' : '⚙️'}</span>
           <span className="button-label">
-            {showFilters ? "Fechar Filtros" : "Abrir Filtros"}
+            {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
           </span>
         </button>
       </div>
@@ -166,17 +147,9 @@ const Dashboard = () => {
 
       {/* Transactions List */}
       <section className="transactions-section">
-        <h2>
-          {filters.activeCategories.length > 0
-            ? "Transações Filtradas"
-            : "Transações Recentes"}
-        </h2>
+        <h2>{filters.activeCategories.length > 0 ? "Transações Filtradas" : "Transações Recentes"}</h2>
         <RecentTransactions
-          transactions={
-            filters.activeCategories.length > 0
-              ? filteredTransactions
-              : filteredTransactions.slice(0, 10)
-          }
+          transactions={filters.activeCategory ? filteredTransactions : filteredTransactions.slice(0, 10)}
           categories={categories}
         />
       </section>

@@ -29,7 +29,8 @@ const CollapsibleCategoryFilter = ({
     onCategoryChange(newSelected);
   };
 
-  const isSelected = (categorySlug) => selectedCategories.includes(categorySlug);
+  const isSelected = (categorySlug) =>
+    selectedCategories.includes(categorySlug);
 
   const renderCategoryButton = (category) => (
     <button
@@ -42,17 +43,15 @@ const CollapsibleCategoryFilter = ({
           isSelected(category.slug)
             ? "#5a8aff"
             : theme === "dark"
-            ? "#3a4454"
-            : "#ddd"
+              ? "#3a4454"
+              : "#ddd"
         }`,
-        backgroundColor: isSelected(category.slug)
-          ? "#5a8aff"
-          : "transparent",
+        backgroundColor: isSelected(category.slug) ? "#5a8aff" : "transparent",
         color: isSelected(category.slug)
           ? "#fff"
           : theme === "dark"
-          ? "#e8eaed"
-          : "#212529",
+            ? "#e8eaed"
+            : "#212529",
         cursor: "pointer",
         fontWeight: "500",
         fontSize: "13px",
@@ -70,7 +69,16 @@ const CollapsibleCategoryFilter = ({
         }
       }}
     >
-      {category.icon || "📌"} {category.name}
+      {category.iconUrl ? (
+        <img
+          src={category.iconUrl}
+          alt={category.name}
+          className="category-icon"
+        />
+      ) : (
+        "📌"
+      )}
+      {category.name}
     </button>
   );
 
