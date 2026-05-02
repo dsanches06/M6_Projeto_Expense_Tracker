@@ -73,7 +73,7 @@ const CollapsibleCategoryFilter = ({
         <img
           src={category.iconUrl}
           alt={category.name}
-          className="category-icon"
+          style={{ width: "16px", height: "16px", marginRight: "6px" }}
         />
       ) : (
         "📌"
