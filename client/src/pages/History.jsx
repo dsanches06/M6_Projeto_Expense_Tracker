@@ -334,7 +334,7 @@ const History = () => {
                           onClick={() => handleDeleteTransaction(tx.id)}
                           disabled={deleteMutation.isPending}
                         >
-                          🗑️ Apagar
+                          🗑️
                         </button>
                       </td>
                     </tr>
