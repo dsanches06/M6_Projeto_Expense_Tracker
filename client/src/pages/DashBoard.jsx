@@ -38,7 +38,7 @@ const Dashboard = () => {
   });
 
   // Buscar categorias
-  const { data: categories = [] } = useQuery({
+  const { data: categories = [], isLoading: categoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
   });
@@ -93,7 +93,7 @@ const Dashboard = () => {
     dispatch({ type: "RESET" });
   };
 
-  if (txLoading || minLoading) {
+  if (txLoading || categoriesLoading || minLoading) {
     return <Loader />;
   }
 

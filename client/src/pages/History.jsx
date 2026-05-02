@@ -56,7 +56,7 @@ const History = () => {
   });
 
   // Buscar categorias
-  const { data: categories = [] } = useQuery({
+  const { data: categories = [], isLoading: categoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
   });
@@ -159,7 +159,7 @@ const History = () => {
     setActiveCategoryType(category.type);
   };
 
-  if (isLoading || minLoading) {
+  if (isLoading || categoriesLoading || minLoading) {
     return <Loader />;
   }
 
