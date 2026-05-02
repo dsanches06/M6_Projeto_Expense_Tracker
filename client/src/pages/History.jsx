@@ -7,6 +7,8 @@ import {
 } from "../services/api";
 import { PreferencesContext } from "../context/PreferencesContext";
 import TransactionListCard from "../components/ui/TransactionListCard";
+import CategoryFilter from "../components/CategoryFilter";
+import DateRangePicker from "../components/DateRangePicker";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/history.css";
 
@@ -29,6 +31,10 @@ const History = () => {
   // Estado para pesquisa, filtro de tipo, modal de confirmação e ordenação
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategoryType, setActiveCategoryType] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [minLoading, setMinLoading] = useState(true);
   const [sortBy, setSortBy] = useState("date");
@@ -63,7 +69,7 @@ const History = () => {
     },
   });
 
-  // Filtrar transações por texto de pesquisa e tipo (todas, receitas ou despesas)
+  // Filtrar transações por texto de pesquisa, tipo e categoria
   const filteredTransactions = transactions.filter((tx) => {
     const matchesSearch = tx.description
       .toLowerCase()
@@ -74,7 +80,13 @@ const History = () => {
       (filterType === "income" && tx.amount > 0) ||
       (filterType === "expense" && tx.amount < 0);
 
-    return matchesSearch && matchesType;
+    const matchesCategory =
+      activeCategory === null ||
+      (tx.category === activeCategory &&
+        (activeCategoryType === null ||
+          (activeCategoryType === "expense" ? tx.amount < 0 : tx.amount > 0)));
+
+    return matchesSearch && matchesType && matchesCategory;
   });
 
   // Ordenar transações pela coluna e direção selecionadas
@@ -141,6 +153,12 @@ const History = () => {
     setDeleteId(null);
   };
 
+  // Handler para mudança de categoria
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category.slug);
+    setActiveCategoryType(category.type);
+  };
+
   if (isLoading || minLoading) {
     return <Loader />;
   }
@@ -184,6 +202,18 @@ const History = () => {
               Despesas
             </button>
           </div>
+
+          {/* Category Filter */}
+          {categories.length > 0 && (
+            <div className="history-category-filter">
+              <CategoryFilter
+                categories={categories}
+                activeCategory={activeCategory}
+                activeCategoryType={activeCategoryType}
+                onCategoryChange={handleCategoryChange}
+              />
+            </div>
+          )}
         </section>
 
         {/* Transactions List */}

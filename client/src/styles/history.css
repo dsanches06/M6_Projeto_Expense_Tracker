@@ -94,9 +94,32 @@
   transition: all 0.3s ease;
 }
 
+.filter-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.filter-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
 .app.dark .filter-btn {
   background-color: #3f4a5f;
   color: var(--text-color);
+}
+
+.app.dark .filter-btn:hover,
+.app.dark .filter-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Category Filter in History */
+.history-category-filter {
+  margin-top: 8px;
 }
 
 .filter-btn:hover {

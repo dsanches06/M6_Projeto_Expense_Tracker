@@ -119,6 +119,19 @@ const Dashboard = () => {
       {/* Summary Cards */}
       <Summary balance={balance} income={income} expenses={expenses} />
 
+      {/* Category Filter - Always visible */}
+      {categories.length > 0 && (
+        <section className="categories-section">
+          <h2>Filtrar por Categoria</h2>
+          <CategoryFilter
+            categories={categories}
+            activeCategory={filters.activeCategory}
+            activeCategoryType={filters.activeCategoryType}
+            onCategoryChange={handleCategoryChange}
+          />
+        </section>
+      )}
+
       {/* Filtros Colapsáveis */}
       {showFilters && (
         <>
@@ -136,19 +149,6 @@ const Dashboard = () => {
           </button>
         </div>
       </section>
-
-      {/* Category Filter */}
-      {categories.length > 0 && (
-        <section className="categories-section">
-          <h2>Filtrar por Categoria</h2>
-          <CategoryFilter
-            categories={categories}
-            activeCategory={filters.activeCategory}
-            activeCategoryType={filters.activeCategoryType}
-            onCategoryChange={handleCategoryChange}
-          />
-        </section>
-      )}
         </>
       )}
 
