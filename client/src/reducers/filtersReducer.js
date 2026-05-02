@@ -1,6 +1,6 @@
 // Reducer para gestão dos filtros do Dashboard
-// Gere o estado dos filtros de data e categoria
-// Ações: SET_DATE_RANGE, SET_CATEGORY, RESET
+// Gere o estado dos filtros de data e categoria (múltiplas)
+// Ações: SET_DATE_RANGE, SET_CATEGORIES, RESET
 
 export const filtersReducer = (state, action) => {
   switch (action.type) {
@@ -11,19 +11,17 @@ export const filtersReducer = (state, action) => {
         endDate: action.payload.endDate,
       };
 
-    case 'SET_CATEGORY':
+    case 'SET_CATEGORIES':
       return {
         ...state,
-        activeCategory: action.payload.slug,
-        activeCategoryType: action.payload.type,
+        activeCategories: action.payload,
       };
 
     case 'RESET':
       return {
         startDate: '',
         endDate: '',
-        activeCategory: null,
-        activeCategoryType: null,
+        activeCategories: [],
       };
 
     default:
@@ -35,6 +33,5 @@ export const filtersReducer = (state, action) => {
 export const initialFiltersState = {
   startDate: '',
   endDate: '',
-  activeCategory: null,
-  activeCategoryType: null,
+  activeCategories: [],
 };

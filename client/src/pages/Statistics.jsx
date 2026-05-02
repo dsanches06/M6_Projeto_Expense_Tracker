@@ -15,6 +15,8 @@ import {
 import { getTransactions, getCategories } from "../services/api";
 import { useTheme } from "../context/ThemeContext";
 import { PreferencesContext } from "../context/PreferencesContext";
+import CollapsibleDateFilter from "../components/CollapsibleDateFilter";
+import CollapsibleCategoryFilter from "../components/CollapsibleCategoryFilter";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/statistics.css";
 
@@ -39,7 +41,7 @@ ChartJS.defaults.devicePixelRatio = window.devicePixelRatio || 2;
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [dateStart, setDateStart] = useState("");
   const [dateEnd, setDateEnd] = useState("");
   const { theme } = useTheme();
@@ -84,8 +86,8 @@ const Statistics = () => {
   // Filtrar transações com base nos filtros selecionados
   const getFilteredTransactions = () => {
     return allTransactions.filter((tx) => {
-      // Filtro de categoria
-      if (selectedCategory && tx.category !== selectedCategory) {
+      // Filtro de categoria (múltiplas)
+      if (selectedCategories.length > 0 && !selectedCategories.includes(tx.category)) {
         return false;
       }
 
@@ -120,6 +122,21 @@ const Statistics = () => {
     if (categoryMap[slug]) return categoryMap[slug];
     // Capitalizar fallback para slugs sem mapeamento
     return slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, " ");
+  };
+
+  // Handlers para filtros
+  const handleDateChange = (start, end) => {
+    setDateStart(start);
+    setDateEnd(end);
+  };
+
+  const handleDateClear = () => {
+    setDateStart("");
+    setDateEnd("");
+  };
+
+  const handleCategoryChange = (categoryArray) => {
+    setSelectedCategories(categoryArray);
   };
 
   // Cores adaptadas ao tema atual (claro/escuro)
@@ -489,180 +506,18 @@ const Statistics = () => {
       {/* Filtros Colapsáveis */}
       {showFilters && (
         <>
-      {/* Filtro por Data */}
-      <div className="filter-section" style={{
-        backgroundColor: theme === 'dark' ? '#252d3d' : '#f5f7fa',
-        padding: '20px',
-        borderRadius: '8px',
-        marginBottom: '25px'
-      }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '15px', marginTop: '0' }}>Filtrar por Data</h2>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-          gap: '15px',
-          alignItems: 'flex-end'
-        }}>
-          {/* Filtro Data Início */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
-              Data Início
-            </label>
-            <input
-              type="date"
-              value={dateStart}
-              onChange={(e) => setDateStart(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '6px',
-                border: `1px solid ${theme === 'dark' ? '#3a4454' : '#ddd'}`,
-                backgroundColor: theme === 'dark' ? '#1e232f' : '#fff',
-                color: theme === 'dark' ? '#e8eaed' : '#212529'
-              }}
-            />
-          </div>
+          <CollapsibleDateFilter
+            startDate={dateStart}
+            endDate={dateEnd}
+            onDateChange={handleDateChange}
+            onClear={handleDateClear}
+          />
 
-          {/* Filtro Data Fim */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
-              Data Fim
-            </label>
-            <input
-              type="date"
-              value={dateEnd}
-              onChange={(e) => setDateEnd(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '6px',
-                border: `1px solid ${theme === 'dark' ? '#3a4454' : '#ddd'}`,
-                backgroundColor: theme === 'dark' ? '#1e232f' : '#fff',
-                color: theme === 'dark' ? '#e8eaed' : '#212529'
-              }}
-            />
-          </div>
-
-          {/* Botão Limpar Filtros */}
-          <button
-            onClick={() => {
-              setSelectedCategory("");
-              setDateStart("");
-              setDateEnd("");
-            }}
-            style={{
-              padding: '10px 20px',
-              borderRadius: '6px',
-              border: 'none',
-              backgroundColor: '#5a8aff',
-              color: '#fff',
-              cursor: 'pointer',
-              fontWeight: '600',
-              transition: 'background-color 0.2s'
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#5a8aff'}
-          >
-            Limpar Filtros
-          </button>
-        </div>
-      </div>
-
-      {/* Filtro por Categoria */}
-      <div className="filter-section" style={{
-        backgroundColor: theme === 'dark' ? '#252d3d' : '#f5f7fa',
-        padding: '20px',
-        borderRadius: '8px',
-        marginBottom: '25px'
-      }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '15px', marginTop: '0' }}>Filtrar por Categoria</h2>
-        
-        {/* Despesas */}
-        <div style={{ marginBottom: '20px' }}>
-          <p style={{ color: '#ff6b6b', fontWeight: '600', fontSize: '14px', marginBottom: '10px', textTransform: 'uppercase' }}>DESPESAS</p>
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '10px'
-          }}>
-            {categories
-              .filter((cat) => cat.type === 'expense')
-              .map((cat) => (
-                <button
-                  key={cat.slug}
-                  onClick={() => setSelectedCategory(selectedCategory === cat.slug ? "" : cat.slug)}
-                  style={{
-                    padding: '8px 14px',
-                    borderRadius: '20px',
-                    border: `2px solid ${selectedCategory === cat.slug ? '#5a8aff' : theme === 'dark' ? '#3a4454' : '#ddd'}`,
-                    backgroundColor: selectedCategory === cat.slug ? '#5a8aff' : 'transparent',
-                    color: selectedCategory === cat.slug ? '#fff' : theme === 'dark' ? '#e8eaed' : '#212529',
-                    cursor: 'pointer',
-                    fontWeight: '500',
-                    fontSize: '13px',
-                    transition: 'all 0.2s',
-                    whiteSpace: 'nowrap'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedCategory !== cat.slug) {
-                      e.target.style.borderColor = '#5a8aff';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedCategory !== cat.slug) {
-                      e.target.style.borderColor = theme === 'dark' ? '#3a4454' : '#ddd';
-                    }
-                  }}
-                >
-                  {cat.icon} {cat.name}
-                </button>
-              ))}
-          </div>
-        </div>
-
-        {/* Receitas */}
-        <div>
-          <p style={{ color: '#6bcf7f', fontWeight: '600', fontSize: '14px', marginBottom: '10px', textTransform: 'uppercase' }}>RECEITAS</p>
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '10px'
-          }}>
-            {categories
-              .filter((cat) => cat.type === 'income')
-              .map((cat) => (
-                <button
-                  key={cat.slug}
-                  onClick={() => setSelectedCategory(selectedCategory === cat.slug ? "" : cat.slug)}
-                  style={{
-                    padding: '8px 14px',
-                    borderRadius: '20px',
-                    border: `2px solid ${selectedCategory === cat.slug ? '#5a8aff' : theme === 'dark' ? '#3a4454' : '#ddd'}`,
-                    backgroundColor: selectedCategory === cat.slug ? '#5a8aff' : 'transparent',
-                    color: selectedCategory === cat.slug ? '#fff' : theme === 'dark' ? '#e8eaed' : '#212529',
-                    cursor: 'pointer',
-                    fontWeight: '500',
-                    fontSize: '13px',
-                    transition: 'all 0.2s',
-                    whiteSpace: 'nowrap'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedCategory !== cat.slug) {
-                      e.target.style.borderColor = '#5a8aff';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedCategory !== cat.slug) {
-                      e.target.style.borderColor = theme === 'dark' ? '#3a4454' : '#ddd';
-                    }
-                  }}
-                >
-                  {cat.icon} {cat.name}
-                </button>
-              ))}
-          </div>
-        </div>
-      </div>
+          <CollapsibleCategoryFilter
+            categories={categories}
+            selectedCategories={selectedCategories}
+            onCategoryChange={handleCategoryChange}
+          />
         </>
       )}
 

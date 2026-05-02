@@ -6,8 +6,8 @@ import {
   initialFiltersState,
 } from "../reducers/filtersReducer";
 import { PreferencesContext } from "../context/PreferencesContext";
-import DateRangePicker from "../components/DateRangePicker";
-import CategoryFilter from "../components/CategoryFilter";
+import CollapsibleDateFilter from "../components/CollapsibleDateFilter";
+import CollapsibleCategoryFilter from "../components/CollapsibleCategoryFilter";
 import Summary from "../components/Summary";
 import RecentTransactions from "../components/ui/RecentTransactions";
 import Loader from "../components/ui/TrophySpin";
@@ -50,11 +50,11 @@ const Dashboard = () => {
       const isInDateRange =
         (!filters.startDate || txDate >= filters.startDate) &&
         (!filters.endDate || txDate <= filters.endDate);
+
+      // Filtro de múltiplas categorias
       const isMatchingCategory =
-        filters.activeCategory === null ||
-        (t.category === filters.activeCategory &&
-          (filters.activeCategoryType === null ||
-            (filters.activeCategoryType === "expense" ? t.amount < 0 : t.amount > 0)));
+        filters.activeCategories.length === 0 ||
+        filters.activeCategories.includes(t.category);
 
       return isInDateRange && isMatchingCategory;
     })
@@ -81,10 +81,17 @@ const Dashboard = () => {
     });
   };
 
-  const handleCategoryChange = (category) => {
+  const handleDateClear = () => {
     dispatch({
-      type: "SET_CATEGORY",
-      payload: category,
+      type: "SET_DATE_RANGE",
+      payload: { startDate: "", endDate: "" },
+    });
+  };
+
+  const handleCategoryChange = (categoryArray) => {
+    dispatch({
+      type: "SET_CATEGORIES",
+      payload: categoryArray,
     });
   };
 
@@ -105,14 +112,33 @@ const Dashboard = () => {
           <p>Bem-vindo ao teu painel de gestão de despesas</p>
         </div>
         <button
-          className={`dashboard-settings-button ${showFilters ? 'open' : ''}`}
+          className={`dashboard-settings-button ${showFilters ? "open" : ""}`}
           onClick={() => setShowFilters(!showFilters)}
-          aria-label={showFilters ? 'Close filters' : 'Open filters'}
-          title={showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
+          aria-label={showFilters ? "Close filters" : "Open filters"}
+          title={showFilters ? "Fechar Filtros" : "Abrir Filtros"}
         >
-          <span className="button-icon">{showFilters ? '✕' : '⚙️'}</span>
+          <span className="button-icon">
+            {showFilters ? (
+              "✕"
+            ) : (
+              <svg
+                xmlns="http://w3.org"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            )}
+          </span>
           <span className="button-label">
-            {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
+            {showFilters ? "Fechar Filtros" : "Abrir Filtros"}
           </span>
         </button>
       </div>
@@ -120,44 +146,37 @@ const Dashboard = () => {
       {/* Summary Cards */}
       <Summary balance={balance} income={income} expenses={expenses} />
 
-      {/* Category Filter - Always visible */}
-      {categories.length > 0 && (
-        <section className="categories-section">
-          <h2>Filtrar por Categoria</h2>
-          <CategoryFilter
-            categories={categories}
-            activeCategory={filters.activeCategory}
-            activeCategoryType={filters.activeCategoryType}
-            onCategoryChange={handleCategoryChange}
-          />
-        </section>
-      )}
-
       {/* Filtros Colapsáveis */}
       {showFilters && (
         <>
-      {/* Filtros */}
-      <section className="filters-section">
-        <h2>Filtrar por Data</h2>
-        <div className="filters-controls">
-          <DateRangePicker
+          <CollapsibleDateFilter
             startDate={filters.startDate}
             endDate={filters.endDate}
             onDateChange={handleDateChange}
+            onClear={handleDateClear}
           />
-          <button onClick={handleResetFilters} className="reset-btn">
-            Limpar Filtros
-          </button>
-        </div>
-      </section>
+
+          <CollapsibleCategoryFilter
+            categories={categories}
+            selectedCategories={filters.activeCategories}
+            onCategoryChange={handleCategoryChange}
+          />
         </>
       )}
 
       {/* Transactions List */}
       <section className="transactions-section">
-        <h2>{filters.activeCategory ? "Transações Filtradas" : "Transações Recentes"}</h2>
+        <h2>
+          {filters.activeCategories.length > 0
+            ? "Transações Filtradas"
+            : "Transações Recentes"}
+        </h2>
         <RecentTransactions
-          transactions={filters.activeCategory ? filteredTransactions : filteredTransactions.slice(0, 10)}
+          transactions={
+            filters.activeCategories.length > 0
+              ? filteredTransactions
+              : filteredTransactions.slice(0, 10)
+          }
           categories={categories}
         />
       </section>

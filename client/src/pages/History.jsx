@@ -6,9 +6,9 @@ import {
   getCategories,
 } from "../services/api";
 import { PreferencesContext } from "../context/PreferencesContext";
+import CollapsibleDateFilter from "../components/CollapsibleDateFilter";
+import CollapsibleCategoryFilter from "../components/CollapsibleCategoryFilter";
 import TransactionListCard from "../components/ui/TransactionListCard";
-import CategoryFilter from "../components/CategoryFilter";
-import DateRangePicker from "../components/DateRangePicker";
 import Loader from "../components/ui/TrophySpin";
 import "../styles/history.css";
 
@@ -31,8 +31,6 @@ const History = () => {
   // Estado para pesquisa, filtro de tipo, modal de confirmação e ordenação
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [activeCategoryType, setActiveCategoryType] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [deleteId, setDeleteId] = useState(null);
@@ -40,6 +38,7 @@ const History = () => {
   const [sortBy, setSortBy] = useState("date");
   const [sortDirection, setSortDirection] = useState("desc");
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => setMinLoading(false), 1000);
@@ -82,12 +81,23 @@ const History = () => {
       (filterType === "expense" && tx.amount < 0);
 
     const matchesCategory =
-      activeCategory === null ||
-      (tx.category === activeCategory &&
-        (activeCategoryType === null ||
-          (activeCategoryType === "expense" ? tx.amount < 0 : tx.amount > 0)));
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(tx.category);
 
-    return matchesSearch && matchesType && matchesCategory;
+    // Filter by date range
+    const txDate = new Date(tx.date);
+    let matchesDateRange = true;
+    if (startDate) {
+      const start = new Date(startDate);
+      matchesDateRange = matchesDateRange && txDate >= start;
+    }
+    if (endDate) {
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999);
+      matchesDateRange = matchesDateRange && txDate <= end;
+    }
+
+    return matchesSearch && matchesType && matchesCategory && matchesDateRange;
   });
 
   // Ordenar transações pela coluna e direção selecionadas
@@ -154,10 +164,14 @@ const History = () => {
     setDeleteId(null);
   };
 
-  // Handler para mudança de categoria
-  const handleCategoryChange = (category) => {
-    setActiveCategory(category.slug);
-    setActiveCategoryType(category.type);
+  // Handler para mudança de categoria (múltiplas)
+  const handleCategoryChange = (categoryArray) => {
+    setSelectedCategories(categoryArray);
+  };
+
+  const handleDateClear = () => {
+    setStartDate("");
+    setEndDate("");
   };
 
   if (isLoading || categoriesLoading || minLoading) {
@@ -224,100 +238,21 @@ const History = () => {
         {/* Collapsible Filters */}
         {showFilters && (
           <>
-          {/* Date Filter Section */}
-          <section className="history-date-filter" style={{
-            backgroundColor: 'var(--surface-secondary-color, rgba(0, 0, 0, 0.05))',
-            padding: '20px',
-            borderRadius: '8px',
-            marginBottom: '20px'
-          }}>
-            <h3 style={{ fontSize: '16px', marginBottom: '15px', marginTop: '0', fontWeight: '600' }}>Filtrar por Data</h3>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-              gap: '15px',
-              alignItems: 'flex-end'
-            }}>
-              <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
-                  Data Início
-                </label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    borderRadius: '6px',
-                    border: '1px solid var(--border-color)',
-                    backgroundColor: 'var(--surface-color)',
-                    color: 'var(--text-color)',
-                    fontFamily: 'inherit'
-                  }}
-                />
-              </div>
+            <CollapsibleDateFilter
+              startDate={startDate}
+              endDate={endDate}
+              onDateChange={(start, end) => {
+                setStartDate(start);
+                setEndDate(end);
+              }}
+              onClear={handleDateClear}
+            />
 
-              <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
-                  Data Fim
-                </label>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    borderRadius: '6px',
-                    border: '1px solid var(--border-color)',
-                    backgroundColor: 'var(--surface-color)',
-                    color: 'var(--text-color)',
-                    fontFamily: 'inherit'
-                  }}
-                />
-              </div>
-
-              <button
-                onClick={() => {
-                  setStartDate("");
-                  setEndDate("");
-                }}
-                style={{
-                  padding: '10px 20px',
-                  borderRadius: '6px',
-                  border: 'none',
-                  backgroundColor: 'var(--primary-color)',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  fontWeight: '600',
-                  transition: 'background-color 0.2s'
-                }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--primary-color)'}
-              >
-                Limpar Datas
-              </button>
-            </div>
-          </section>
-
-          {/* Category Filter Section */}
-          <section className="history-category-filter" style={{
-            backgroundColor: 'var(--surface-secondary-color, rgba(0, 0, 0, 0.05))',
-            padding: '20px',
-            borderRadius: '8px',
-            marginBottom: '20px'
-          }}>
-            <h3 style={{ fontSize: '16px', marginBottom: '15px', marginTop: '0', fontWeight: '600' }}>Filtrar por Categoria</h3>
-            {categories.length > 0 && (
-              <CategoryFilter
-                categories={categories}
-                activeCategory={activeCategory}
-                activeCategoryType={activeCategoryType}
-                onCategoryChange={handleCategoryChange}
-              />
-            )}
-          </section>
+            <CollapsibleCategoryFilter
+              categories={categories}
+              selectedCategories={selectedCategories}
+              onCategoryChange={handleCategoryChange}
+            />
           </>
         )}
 
