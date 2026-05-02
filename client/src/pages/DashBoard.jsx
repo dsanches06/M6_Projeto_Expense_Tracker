@@ -99,29 +99,14 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="dashboard-header">
         <div>
           <h1>Olá, {userName}! 👋</h1>
           <p>Bem-vindo ao teu painel de gestão de despesas</p>
         </div>
         <button
+          className={`dashboard-settings-button ${showFilters ? 'open' : ''}`}
           onClick={() => setShowFilters(!showFilters)}
-          style={{
-            padding: '10px 20px',
-            borderRadius: '6px',
-            border: 'none',
-            backgroundColor: showFilters ? '#4a78e0' : '#5a8aff',
-            color: '#fff',
-            cursor: 'pointer',
-            fontWeight: '600',
-            transition: 'all 0.3s',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            whiteSpace: 'nowrap'
-          }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = showFilters ? '#4a78e0' : '#5a8aff'}
         >
           <span>{showFilters ? '✕' : '⚙️'}</span>
           {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}

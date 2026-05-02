@@ -102,16 +102,24 @@
   .sectionCard {
     grid-template-columns: 1fr;
     gap: 12px;
-    padding: 0;
+    padding: 0 10px;
     margin-bottom: 24px;
   }
 
   .sectionCard .card {
     max-width: 100%;
     height: auto;
-    min-height: 90px;
-    padding: 16px 20px;
-    gap: 14px;
+    min-height: 80px;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .sectionCard .card .cardIcon {
+    font-size: 28px;
+  }
+
+  .sectionCard .card .cardValue {
+    font-size: 20px;
   }
 
   .sectionCard .card .cardIcon {
