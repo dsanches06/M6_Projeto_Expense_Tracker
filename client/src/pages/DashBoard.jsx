@@ -46,8 +46,10 @@ const Dashboard = () => {
   // Filtrar transações no frontend com base nos filtros de data e categoria ativos
   const filteredTransactions = allTransactions
     .filter((t) => {
-      const txDate = t.date;
-      const isInDateRange = txDate >= filters.startDate && txDate <= filters.endDate;
+      const txDate = t.date || t.createdAt;
+      const isInDateRange =
+        (!filters.startDate || txDate >= filters.startDate) &&
+        (!filters.endDate || txDate <= filters.endDate);
       const isMatchingCategory =
         filters.activeCategory === null ||
         (t.category === filters.activeCategory &&
