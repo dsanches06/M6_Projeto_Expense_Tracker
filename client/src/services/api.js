@@ -3,7 +3,7 @@
 // A filtragem por datas é feita no frontend, a API devolve todos os dados
 const API_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.MODE === 'development' ? 'http://localhost:3001' : '/api')
+  (import.meta.env.MODE === 'development' ? 'http://localhost:3001' : '')
 
 // Buscar todas as transações (GET)
 // A filtragem por datas é feita no frontend com .filter()
