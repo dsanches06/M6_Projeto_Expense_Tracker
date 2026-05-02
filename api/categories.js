@@ -1,11 +1,17 @@
 const db = require('./src/data/db');
 const staticCategories = require('./src/data/categories');
 
-const buildOrigin = (req) => {
-  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
-  const host = req.headers.host || '';
-  return `${proto}://${host}`;
-};
+const encodeSvg = (svg) =>
+  encodeURIComponent(svg)
+    .replace(/%20/g, ' ')
+    .replace(/%3D/g, '=')
+    .replace(/%3A/g, ':')
+    .replace(/%2F/g, '/')
+    .replace(/%22/g, '"')
+    .replace(/%2C/g, ',')
+    .replace(/%3B/g, ';')
+    .replace(/%2B/g, '+')
+    .replace(/%27/g, "'");
 
 module.exports = async function handler(req, res) {
   // Enable CORS
@@ -22,9 +28,17 @@ module.exports = async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const categoriesFromDb = await db.getAllCategories();
-      const origin = buildOrigin(req);
       const categories = categoriesFromDb.map((dbCategory) => {
         const staticCategory = staticCategories.find((cat) => cat.slug === dbCategory.slug) || {};
+        const iconSvg = staticCategory.icon || '';
+        const coloredSvg = iconSvg.replace(
+          '<svg ',
+          `<svg style="color: ${dbCategory.color}" `,
+        );
+        const iconUrl = iconSvg
+          ? `data:image/svg+xml;utf8,${encodeSvg(coloredSvg)}`
+          : undefined;
+
         return {
           slug: dbCategory.slug,
           name: dbCategory.name,
@@ -33,7 +47,7 @@ module.exports = async function handler(req, res) {
           type: staticCategory.type || 'expense',
           label: staticCategory.label || dbCategory.name,
           labelEn: staticCategory.labelEn || dbCategory.name,
-          iconUrl: `${origin}/api/categories/${dbCategory.slug}/icon`,
+          iconUrl,
         };
       });
       res.status(200).json(categories);

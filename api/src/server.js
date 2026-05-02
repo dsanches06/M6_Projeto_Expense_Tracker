@@ -18,9 +18,29 @@ initDB().catch((err) => {
   console.error("⚠️ Aviso ao inicializar DB:", err.message);
 });
 
+const encodeSvg = (svg) =>
+  encodeURIComponent(svg)
+    .replace(/%20/g, ' ')
+    .replace(/%3D/g, '=')
+    .replace(/%3A/g, ':')
+    .replace(/%2F/g, '/')
+    .replace(/%22/g, '"')
+    .replace(/%2C/g, ',')
+    .replace(/%3B/g, ';')
+    .replace(/%2B/g, '+')
+    .replace(/%27/g, "'");
+
 const buildCategoryResponse = (req, dbCategory) => {
-  const origin = `${req.protocol}://${req.get("host")}`;
   const staticCategory = categoriesData.find((cat) => cat.slug === dbCategory.slug) || {};
+  const iconSvg = staticCategory.icon || '';
+  const coloredSvg = iconSvg.replace(
+    '<svg ',
+    `<svg style="color: ${dbCategory.color}" `,
+  );
+  const iconUrl = iconSvg
+    ? `data:image/svg+xml;utf8,${encodeSvg(coloredSvg)}`
+    : undefined;
+
   return {
     slug: dbCategory.slug,
     name: dbCategory.name,
@@ -29,7 +49,7 @@ const buildCategoryResponse = (req, dbCategory) => {
     type: staticCategory.type || "expense",
     label: staticCategory.label || dbCategory.name,
     labelEn: staticCategory.labelEn || dbCategory.name,
-    iconUrl: `${origin}/api/categories/${dbCategory.slug}/icon`,
+    iconUrl,
   };
 };
 
