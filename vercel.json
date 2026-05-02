@@ -3,7 +3,11 @@
   "installCommand": "npm install && cd client && npm install && cd ../api && npm install",
   "outputDirectory": "client/dist",
   "env": {
-    "VITE_API_URL": "/api",
     "VERCEL": "true"
-  }
+  },
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
