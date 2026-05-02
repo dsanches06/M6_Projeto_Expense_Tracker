@@ -28,12 +28,63 @@
   color: var(--text-color);
 }
 
-/* Filters Section */
-.history-filters {
+/* History Header with Filter Button */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.history-filters-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  min-width: 140px;
+  border-radius: 999px;
+  border: none;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.history-filters-button:hover {
+  background-color: #4a78e0;
+  transform: translateY(-1px);
+}
+
+.history-filters-button.open {
+  background-color: #4a78e0;
+}
+
+.history-filters-button .button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-filters-button .button-label {
+  display: inline;
+}
+
+/* Search and Filter Sections */
+.history-search {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+}
+
+.history-type-filter {
+  margin-bottom: 16px;
 }
 
 .search-input {
@@ -315,9 +366,19 @@
     gap: 16px;
   }
 
+  .history-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
   .history-title {
     font-size: 22px;
-    margin-bottom: 12px;
+    margin-bottom: 0;
+  }
+
+  .history-filters-button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
   }
 
   .transactions-table {
@@ -342,20 +403,47 @@
     border-radius: 10px;
   }
 
-  .history-title {
-    font-size: 20px;
-    margin-bottom: 8px;
-    text-align: center;
+  .history-header {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
 
-  .history-filters {
+  .history-title {
+    font-size: 20px;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  .history-filters-button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 1.05rem;
+    justify-content: center;
+    min-width: 44px;
+  }
+
+  .history-filters-button .button-label {
+    display: none;
+  }
+
+  .history-search {
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .search-input {
     padding: 10px 12px;
     font-size: 13px;
+  }
+
+  .history-type-filter {
+    margin-bottom: 10px;
   }
 
   .filter-buttons {

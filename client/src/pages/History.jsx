@@ -39,6 +39,7 @@ const History = () => {
   const [minLoading, setMinLoading] = useState(true);
   const [sortBy, setSortBy] = useState("date");
   const [sortDirection, setSortDirection] = useState("desc");
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setMinLoading(false), 1000);
@@ -170,10 +171,23 @@ const History = () => {
   return (
     <div className="history-container">
       <div className="history-card">
-        <h1 className="history-title">Histórico de Transações</h1>
+        <div className="history-header">
+          <h1 className="history-title">Histórico de Transações</h1>
+          <button
+            className={`history-filters-button ${showFilters ? 'open' : ''}`}
+            onClick={() => setShowFilters(!showFilters)}
+            aria-label={showFilters ? 'Close filters' : 'Open filters'}
+            title={showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
+          >
+            <span className="button-icon">{showFilters ? '✕' : '⚙️'}</span>
+            <span className="button-label">
+              {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
+            </span>
+          </button>
+        </div>
 
-        {/* Filtros */}
-        <section className="history-filters">
+        {/* Search Bar - Always Visible */}
+        <section className="history-search">
           <input
             type="text"
             placeholder="Pesquisar por descrição..."
@@ -181,7 +195,10 @@ const History = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+        </section>
 
+        {/* Type Filter - Always Visible */}
+        <section className="history-type-filter">
           <div className="filter-buttons">
             <button
               className={`filter-btn ${filterType === "all" ? "active" : ""}`}
@@ -202,19 +219,107 @@ const History = () => {
               Despesas
             </button>
           </div>
+        </section>
 
-          {/* Category Filter */}
-          {categories.length > 0 && (
-            <div className="history-category-filter">
+        {/* Collapsible Filters */}
+        {showFilters && (
+          <>
+          {/* Date Filter Section */}
+          <section className="history-date-filter" style={{
+            backgroundColor: 'var(--surface-secondary-color, rgba(0, 0, 0, 0.05))',
+            padding: '20px',
+            borderRadius: '8px',
+            marginBottom: '20px'
+          }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '15px', marginTop: '0', fontWeight: '600' }}>Filtrar por Data</h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+              gap: '15px',
+              alignItems: 'flex-end'
+            }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
+                  Data Início
+                </label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    borderRadius: '6px',
+                    border: '1px solid var(--border-color)',
+                    backgroundColor: 'var(--surface-color)',
+                    color: 'var(--text-color)',
+                    fontFamily: 'inherit'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', textTransform: 'uppercase', fontSize: '12px', opacity: '0.8' }}>
+                  Data Fim
+                </label>
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    borderRadius: '6px',
+                    border: '1px solid var(--border-color)',
+                    backgroundColor: 'var(--surface-color)',
+                    color: 'var(--text-color)',
+                    fontFamily: 'inherit'
+                  }}
+                />
+              </div>
+
+              <button
+                onClick={() => {
+                  setStartDate("");
+                  setEndDate("");
+                }}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: 'var(--primary-color)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  transition: 'background-color 0.2s'
+                }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--primary-color)'}
+              >
+                Limpar Datas
+              </button>
+            </div>
+          </section>
+
+          {/* Category Filter Section */}
+          <section className="history-category-filter" style={{
+            backgroundColor: 'var(--surface-secondary-color, rgba(0, 0, 0, 0.05))',
+            padding: '20px',
+            borderRadius: '8px',
+            marginBottom: '20px'
+          }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '15px', marginTop: '0', fontWeight: '600' }}>Filtrar por Categoria</h3>
+            {categories.length > 0 && (
               <CategoryFilter
                 categories={categories}
                 activeCategory={activeCategory}
                 activeCategoryType={activeCategoryType}
                 onCategoryChange={handleCategoryChange}
               />
-            </div>
-          )}
-        </section>
+            )}
+          </section>
+          </>
+        )}
 
         {/* Transactions List */}
         {sortedTransactions.length > 0 ? (

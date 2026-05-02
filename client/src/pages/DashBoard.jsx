@@ -108,6 +108,7 @@ const Dashboard = () => {
           className={`dashboard-settings-button ${showFilters ? 'open' : ''}`}
           onClick={() => setShowFilters(!showFilters)}
           aria-label={showFilters ? 'Close filters' : 'Open filters'}
+          title={showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
         >
           <span className="button-icon">{showFilters ? '✕' : '⚙️'}</span>
           <span className="button-label">
