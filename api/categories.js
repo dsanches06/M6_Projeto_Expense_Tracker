@@ -1,4 +1,11 @@
 const db = require('./src/data/db');
+const staticCategories = require('./src/data/categories');
+
+const buildOrigin = (req) => {
+  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+  const host = req.headers.host || '';
+  return `${proto}://${host}`;
+};
 
 module.exports = async function handler(req, res) {
   // Enable CORS
@@ -14,7 +21,21 @@ module.exports = async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      const categories = await db.getAllCategories();
+      const categoriesFromDb = await db.getAllCategories();
+      const origin = buildOrigin(req);
+      const categories = categoriesFromDb.map((dbCategory) => {
+        const staticCategory = staticCategories.find((cat) => cat.slug === dbCategory.slug) || {};
+        return {
+          slug: dbCategory.slug,
+          name: dbCategory.name,
+          icon_name: dbCategory.icon_name,
+          color: dbCategory.color,
+          type: staticCategory.type || 'expense',
+          label: staticCategory.label || dbCategory.name,
+          labelEn: staticCategory.labelEn || dbCategory.name,
+          iconUrl: `${origin}/api/categories/${dbCategory.slug}/icon`,
+        };
+      });
       res.status(200).json(categories);
     } else {
       res.status(405).json({ error: 'Method not allowed' });
