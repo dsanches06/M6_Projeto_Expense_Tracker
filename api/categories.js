@@ -2,16 +2,7 @@ const db = require('./src/data/db');
 const staticCategories = require('./src/data/categories');
 
 const encodeSvg = (svg) =>
-  encodeURIComponent(svg)
-    .replace(/%20/g, ' ')
-    .replace(/%3D/g, '=')
-    .replace(/%3A/g, ':')
-    .replace(/%2F/g, '/')
-    .replace(/%22/g, '"')
-    .replace(/%2C/g, ',')
-    .replace(/%3B/g, ';')
-    .replace(/%2B/g, '+')
-    .replace(/%27/g, "'");
+  encodeURIComponent(svg);
 
 module.exports = async function handler(req, res) {
   // Enable CORS
