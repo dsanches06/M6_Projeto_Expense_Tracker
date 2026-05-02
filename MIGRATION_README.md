@@ -1,6 +1,6 @@
 # 🗄️ Migração de Categorias para Neon
 
-Este script migra todas as categorias do arquivo `server/src/data/categories.js` para o banco de dados Neon PostgreSQL.
+Este script migra todas as categorias do arquivo `api/src/data/categories.js` para o banco de dados Neon PostgreSQL.
 
 ## 📋 Categorias Incluídas
 

@@ -1,86 +1,138 @@
-https://m6-projeto-expense-tracker.vercel.app/api/transactionsconst express = require("express");
+const express = require("express");
 const cors = require("cors");
-const { initDB } = require("./data/db");
-
-const transactionsRouter = require("./routes/transactions");
-const categoriesRouter = require("./routes/categories");
+const {
+  initDB,
+  getAllTransactions,
+  getTransactionById,
+  createTransaction,
+  deleteTransaction,
+  getAllCategories,
+} = require("./data/db");
+const categoriesData = require("./data/categories");
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-// ─── Middleware ───────────────────────────────
-app.use(cors()); // Permite pedidos do React (localhost:3000, etc.)
-app.use(express.json()); // Interpreta JSON no body dos pedidos
-
-// ─── Initialize Database ──────────────────────
 initDB().catch((err) => {
-  console.error("⚠️  Aviso ao inicializar BD:", err.message);
-  // Don't exit - the app can still start, but DB operations will fail
+  console.error("⚠️ Aviso ao inicializar DB:", err.message);
 });
 
-// ─── Rotas ───────────────────────────────────
-app.use("/transactions", transactionsRouter);
-app.use("/categories", categoriesRouter);
-
-// ─── Rota raiz com guia rápido ────────────────
-app.get("/", (req, res) => {
-  const response = {
-    message: "Expense Tracker API",
-    version: "1.0.0",
-    status: process.env.DATABASE_URL ? "✅ BD Configurada" : "⚠️  DATABASE_URL não configurada",
-    endpoints: {
-      transactions: {
-        "GET    /api/transactions": "Listar todas as transações",
-        "GET    /api/transactions/:id": "Obter uma transação",
-        "POST   /api/transactions": "Criar uma transação",
-        "PUT    /api/transactions/:id": "Atualizar uma transação",
-        "DELETE /api/transactions/:id": "Eliminar uma transação",
-      },
-      categories: {
-        "GET /api/categories": "Listar todas as categorias",
-        "GET /api/categories/:slug": "Obter uma categoria",
-        "GET /api/categories/:slug/icon": "Obter o ícone SVG de uma categoria",
-      },
-    },
-    exemplo_transacao: {
-      description: "Almoço no restaurante",
-      type: "expense",
-      amount: 12.5,
-      category: "restaurantes",
-      date: "2026-04-09",
-    },
+const buildCategoryResponse = (req, dbCategory) => {
+  const origin = `${req.protocol}://${req.get("host")}`;
+  const staticCategory = categoriesData.find((cat) => cat.slug === dbCategory.slug) || {};
+  return {
+    slug: dbCategory.slug,
+    name: dbCategory.name,
+    icon_name: dbCategory.icon_name,
+    color: dbCategory.color,
+    type: staticCategory.type || "expense",
+    label: staticCategory.label || dbCategory.name,
+    labelEn: staticCategory.labelEn || dbCategory.name,
+    iconUrl: `${origin}/api/categories/${dbCategory.slug}/icon`,
   };
+};
 
-  if (!process.env.DATABASE_URL) {
-    response.warning = {
-      message: "⚠️  DATABASE_URL não está configurada!",
-      steps: [
-        "1. Cria um banco de dados (Neon, Vercel Postgres, ou Supabase)",
-        "2. Copia a Connection String",
-        "3. Em Vercel: Settings → Environment Variables → DATABASE_URL",
-        "4. Faz Redeploy",
-        "📖 Mais detalhes: Vê o ficheiro VERCEL_NEON_SETUP.md no repositório"
-      ]
-    };
+app.get("/api/transactions", async (req, res) => {
+  try {
+    const transactions = await getAllTransactions();
+    res.json(transactions);
+  } catch (error) {
+    console.error("Erro ao buscar transações:", error);
+    res.status(500).json({ error: "Erro ao buscar transações" });
+  }
+});
+
+app.get("/api/transactions/:id", async (req, res) => {
+  try {
+    const transaction = await getTransactionById(req.params.id);
+    if (!transaction) {
+      return res.status(404).json({ error: "Transação não encontrada" });
+    }
+    res.json(transaction);
+  } catch (error) {
+    console.error("Erro ao buscar transação:", error);
+    res.status(500).json({ error: "Erro ao buscar transação" });
+  }
+});
+
+app.post("/api/transactions", async (req, res) => {
+  try {
+    const { description, amount, category, date, type } = req.body;
+    if (!description || description.trim() === "") {
+      return res.status(400).json({ error: "O campo 'description' é obrigatório" });
+    }
+    if (amount === undefined || amount === null || isNaN(Number(amount))) {
+      return res.status(400).json({ error: "O campo 'amount' é obrigatório e deve ser um número" });
+    }
+
+    const created = await createTransaction({
+      description: description.trim(),
+      amount: Number(amount),
+      category: category || "outro",
+      type: type || (Number(amount) >= 0 ? "income" : "expense"),
+      date: date || new Date().toISOString().split("T")[0],
+    });
+
+    res.status(201).json(created);
+  } catch (error) {
+    console.error("Erro ao criar transação:", error);
+    res.status(500).json({ error: "Erro ao criar transação" });
+  }
+});
+
+app.delete("/api/transactions/:id", async (req, res) => {
+  try {
+    const deleted = await deleteTransaction(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Transação não encontrada" });
+    }
+    res.json({ message: "Transação eliminada com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar transação:", error);
+    res.status(500).json({ error: "Erro ao deletar transação" });
+  }
+});
+
+app.get("/api/categories", async (req, res) => {
+  try {
+    let categories = [];
+    if (process.env.DATABASE_URL) {
+      categories = await getAllCategories();
+    }
+
+    if (!categories || categories.length === 0) {
+      categories = categoriesData.map((cat) => ({
+        slug: cat.slug,
+        name: cat.label,
+        icon_name: cat.slug,
+        color: cat.color,
+      }));
+    }
+
+    res.json(categories.map((category) => buildCategoryResponse(req, category)));
+  } catch (error) {
+    console.error("Erro ao buscar categorias:", error);
+    res.status(500).json({ error: "Erro ao buscar categorias" });
+  }
+});
+
+app.get("/api/categories/:slug/icon", (req, res) => {
+  const category = categoriesData.find((cat) => cat.slug === req.params.slug);
+  if (!category) {
+    return res.status(404).json({ error: "Categoria não encontrada" });
   }
 
-  res.json(response);
+  const coloredSvg = category.icon.replace(
+    "<svg ",
+    `<svg style="color: ${category.color}" `,
+  );
+
+  res.setHeader("Content-Type", "image/svg+xml");
+  res.setHeader("Cache-Control", "public, max-age=86400");
+  res.send(coloredSvg);
 });
 
-// ─── 404 handler ─────────────────────────────
-app.use((req, res) => {
-  res.status(404).json({ error: `Rota '${req.path}' não encontrada` });
+app.listen(3001, () => {
+  console.log("Servidor API local iniciado em http://localhost:3001");
 });
-
-// ─── Export for Vercel serverless function ────
-module.exports = app;
-
-// ─── Start server for local development ──────
-if (require.main === module) {
-  const PORT = process.env.PORT || 3001;
-  app.listen(PORT, () => {
-    console.log(`\nServidor a correr em http://localhost:${PORT}`);
-    console.log(`Documentação:       http://localhost:${PORT}/`);
-    console.log(`Transações:         http://localhost:${PORT}/api/transactions`);
-    console.log(`Categorias:         http://localhost:${PORT}/api/categories\n`);
-  });
-}

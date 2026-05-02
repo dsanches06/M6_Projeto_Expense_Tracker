@@ -4,10 +4,10 @@
   "description": "Full-stack Expense Tracker application",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "dev": "concurrently \"npm --prefix api run dev\" \"npm --prefix client run dev\"",
     "build": "npm --prefix client run build",
     "install-all": "npm install && npm --prefix client install && npm --prefix api install",
-    "start": "npm --prefix server start",
+    "start": "npm --prefix api start",
     "migrate": "node migrate-categories.js"
   },
   "keywords": [

@@ -1,6 +1,6 @@
 require('dotenv').config({ path: '.env.local' });
 const { Pool } = require("pg");
-const categories = require("./server/src/data/categories");
+const categories = require("./api/src/data/categories");
 
 // Configuração da conexão com o banco Neon
 const DATABASE_URL = process.env.DATABASE_URL;

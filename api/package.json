@@ -2,7 +2,10 @@
   "name": "expense-tracker-api",
   "version": "1.0.0",
   "description": "API para o Expense Tracker - Projeto React",
-  "main": "index.js",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.3",

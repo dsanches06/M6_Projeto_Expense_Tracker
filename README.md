@@ -26,16 +26,16 @@ Expense Tracker/
 │   ├── vite.config.js        # Configuração Vite
 │   └── package.json          # Dependências client
 │
-└── server/                    # Backend Node.js + Express
+└── api/                       # Backend para Vercel + Node.js
     ├── src/
-    │   ├── routes/           # API routes (transactions, categories)
-    │   ├── data/
-    │   │   ├── db.js         # Lógica de arquivo JSON
-    │   │   ├── categories.js # Dados das categorias
-    │   │   └── transactions.json # Base de dados
-    │   └── server.js         # Servidor Express
-    ├── package.json          # Dependências server
-    └── README.md             # Documentação server
+    │   └── data/              # Lógica de banco e dados de categorias
+    │       ├── db.js
+    │       ├── categories.js
+    │       └── transactions.json
+    ├── categories.js         # Endpoint de categorias
+    ├── transactions.js       # Endpoint de transações
+    ├── categories/[slug]/icon.js  # Ícones de categoria em SVG
+    └── transactions/[id].js  # Delete transação por id
 ```
 
 ## 🚀 Início Rápido
@@ -45,15 +45,15 @@ Expense Tracker/
 - npm ou yarn
 - Terminal com acesso aos dois diretórios
 
-### 1️⃣ Setup do Server
+### 1️⃣ Setup do Backend
 
 ```bash
-cd server
+cd api
 npm install
-npm start
+npm run dev
 ```
 
-O servidor iniciará em `http://localhost:3001`
+O backend iniciará em `http://localhost:3001`
 
 ### 2️⃣ Setup do Client
 
@@ -111,7 +111,7 @@ Component (React)
     ↓
 API Client (fetch)
     ↓
-Express Server
+Backend API
     ↓
 JSON Database
     ↓
@@ -248,7 +248,7 @@ Certifique-se que o servidor está rodando em `localhost:3001`
 O servidor tem CORS configurado para aceitar requests de `localhost:5173`
 
 ### Transações não aparecem
-- Verifique se `transactions.json` existe em `server/src/data/`
+- Verifique se `transactions.json` existe em `api/src/data/`
 - Certifique-se que o servidor tem permissão de leitura/escrita
 
 ##  Segurança
