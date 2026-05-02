@@ -7,6 +7,7 @@ const categories = [
     slug: "alimentacao",
     label: "Alimentação",
     labelEn: "Food & Dining",
+    type: "expense",
     color: "#F97316",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
@@ -20,6 +21,7 @@ const categories = [
     slug: "transporte",
     label: "Transporte",
     labelEn: "Transportation",
+    type: "expense",
     color: "#3B82F6",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="1" y="3" width="15" height="13" rx="2"/>
@@ -32,6 +34,7 @@ const categories = [
     slug: "saude",
     label: "Saúde",
     labelEn: "Health",
+    type: "expense",
     color: "#EF4444",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
@@ -41,6 +44,7 @@ const categories = [
     slug: "bem-estar",
     label: "Bem-estar",
     labelEn: "Wellness & Gym",
+    type: "expense",
     color: "#8B5CF6",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 8H6"/>
@@ -56,6 +60,7 @@ const categories = [
     slug: "habitacao",
     label: "Habitação",
     labelEn: "Housing & Rent",
+    type: "expense",
     color: "#10B981",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -66,6 +71,7 @@ const categories = [
     slug: "lazer",
     label: "Lazer",
     labelEn: "Entertainment",
+    type: "expense",
     color: "#F59E0B",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/>
@@ -76,6 +82,7 @@ const categories = [
     slug: "compras",
     label: "Compras",
     labelEn: "Shopping",
+    type: "expense",
     color: "#EC4899",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
@@ -87,6 +94,7 @@ const categories = [
     slug: "educacao",
     label: "Educação",
     labelEn: "Education",
+    type: "expense",
     color: "#06B6D4",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -97,6 +105,7 @@ const categories = [
     slug: "tecnologia",
     label: "Tecnologia",
     labelEn: "Technology",
+    type: "expense",
     color: "#6366F1",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="3" width="20" height="14" rx="2"/>
@@ -108,6 +117,7 @@ const categories = [
     slug: "viagens",
     label: "Viagens",
     labelEn: "Travel",
+    type: "expense",
     color: "#14B8A6",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19.5 2.5S18 2 16.5 3.5L13 7 4.8 5.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
@@ -117,6 +127,7 @@ const categories = [
     slug: "restaurantes",
     label: "Restaurantes",
     labelEn: "Restaurants & Bars",
+    type: "expense",
     color: "#F97316",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
@@ -125,9 +136,127 @@ const categories = [
     </svg>`,
   },
   {
-    slug: "outro",
-    label: "Outro",
+    slug: "entretenimento",
+    label: "Entretenimento",
+    labelEn: "Entertainment",
+    type: "expense",
+    color: "#F59E0B",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="10 8 16 12 10 16 10 8"/>
+    </svg>`,
+  },
+  {
+    slug: "outros",
+    label: "Outros",
     labelEn: "Other",
+    type: "expense",
+    color: "#6B7280",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>`,
+  },
+  // ==================== CATEGORIAS DE RECEITAS ====================
+  {
+    slug: "salario",
+    label: "Salário",
+    labelEn: "Salary",
+    type: "income",
+    color: "#22C55E",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2"/>
+      <line x1="2" y1="10" x2="22" y2="10"/>
+    </svg>`,
+  },
+  {
+    slug: "vendas",
+    label: "Vendas",
+    labelEn: "Sales",
+    type: "income",
+    color: "#10B981",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="1" x2="12" y2="23"/>
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+    </svg>`,
+  },
+  {
+    slug: "investimentos",
+    label: "Investimentos",
+    labelEn: "Investments",
+    type: "income",
+    color: "#8B5CF6",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+      <polyline points="16 7 22 7 22 13"/>
+    </svg>`,
+  },
+  {
+    slug: "freelance",
+    label: "Freelance",
+    labelEn: "Freelance",
+    type: "income",
+    color: "#F59E0B",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 7h-9"/>
+      <path d="M14 17H5"/>
+      <circle cx="17" cy="17" r="3"/>
+      <circle cx="7" cy="7" r="3"/>
+    </svg>`,
+  },
+  {
+    slug: "reembolso",
+    label: "Reembolso",
+    labelEn: "Refund",
+    type: "income",
+    color: "#06B6D4",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="1 4 1 10 7 10"/>
+      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+    </svg>`,
+  },
+  {
+    slug: "cashback",
+    label: "Cashback",
+    labelEn: "Cashback",
+    type: "income",
+    color: "#A855F7",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2"/>
+      <line x1="2" y1="10" x2="22" y2="10"/>
+    </svg>`,
+  },
+  {
+    slug: "aluguel",
+    label: "Aluguel",
+    labelEn: "Rental Income",
+    type: "income",
+    color: "#14B8A6",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>`,
+  },
+  {
+    slug: "presentes",
+    label: "Presentes",
+    labelEn: "Gifts",
+    type: "income",
+    color: "#EC4899",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 12 20 22 4 22 4 12"/>
+      <rect x="2" y="7" width="20" height="5"/>
+      <line x1="12" y1="22" x2="12" y2="7"/>
+      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+    </svg>`,
+  },
+  {
+    slug: "outros",
+    label: "Outros",
+    labelEn: "Other Income",
+    type: "income",
     color: "#6B7280",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/>
