@@ -4,6 +4,7 @@
   "description": "API para o Expense Tracker - Projeto React",
   "main": "src/server.js",
   "scripts": {
+    "dev": "node src/server.js",
     "start": "node src/server.js"
   },
   "dependencies": {

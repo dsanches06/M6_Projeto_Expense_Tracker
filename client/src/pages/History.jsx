@@ -330,7 +330,8 @@ const History = () => {
                       </td>
                       <td>
                         <button
-                          className="btn-delete" style={"background:transparent; border:none; cursor:pointer; font-size:16px;"}
+                          className="btn-delete" 
+                          style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: "16px" }}
                           onClick={() => handleDeleteTransaction(tx.id)}
                           disabled={deleteMutation.isPending}
                         >

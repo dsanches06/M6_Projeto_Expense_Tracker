@@ -1,3 +1,4 @@
+require("dotenv").config({ path: require("path").resolve(__dirname, "..", ".env.local") });
 const express = require("express");
 const cors = require("cors");
 const {
@@ -42,6 +43,7 @@ const buildCategoryResponse = (req, dbCategory) => {
     : undefined;
 
   return {
+    id: staticCategory.id || dbCategory.id,
     slug: dbCategory.slug,
     name: dbCategory.name,
     icon_name: dbCategory.icon_name,
@@ -121,7 +123,9 @@ app.get("/api/categories", async (req, res) => {
       categories = await getAllCategories();
     }
 
-    if (!categories || categories.length === 0) {
+    // Usar categorias estáticas se o DB não tiver o schema correcto (sem campo slug)
+    const hasValidSchema = categories.length > 0 && categories[0].slug;
+    if (!hasValidSchema) {
       categories = categoriesData.map((cat) => ({
         slug: cat.slug,
         name: cat.label,

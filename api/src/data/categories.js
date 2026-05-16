@@ -4,6 +4,7 @@
 
 const categories = [
   {
+    id: 1,
     slug: "alimentacao",
     label: "Alimentação",
     labelEn: "Food & Dining",
@@ -18,6 +19,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 2,
     slug: "transporte",
     label: "Transporte",
     labelEn: "Transportation",
@@ -31,6 +33,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 3,
     slug: "saude",
     label: "Saúde",
     labelEn: "Health",
@@ -41,6 +44,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 4,
     slug: "bem-estar",
     label: "Bem-estar",
     labelEn: "Wellness & Gym",
@@ -57,6 +61,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 5,
     slug: "habitacao",
     label: "Habitação",
     labelEn: "Housing & Rent",
@@ -68,6 +73,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 6,
     slug: "lazer",
     label: "Lazer",
     labelEn: "Entertainment",
@@ -79,6 +85,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 7,
     slug: "compras",
     label: "Compras",
     labelEn: "Shopping",
@@ -91,6 +98,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 8,
     slug: "educacao",
     label: "Educação",
     labelEn: "Education",
@@ -102,6 +110,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 9,
     slug: "tecnologia",
     label: "Tecnologia",
     labelEn: "Technology",
@@ -114,6 +123,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 10,
     slug: "viagens",
     label: "Viagens",
     labelEn: "Travel",
@@ -124,6 +134,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 11,
     slug: "restaurantes",
     label: "Restaurantes",
     labelEn: "Restaurants & Bars",
@@ -136,6 +147,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 12,
     slug: "entretenimento",
     label: "Entretenimento",
     labelEn: "Entertainment",
@@ -147,6 +159,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 13,
     slug: "outros",
     label: "Outros",
     labelEn: "Other",
@@ -160,6 +173,7 @@ const categories = [
   },
   // ==================== CATEGORIAS DE RECEITAS ====================
   {
+    id: 14,
     slug: "salario",
     label: "Salário",
     labelEn: "Salary",
@@ -171,6 +185,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 15,
     slug: "vendas",
     label: "Vendas",
     labelEn: "Sales",
@@ -182,6 +197,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 16,
     slug: "investimentos",
     label: "Investimentos",
     labelEn: "Investments",
@@ -193,6 +209,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 17,
     slug: "freelance",
     label: "Freelance",
     labelEn: "Freelance",
@@ -206,6 +223,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 18,
     slug: "reembolso",
     label: "Reembolso",
     labelEn: "Refund",
@@ -217,6 +235,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 19,
     slug: "cashback",
     label: "Cashback",
     labelEn: "Cashback",
@@ -228,6 +247,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 20,
     slug: "aluguel",
     label: "Aluguel",
     labelEn: "Rental Income",
@@ -239,6 +259,7 @@ const categories = [
     </svg>`,
   },
   {
+    id: 21,
     slug: "presentes",
     label: "Presentes",
     labelEn: "Gifts",
@@ -253,7 +274,8 @@ const categories = [
     </svg>`,
   },
   {
-    slug: "outros",
+    id: 22,
+    slug: "outros-receitas",
     label: "Outros",
     labelEn: "Other Income",
     type: "income",

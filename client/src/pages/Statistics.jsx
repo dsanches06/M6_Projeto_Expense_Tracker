@@ -40,6 +40,7 @@ ChartJS.defaults.devicePixelRatio = window.devicePixelRatio || 2;
 // e gráfico de linha (evolução do saldo e despesas ao longo do tempo)
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [dateStart, setDateStart] = useState("");
@@ -71,6 +72,12 @@ const Statistics = () => {
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const { data: allTransactions = [] } = useQuery({
@@ -357,9 +364,6 @@ const Statistics = () => {
     ],
   };
 
-  // Detectar mobile
-  const isMobile = window.innerWidth <= 768;
-
   // Opções compartilhadas dos gráficos
   const commonOptions = {
     responsive: true,
@@ -478,7 +482,7 @@ const Statistics = () => {
 
   return (
     <div className="statistics-container">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
         <h1 style={{ margin: '0' }}>Estatísticas</h1>
         <button
           onClick={() => setShowFilters(!showFilters)}
@@ -495,8 +499,8 @@ const Statistics = () => {
             alignItems: 'center',
             gap: '8px'
           }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#4a78e0'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = showFilters ? '#4a78e0' : '#5a8aff'}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4a78e0'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = showFilters ? '#4a78e0' : '#5a8aff'; }}
         >
           <span>{showFilters ? '✕' : '⚙️'}</span>
           {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}

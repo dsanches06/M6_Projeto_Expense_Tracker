@@ -101,6 +101,44 @@
   border-top-color: #2c3142;
 }
 
+/* Botão de alternância de tema */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #212529;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  transform: scale(1.05);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.app.dark .theme-toggle-btn {
+  color: #e8eaed;
+}
+
+.app.dark .theme-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Botões de tema em tema escuro */
 .app.dark .theme-btn {
   background: #252d3d;

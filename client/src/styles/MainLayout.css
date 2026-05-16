@@ -121,31 +121,6 @@
   z-index: 50;
 }
 
-.theme-toggle-btn {
-  background: none;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-  height: 40px;
-}
-
-.app-header .theme-toggle-btn:hover {
-  border-color: #4a78e0;
-  background: rgba(74, 120, 224, 0.08);
-  transform: scale(1.05);
-}
-
-.app-header .theme-toggle-btn:active {
-  transform: scale(0.95);
-}
-
 footer {
   text-align: center;
   margin-top: 32px;

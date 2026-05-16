@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useTheme } from "../context/ThemeContext";
 
 // Componente reutilizável de filtro de categoria colapsável
@@ -34,7 +35,6 @@ const CollapsibleCategoryFilter = ({
 
   const renderCategoryButton = (category) => (
     <button
-      key={category.slug}
       onClick={() => handleCategoryClick(category.slug)}
       style={{
         padding: "8px 14px",
@@ -117,7 +117,9 @@ const CollapsibleCategoryFilter = ({
               gap: "10px",
             }}
           >
-            {expenseCategories.map(renderCategoryButton)}
+            {expenseCategories.map((cat) => (
+              <Fragment key={cat.id}>{renderCategoryButton(cat)}</Fragment>
+            ))}
           </div>
         </div>
       )}
@@ -143,7 +145,9 @@ const CollapsibleCategoryFilter = ({
               gap: "10px",
             }}
           >
-            {incomeCategories.map(renderCategoryButton)}
+            {incomeCategories.map((cat) => (
+              <Fragment key={cat.id}>{renderCategoryButton(cat)}</Fragment>
+            ))}
           </div>
         </div>
       )}

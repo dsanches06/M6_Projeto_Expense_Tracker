@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 // Componente de filtro por categorias
 // Apresenta botões (pills) para filtrar transações por categoria de despesa ou receita
 // Permite selecionar/desselecionar uma categoria para filtrar os resultados
@@ -23,7 +25,6 @@ const CategoryFilter = ({ categories, activeCategory, activeCategoryType, onCate
   // Renderizar cada botão (pill) de categoria com ícone e nome
   const renderPill = (category) => (
     <button
-      key={`${category.type}-${category.slug}`}
       className={`category-pill ${isActive(category) ? "active" : ""}`}
       onClick={() => handleClick(category)}
       title={category.name}
@@ -49,14 +50,18 @@ const CategoryFilter = ({ categories, activeCategory, activeCategoryType, onCate
       {expenseCategories.length > 0 && (
         <div className="category-group">
           <span className="category-group-label expense">Despesas</span>
-          {expenseCategories.map(renderPill)}
+          {expenseCategories.map((cat) => (
+            <Fragment key={cat.id}>{renderPill(cat)}</Fragment>
+          ))}
         </div>
       )}
 
       {incomeCategories.length > 0 && (
         <div className="category-group">
           <span className="category-group-label income">Receitas</span>
-          {incomeCategories.map(renderPill)}
+          {incomeCategories.map((cat) => (
+            <Fragment key={cat.id}>{renderPill(cat)}</Fragment>
+          ))}
         </div>
       )}
     </div>

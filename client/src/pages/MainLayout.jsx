@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import { ThemeToggle } from "../components/ui/ThemeToggle";
 import expenseLogo from "../assets/expense.png";
 import "../styles/MainLayout.css";
 
@@ -50,13 +51,7 @@ const MainLayout = () => {
             >
               {sidebarOpen ? "✕" : "☰"}
             </button>
-            <button
-              className="theme-toggle-btn"
-              onClick={toggleTheme}
-              title="Alternar tema"
-            >
-              {theme === "dark" ? "☀️" : "🌙"}
-            </button>
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
           </header>
 
           <main>

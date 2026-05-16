@@ -69,7 +69,7 @@
 
 /* ===== RESPONSIVE ===== */
 
-/* Tablet */
+/* Tablet largo */
 @media (max-width: 900px) {
   .sectionCard {
     grid-template-columns: repeat(3, 1fr);
@@ -94,6 +94,33 @@
 
   .sectionCard .card .cardTitle {
     font-size: 12px;
+  }
+}
+
+/* Tablet estreito — 3 colunas mas mais compactas */
+@media (max-width: 720px) {
+  .sectionCard {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .sectionCard .card {
+    height: 110px;
+    padding: 12px 10px;
+    gap: 8px;
+  }
+
+  .sectionCard .card .cardIcon {
+    font-size: 22px;
+  }
+
+  .sectionCard .card .cardValue {
+    font-size: 16px;
+  }
+
+  .sectionCard .card .cardTitle {
+    font-size: 11px;
   }
 }
 

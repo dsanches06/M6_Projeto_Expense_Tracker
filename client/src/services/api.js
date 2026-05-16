@@ -9,7 +9,10 @@ const API_URL =
 // A filtragem por datas é feita no frontend com .filter()
 // A API devolve TODAS as transações e nós filtramos no componente
 export const getTransactions = () =>
-  fetch(`${API_URL}/api/transactions`).then((res) => res.json())
+  fetch(`${API_URL}/api/transactions`).then((res) => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return res.json()
+  })
 
 // Criar uma transação (POST)
 export const createTransaction = (data) =>
@@ -17,7 +20,10 @@ export const createTransaction = (data) =>
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
-  }).then(res => res.json())
+  }).then((res) => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return res.json()
+  })
 
 // Apagar uma transação (DELETE)
 export const deleteTransaction = (id) =>
@@ -25,4 +31,7 @@ export const deleteTransaction = (id) =>
 
 // Buscar categorias (GET)
 export const getCategories = () =>
-  fetch(`${API_URL}/api/categories`).then(res => res.json())
+  fetch(`${API_URL}/api/categories`).then((res) => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return res.json()
+  })
