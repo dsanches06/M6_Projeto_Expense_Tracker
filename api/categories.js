@@ -2,15 +2,47 @@ const db = require('./src/data/db');
 const staticCategories = require('./src/data/categories');
 
 const encodeSvg = (svg) =>
-  encodeURIComponent(svg);
+  encodeURIComponent(svg)
+    .replace(/%20/g, ' ')
+    .replace(/%3D/g, '=')
+    .replace(/%3A/g, ':')
+    .replace(/%2F/g, '/')
+    .replace(/%22/g, '"')
+    .replace(/%2C/g, ',')
+    .replace(/%3B/g, ';')
+    .replace(/%2B/g, '+')
+    .replace(/%27/g, "'");
+
+const buildCategoryResponse = (dbCategory) => {
+  const staticCategory = staticCategories.find((cat) => cat.slug === dbCategory.slug) || {};
+  const iconSvg = staticCategory.icon || '';
+  const coloredSvg = iconSvg.replace(
+    '<svg ',
+    `<svg style="color: ${dbCategory.color}" `,
+  );
+  const iconUrl = iconSvg
+    ? `data:image/svg+xml;utf8,${encodeSvg(coloredSvg)}`
+    : undefined;
+
+  return {
+    id: staticCategory.id || dbCategory.id,
+    slug: dbCategory.slug,
+    name: dbCategory.name,
+    icon_name: dbCategory.icon_name,
+    color: dbCategory.color,
+    type: staticCategory.type || 'expense',
+    label: staticCategory.label || dbCategory.name,
+    labelEn: staticCategory.labelEn || dbCategory.name,
+    iconUrl,
+  };
+};
 
 module.exports = async function handler(req, res) {
-  // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-  
+
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
@@ -18,30 +50,21 @@ module.exports = async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      const categoriesFromDb = await db.getAllCategories();
-      const categories = categoriesFromDb.map((dbCategory) => {
-        const staticCategory = staticCategories.find((cat) => cat.slug === dbCategory.slug) || {};
-        const iconSvg = staticCategory.icon || '';
-        const coloredSvg = iconSvg.replace(
-          '<svg ',
-          `<svg style="color: ${dbCategory.color}" `,
-        );
-        const iconUrl = iconSvg
-          ? `data:image/svg+xml;utf8,${encodeSvg(coloredSvg)}`
-          : undefined;
+      let categories = await db.getAllCategories();
 
-        return {
-          slug: dbCategory.slug,
-          name: dbCategory.name,
-          icon_name: dbCategory.icon_name,
-          color: dbCategory.color,
-          type: staticCategory.type || 'expense',
-          label: staticCategory.label || dbCategory.name,
-          labelEn: staticCategory.labelEn || dbCategory.name,
-          iconUrl,
-        };
-      });
-      res.status(200).json(categories);
+      // Fallback para categorias estáticas se a DB não tiver coluna slug
+      const hasValidSchema = categories.length > 0 && categories[0].slug;
+      if (!hasValidSchema) {
+        categories = staticCategories.map((cat) => ({
+          id: cat.id,
+          slug: cat.slug,
+          name: cat.label,
+          icon_name: cat.slug,
+          color: cat.color,
+        }));
+      }
+
+      res.status(200).json(categories.map(buildCategoryResponse));
     } else {
       res.status(405).json({ error: 'Method not allowed' });
     }

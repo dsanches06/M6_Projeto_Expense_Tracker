@@ -56,6 +56,25 @@ async function initDB() {
     `);
     console.log("✅ Tabela 'categories' inicializada");
 
+    // Verificar se a tabela categories tem o schema correto (coluna slug)
+    const schemaCheck = await pool.query(`
+      SELECT column_name FROM information_schema.columns
+      WHERE table_name = 'categories' AND column_name = 'slug';
+    `);
+    if (schemaCheck.rows.length === 0) {
+      console.warn("⚠️  Tabela 'categories' tem schema errado — a recriar...");
+      await pool.query("DROP TABLE IF EXISTS categories;");
+      await pool.query(`
+        CREATE TABLE categories (
+          slug TEXT PRIMARY KEY,
+          name TEXT NOT NULL,
+          icon_name TEXT,
+          color TEXT
+        );
+      `);
+      console.log("✅ Tabela 'categories' recriada com schema correto");
+    }
+
     // Migrate data from JSON if table is empty
     await migrateData();
     dbInitialized = true;
