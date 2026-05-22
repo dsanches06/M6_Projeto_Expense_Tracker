@@ -1,4 +1,4 @@
-import { useReducer, useContext, useState, useEffect } from "react";
+import { useReducer, useContext, useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTransactions, getCategories } from "../services/api";
 import {
@@ -21,14 +21,6 @@ const Dashboard = () => {
   const [filters, dispatch] = useReducer(filtersReducer, initialFiltersState);
   const { userName } = useContext(PreferencesContext);
 
-  // Tempo mínimo de loading para melhor experiência visual
-  const [minLoading, setMinLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setMinLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   // Buscar transações - refetch sempre que o Dashboard monta
   const { data: allTransactions = [], isLoading: txLoading } = useQuery({
     queryKey: ["transactions"],
@@ -43,34 +35,36 @@ const Dashboard = () => {
     queryFn: getCategories,
   });
 
-  // Filtrar transações no frontend com base nos filtros de data e categoria ativos
-  const filteredTransactions = allTransactions
-    .filter((t) => {
-      const txDate = t.date || t.createdAt;
-      const isInDateRange =
-        (!filters.startDate || txDate >= filters.startDate) &&
-        (!filters.endDate || txDate <= filters.endDate);
-      
-      // Filtro de múltiplas categorias
-      const isMatchingCategory =
-        filters.activeCategories.length === 0 ||
-        filters.activeCategories.includes(t.category);
+  const filteredTransactions = useMemo(
+    () =>
+      allTransactions
+        .filter((t) => {
+          const txDate = t.date || t.createdAt;
+          const isInDateRange =
+            (!filters.startDate || txDate >= filters.startDate) &&
+            (!filters.endDate || txDate <= filters.endDate);
+          const isMatchingCategory =
+            filters.activeCategories.length === 0 ||
+            filters.activeCategories.includes(t.category);
+          return isInDateRange && isMatchingCategory;
+        })
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+    [allTransactions, filters]
+  );
 
-      return isInDateRange && isMatchingCategory;
-    })
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const balance = useMemo(
+    () => filteredTransactions.reduce((sum, t) => sum + t.amount, 0),
+    [filteredTransactions]
+  );
 
-  // Calcular os totais financeiros a partir das transações filtradas
-  const balance = filteredTransactions.reduce((sum, t) => sum + t.amount, 0);
+  const income = useMemo(
+    () => filteredTransactions.filter((t) => t.amount > 0).reduce((sum, t) => sum + t.amount, 0),
+    [filteredTransactions]
+  );
 
-  const income = filteredTransactions
-    .filter((t) => t.amount > 0)
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const expenses = Math.abs(
-    filteredTransactions
-      .filter((t) => t.amount < 0)
-      .reduce((sum, t) => sum + t.amount, 0),
+  const expenses = useMemo(
+    () => Math.abs(filteredTransactions.filter((t) => t.amount < 0).reduce((sum, t) => sum + t.amount, 0)),
+    [filteredTransactions]
   );
 
   // Handlers de filtros - enviam ações ao reducer para atualizar os filtros
@@ -100,7 +94,7 @@ const Dashboard = () => {
     dispatch({ type: "RESET" });
   };
 
-  if (txLoading || categoriesLoading || minLoading) {
+  if (txLoading || categoriesLoading) {
     return <Loader />;
   }
 

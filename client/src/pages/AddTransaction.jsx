@@ -59,8 +59,6 @@ const AddTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       navigate('/');
     },
-    onError: (error) => {
-    },
   });
 
   // Focar no input de descrição quando a página monta

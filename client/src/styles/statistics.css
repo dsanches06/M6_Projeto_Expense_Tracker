@@ -6,9 +6,44 @@
 
 .statistics-container h1 {
   color: var(--text-color);
-  margin-bottom: 2rem;
+  margin: 0;
   font-size: 2rem;
   font-weight: 600;
+}
+
+.statistics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.stats-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background-color: #5a8aff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.stats-filter-btn.active,
+.stats-filter-btn:hover {
+  background-color: #4a78e0;
+}
+
+.stats-empty {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--surface-color);
+  border-radius: 8px;
+  color: var(--secondary-color);
 }
 
 .charts-grid-two {

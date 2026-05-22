@@ -482,25 +482,11 @@ const Statistics = () => {
 
   return (
     <div className="statistics-container">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
-        <h1 style={{ margin: '0' }}>Estatísticas</h1>
+      <div className="statistics-header">
+        <h1>Estatísticas</h1>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          style={{
-            padding: '10px 20px',
-            borderRadius: '6px',
-            border: 'none',
-            backgroundColor: showFilters ? '#4a78e0' : '#5a8aff',
-            color: '#fff',
-            cursor: 'pointer',
-            fontWeight: '600',
-            transition: 'all 0.3s',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4a78e0'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = showFilters ? '#4a78e0' : '#5a8aff'; }}
+          className={`stats-filter-btn${showFilters ? ' active' : ''}`}
         >
           <span>{showFilters ? '✕' : '⚙️'}</span>
           {showFilters ? 'Fechar Filtros' : 'Abrir Filtros'}
@@ -527,13 +513,7 @@ const Statistics = () => {
 
       {/* Mensagem quando não há dados */}
       {filteredTransactions.length === 0 ? (
-        <div style={{
-          textAlign: 'center',
-          padding: '40px 20px',
-          backgroundColor: theme === 'dark' ? '#252d3d' : '#f5f7fa',
-          borderRadius: '8px',
-          color: theme === 'dark' ? '#b0b5c1' : '#5a6473'
-        }}>
+        <div className="stats-empty">
           <p>Nenhuma transação encontrada com os filtros selecionados.</p>
         </div>
       ) : (
